@@ -30,6 +30,9 @@ public class Pre10 {
         System.out.println(MedianofTwoSortedArrays(num1, num2));
         String s = "abbdswq";
         System.out.println(lengthOfLongestSubstring(s));
+
+        System.out.println(longestPalindrome("abcdbbfcba"));
+        System.out.println(longestPalindrome2("abcdbbfcba"));
     }
 
     /**
@@ -145,10 +148,60 @@ public class Pre10 {
      * @param str2
      * @return
      */
-    public int mgetLCSLength(String str1, String str2) {
+    public static String mgetLCSLength(String str1, String str2) {
 
+        int[][] matrix = new int[str1.length()][str2.length()];
+        int indexI=0;
+        int len = 0;
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                if (str1.charAt(i) == str2.charAt(j)) {
+                    if (i == 0 || j == 0) {
+                        matrix[i][j] = 1;
+                    }else {
+                        matrix[i][j] = 1 + matrix[i - 1][j - 1];
+
+                    }
+                }
+                if (matrix[i][j]>len) {
+                    //判断是否倒装，导致相同的
+                    int beforeRev = str1.length() - 1 - j;
+                    if (beforeRev + matrix[i][j] - 1 == i) { //判断下标是否对应
+                        len = matrix[i][j];
+                        indexI = i;
+                    }
+                }
+            }
+        }
+        return str1.substring(indexI - len + 1, indexI+1);
 
     }
+
+    /**
+     * 给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。
+     * @param s
+     * @return
+     */
+    public static String longestPalindrome(String s) {
+        return mgetLCSLength(s,reverse(s));
+    }
+
+    /**
+     * 反正字符串
+     * @param str
+     * @return
+     */
+    public static String reverse(String str) {
+        char[] chars = str.toCharArray();
+        char[] reverseChar = new char[str.length()];
+        int j = 0;
+        for (int i = chars.length-1; i >= 0; i--) {
+            reverseChar[j++] = chars[i];
+        }
+        return String.valueOf(reverseChar);
+    }
+
+
 
 
 
