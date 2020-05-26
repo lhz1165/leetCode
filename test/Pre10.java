@@ -2,8 +2,11 @@ package org.example.leetcode300.test;
 
 import org.example.leetcode300.demo.ListNode;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author: lhz
@@ -32,7 +35,8 @@ public class Pre10 {
         System.out.println(lengthOfLongestSubstring(s));
 
         System.out.println(longestPalindrome("abcdbbfcba"));
-        System.out.println(longestPalindrome2("abcdbbfcba"));
+
+        System.out.println(convert("ABC", 1));
     }
 
     /**
@@ -52,8 +56,11 @@ public class Pre10 {
         while (p1 != null || p2 != null||carry>0) {
             int x = p1 == null ?  0 :  p1.val;
             int y = p2 == null ?  0 :  p2.val;
-            if (p1 != null) p1 = p1.next;
-            if (p2 != null) p2 = p2.next;
+            if (p1 != null){ p1 = p1.next;}
+
+            if (p2 != null) {
+                p2 = p2.next;
+            }
             int sum = x + y+carry;
             ListNode node;
             if (sum >=10) {
@@ -199,6 +206,46 @@ public class Pre10 {
             reverseChar[j++] = chars[i];
         }
         return String.valueOf(reverseChar);
+    }
+
+    /**
+     * 就是给定一个字符串，然后按写竖着的 「z」的方式排列字符。
+     * @param s
+     * @param numRows
+     * @return
+     */
+    public static String convert(String s, int numRows) {
+        //判断有几行
+        List<StringBuilder> rows = new ArrayList<>();
+        for (int i = 0; i < Math.min(s.length(),numRows); i++) {
+            rows.add(new StringBuilder());
+        }
+        //遍历字符串,从第0行开始,true为向下，fals为向上
+        boolean direction = true;
+        int getRow=0;
+        for (char c : s.toCharArray()) {
+            //从下往上转向
+            if (direction) {
+                rows.get(getRow).append(c);
+                getRow++;
+                if (getRow >= rows.size()) {
+                    direction = false;
+                        getRow = Math.max(rows.size() - 2, 0);
+                }
+            }else {
+                rows.get(getRow).append(c);
+                getRow--;
+                if (getRow < 0) {
+                    direction = true;
+                    getRow=getRow+2>=rows.size()?0:getRow+2;
+                }
+            }
+        }
+        StringBuilder result = new StringBuilder();
+        for (StringBuilder row : rows) {
+            result.append(row);
+        }
+        return result.toString();
     }
 
 
