@@ -38,9 +38,10 @@ public class Pre10 {
 //        System.out.println(convert("ABC", 1));
 //        System.out.println(reverse(5321));
 //        isPalindrome(121);
-        int i = maxArea(new int[]{2, 3, 4, 5, 18, 17, 6});
-        System.out.println(i);
-        System.out.println(intToRoman(40));
+//        int i = maxArea(new int[]{2, 3, 4, 5, 18, 17, 6});
+//        System.out.println(i);
+//        System.out.println(intToRoman(40));
+        System.out.println(waysToChange(10));
     }
 
     /**
@@ -450,6 +451,35 @@ public class Pre10 {
             sb.append("I");
         }
         return sb.toString();
+
+    }
+    public List<List<Integer>> threeSum(int[] nums) {
+        int len=0;
+        for (int i = 0; i < nums.length; i++) {
+
+        }
+        return null;
+
+    }
+
+    /**
+     * 硬币。给定数量不限的硬币，币值为25分、10分、5分和1分，
+     * 编写代码计算n分有几种表示法。(结果可能会很大，你需要将结果模上1000000007)
+     * @param n
+     * @return
+     */
+    public static int waysToChange(int n) {
+
+        int[] dp = new int[n+1];
+        int[] coins = {1, 5, 10, 25};
+        dp[0] = 1;
+        for(int coin : coins) {
+            for(int i = coin; i <= n; i++) {
+                dp[i] = dp[i] + dp[i - coin];
+            }
+        }
+
+        return dp[n];
 
 
     }
