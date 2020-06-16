@@ -41,7 +41,8 @@ public class Pre10 {
 //        int i = maxArea(new int[]{2, 3, 4, 5, 18, 17, 6});
 //        System.out.println(i);
 //        System.out.println(intToRoman(40));
-        System.out.println(waysToChange(10));
+        int[] a = {-4, -1, -1, 0, 1, 2};
+        System.out.println(threeSum(a));
     }
 
     /**
@@ -400,7 +401,7 @@ public class Pre10 {
         num = num % 100;
         //90
         int XC = num / 90;
-        for (int i = 0; i <XC ; i++) {
+        for (int i = 0; i < XC; i++) {
             sb.append("XC");
         }
         num %= 90;
@@ -416,7 +417,7 @@ public class Pre10 {
             sb.append("XL");
 
         }
-        num%=40;
+        num %= 40;
 
         //10
         int X = num / 10;
@@ -453,35 +454,64 @@ public class Pre10 {
         return sb.toString();
 
     }
-    public List<List<Integer>> threeSum(int[] nums) {
-        int len=0;
-        for (int i = 0; i < nums.length; i++) {
-
-        }
-        return null;
-
-    }
 
     /**
+     * 动态规划
      * 硬币。给定数量不限的硬币，币值为25分、10分、5分和1分，
      * 编写代码计算n分有几种表示法。(结果可能会很大，你需要将结果模上1000000007)
+     *
      * @param n
      * @return
      */
     public static int waysToChange(int n) {
 
-        int[] dp = new int[n+1];
+        int[] dp = new int[n + 1];
         int[] coins = {1, 5, 10, 25};
         dp[0] = 1;
-        for(int coin : coins) {
-            for(int i = coin; i <= n; i++) {
+        for (int coin : coins) {
+            for (int i = coin; i <= n; i++) {
                 dp[i] = dp[i] + dp[i - coin];
             }
         }
 
         return dp[n];
+    }
+
+    /**
+     * 给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？请你找出所有满足条件且不重复的三元组。
+     * <p>
+     * 注意：答案中不可以包含重复的三元组。
+     *
+     * @param nums
+     * @return
+     */
+    public static List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums); //排序
+        List<List<Integer>> result = new LinkedList<>();
+        for (int i = 0; i < nums.length - 2; i++) {
+            if (i == 0 || nums[i] != nums[i - 1]) {
+                int target = -nums[i];
+                int LO = i + 1;
+                int HI = nums.length - 1;
+                while (LO < HI) {
+                    if (nums[LO] + nums[HI] == target) {
+                        result.add(Arrays.asList(nums[i], nums[LO], nums[HI]));
+                        //元素相同要后移，防止加入重复的 list
+                        while (LO < HI && nums[LO] == nums[LO + 1]) LO++;
+                        while (LO < HI && nums[HI] == nums[HI - 1]) HI--;
+                        LO++;
+                        HI--;
+                    }else if (nums[LO] + nums[HI]<target){
+                        LO++;
+                    }else {
+                        HI--;
+                    }
+                }
 
 
+            }
+        }
+        return result;
     }
 
 
