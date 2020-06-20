@@ -8,14 +8,13 @@ import java.util.Arrays;
  **/
 public class Pre20 {
     public static void main(String[] args) {
-        int[] a = {-1, 2, 1, 4};
-        System.out.println(threeSumClosest(a,1));
+        int[] a = {0,1,2};
+        System.out.println(threeSumClosest(a,3));
 
     }
 
     public static int threeSumClosest(int[] nums, int target) {
         Arrays.sort(nums);
-        int result = 0;
         int minL = 0;
         int minR = 0;
         int minI = 0;
@@ -32,12 +31,10 @@ public class Pre20 {
                     minR = HI;
                     minI = i;
                 }
-                if (goal > two) {
+                if (goal >= two) {
                     LO++;
-                } else if (goal < two) {
+                } else  {
                     HI--;
-                }else {
-                    return 0;
                 }
             }
 
