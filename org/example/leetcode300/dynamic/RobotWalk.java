@@ -13,6 +13,7 @@ public class RobotWalk {
     /**
      * // 转移方程         f[i][j]=f[i][j-1]+f[i-1][j-1]
      * // 二维数组先走第0行  f[0][0] f[0][1] f[0][2]... f[0][n-1]
+     * 坐标性的动态规划
      * n*m的格子 机器人从00走到mn一共有多少种走法
      * @param m
      * @param n
@@ -20,13 +21,20 @@ public class RobotWalk {
      */
     public static int howManyWalkWay(int m,int n) {
         int f[][] = new int[m][n];
-        f[0][0] = 0;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n ; j++) {
-                if (i == 0 || j == 0) {
+                if (i == 0 && j == 0) {
                     f[i][j] = 1;
-                } else  {
-                    f[i][j] = f[i-1][j]+ f[i][j - 1];
+                    continue;
+                }
+                f[i][j] = 0;
+                //加右边前一格
+                if (i > 0) {
+                    f[i][j] += f[i - 1][j];
+                }
+                //加左边前一格
+                if (j > 0) {
+                    f[i][j] += f[i ][j-1];
                 }
             }
         }
