@@ -12,6 +12,10 @@ public class SequenceDP {
     public static void main(String[] args) {
 //        int c[][] = {{14, 2, 11,10}, {11, 14, 5,3}};
 //        System.out.println(minCost(c));
+
+        for (int i = 0; i < 10; i++) {
+            System.out.println(i);
+        }
         int[] A = {3, 8, 4};
         System.out.println(houseRobber(A));
 
