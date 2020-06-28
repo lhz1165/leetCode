@@ -2,6 +2,9 @@ package org.example.leetcode300.dynamic;
 
 import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 /**
  * @author: lhz
  *
@@ -10,15 +13,8 @@ import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
  **/
 public class SequenceDP {
     public static void main(String[] args) {
-//        int c[][] = {{14, 2, 11,10}, {11, 14, 5,3}};
-//        System.out.println(minCost(c));
-
-        for (int i = 0; i < 10; i++) {
-            System.out.println(i);
-        }
-        int[] A = {3, 8, 4};
-        System.out.println(houseRobber(A));
-
+        int[] A = {4, 2, 4, 5, 3, 7};
+        longestIncreasing(A);
     }
     /**
      * 房子染色问题，相邻房子颜色不同
@@ -137,7 +133,70 @@ public class SequenceDP {
             minV = prices[i];
         }
         return res;
+    }
 
+    /**
+     * 最长上升子序列
+     * @param nums
+     * @return
+     */
+    public static int longestIncreasing(int[] nums){
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        int [] f = new int[nums.length];
+        int res = 0;
+        int p = 0;
+        int[] pi = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            f[i] = 1;
+            pi[i] = -1;
+
+            for (int j = 0; j <i ; j++) {
+                if (nums[j] < nums[i]) {
+                    f[i] = Integer.max(f[i], f[j] + 1);
+                    if (f[j]+1==f[i]) {
+                        //pi下标表示当前数字，值表示他的前一个数字是
+                        pi[i] = j;
+                    }
+                }
+            }
+            res = Math.max(res, f[i]);
+            if (f[i] == res) {
+                p = i;
+            }
+        }
+        int[] seq = new int[res];
+        for (int i = res-1; i >= 0; --i) {
+            seq[i] = nums[p];
+            p = pi[p];
+        }
+        System.out.println(Arrays.toString(seq));
+        return res;
+    }
+
+    public int russianDollEnvelopes(int[][]envelopes) {
+        if (envelopes == null || envelopes[0].length == 0) {
+            return 0;
+        }
+        //信封个数
+        int n = envelopes.length;
+        //先比较长度，长度相同比较宽度，
+        int res = 0;
+        Arrays.sort(envelopes, (o1, o2) -> (o1[0]==o2[0])?o1[1]-o2[1]:o1[0]-o2[0]);
+        //结果
+        int[] f = new int[n];
+        f[0] = 1;
+        for (int i = 1; i < n; i++) {
+            f[i] = 1;
+            for (int j = i-1; j >=0 ; j--) {
+                if (envelopes[i][0] > envelopes[j][0] && envelopes[i][1] > envelopes[j][1]) {
+                    f[i] = Math.max(f[i], f[j] + 1);
+                }
+            }
+            res = Math.max(res, f[i]);
+        }
+        return res;
     }
 
 
