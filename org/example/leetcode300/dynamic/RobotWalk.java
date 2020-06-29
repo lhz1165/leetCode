@@ -6,7 +6,7 @@ package org.example.leetcode300.dynamic;
  **/
 public class RobotWalk {
     public static void main(String[] args) {
-        System.out.println(howManyWalkWay(3, 3));
+        System.out.println(howManyWalkWay(4, 3));
         int[] arr = {3,2,1,0,4};
         System.out.println(jump(arr));
     }
@@ -41,6 +41,8 @@ public class RobotWalk {
         return f[m - 1][n - 1];
     }
 
+
+
     /**
      * 存在性问题
      * @param A
@@ -63,6 +65,8 @@ public class RobotWalk {
         return f[A.length-1];
 
     }
+
+
 
 
 
