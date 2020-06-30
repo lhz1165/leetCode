@@ -16,7 +16,7 @@ package org.example.leetcode300.dynamic;
 public class DymicTest {
     public static void main(String[] args) {
         int[] data = {2, 5, 7};
-        System.out.println(test01(data,27));
+        System.out.println(test01(data,1000));
     }
     /**
      *  A =[2, 5, 7]三枚硬币
@@ -45,4 +45,5 @@ public class DymicTest {
         }
         return result;
     }
+
 }
