@@ -35,7 +35,6 @@ public class zuobiao {
         int down = dP(A);
         return Math.max(up,down);
     }
-
     public static int dP(int[]A) {
         int[] f = new int[A.length];
         int res = 0;
@@ -58,7 +57,6 @@ public class zuobiao {
             return 0;
         }
         int f[][] = new int[m][n];
-
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n ; j++) {
                 if (i == 0 && j == 0) {
