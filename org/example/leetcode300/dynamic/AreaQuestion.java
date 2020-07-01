@@ -33,21 +33,11 @@ public class AreaQuestion {
             f[i][i + 1] = (ss[i] == ss[i + 1]) ? 2 : 1;
         }
         //枚举长度2后面的
-        for (int i = 3; i <= n; i++) {
-            for (int j = n; j < n-i; j++) {
-                int k = i + j - 1;
-                f[i][k]=Math.max()
+        for (int len = 3; len <= n; len++) {
+            for (int j = n; j < n-len; j++) {
+                int k = len + j - 1;
 
             }
-
         }
-
-
-
-
-
-
-
-        
     }
 }
