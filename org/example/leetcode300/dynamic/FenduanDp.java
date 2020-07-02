@@ -39,6 +39,7 @@ public class FenduanDp {
 				for (int j = i; j >=0 ; j--) {
 					f[kk][i] = Math.min(f[kk][i], Math.max(f[kk - 1][j], sum));
 					if (j > 0) {
+
 						sum += pages[j-1];
 					}
 				}
