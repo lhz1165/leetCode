@@ -84,4 +84,25 @@ public class BfsTest {
         }
         return result;
    }
+
+
+
+
+    /**
+     * @param node: A undirected graph node
+     * @return: A undirected graph node
+     */
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        // write your code here
+    }
+
+}
+
+class UndirectedGraphNode {
+    int label;
+    List<UndirectedGraphNode> neighbors;
+    UndirectedGraphNode(int x) {
+        label = x;
+        neighbors = new ArrayList<UndirectedGraphNode>();
+    }
 }
