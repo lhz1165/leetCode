@@ -1,6 +1,4 @@
-package org.example.leetcode300.dynamic;
-
-import sun.print.SunMinMaxPage;
+package org.example.leetcode300.specified.dynamic.lintcode;
 
 /**
  * @author lhzlhz

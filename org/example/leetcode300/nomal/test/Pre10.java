@@ -1,11 +1,8 @@
-package org.example.leetcode300.test;
+package org.example.leetcode300.nomal.test;
 
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import org.example.leetcode300.demo.ListNode;
-import sun.security.krb5.SCDynamicStoreConfig;
 
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author: lhz

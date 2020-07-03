@@ -1,4 +1,4 @@
-package org.example.leetcode300.dynamic;
+package org.example.leetcode300.specified.dynamic.lintcode;
 
 /**
  * @author: lhz

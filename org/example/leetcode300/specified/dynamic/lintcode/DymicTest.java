@@ -1,4 +1,4 @@
-package org.example.leetcode300.dynamic;
+package org.example.leetcode300.specified.dynamic.lintcode;
 
 /**
  * @author: lhz
@@ -16,7 +16,7 @@ package org.example.leetcode300.dynamic;
 public class DymicTest {
     public static void main(String[] args) {
         int[] data = {2, 5, 7};
-        System.out.println(test01(data,1000));
+        System.out.println(coinChange(data,25));
     }
     /**
      *  A =[2, 5, 7]三枚硬币
@@ -44,6 +44,26 @@ public class DymicTest {
             return -1;
         }
         return result;
+    }
+
+    public static int coinChange(int[] coins, int amount) {
+        int n = coins.length;
+        if(n == 0){
+            return 0;
+        }
+        //凑 i 元需要的最少硬币
+        int [] f=new int [amount+1];
+        for(int i = 1; i <= n ;i++){
+            f[i] = Integer.MAX_VALUE;
+            for(int j = 0;j <coins.length ;j++){
+                if(i-coins[j]>=0&&f[i - coins[j]]<Integer.MAX_VALUE){
+                    f[i]=Math.min(f[i],f[i-coins[j]]+1);
+                }
+            }
+        }
+        System.out.println();
+
+        return f[amount] == Integer.MAX_VALUE ? -1 : f[amount];
     }
 
 }

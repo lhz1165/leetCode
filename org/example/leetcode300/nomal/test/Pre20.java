@@ -1,4 +1,4 @@
-package org.example.leetcode300.test;
+package org.example.leetcode300.nomal.test;
 
 import java.util.ArrayList;
 import java.util.Arrays;

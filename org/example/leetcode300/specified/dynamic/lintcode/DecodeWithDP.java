@@ -1,6 +1,4 @@
-package org.example.leetcode300.dynamic;
-
-import java.sql.SQLOutput;
+package org.example.leetcode300.specified.dynamic.lintcode;
 
 /**
  * @author: lhz

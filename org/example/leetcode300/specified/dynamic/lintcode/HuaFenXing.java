@@ -1,4 +1,4 @@
-package org.example.leetcode300.dynamic;
+package org.example.leetcode300.specified.dynamic.lintcode;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,9 +1,6 @@
-package org.example.leetcode300.dynamic;
-
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+package org.example.leetcode300.specified.dynamic.lintcode;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 /**
  * @author: lhz
