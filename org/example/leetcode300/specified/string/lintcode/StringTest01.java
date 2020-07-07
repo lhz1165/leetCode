@@ -6,11 +6,23 @@ package org.example.leetcode300.specified.string.lintcode;
  **/
 public class StringTest01 {
     public static void main(String[] args) {
-        System.out.println(strStr2("abcde", "cde"));
+        //"mississippi"
+        //"issi"
+        System.out.println(strStr2("abcdef", "def"));
     }
     /**
      * 使用rabin-karp 解决字符串字串问题
      * 使用hash表来记录字符串的值
+     * def 的targetCode =d*31^2+e*31^1+f*31^0
+     * abcdef开始枚举
+     * 1 a hashcode = a*31^0;
+     * 2 ab hashcode = a*31^1+b*31^0;
+     * 3 abc hashcode = a*31^2+b*31^1+c*31^0
+     * 4 abcd hashcode =a*31^3+b*31^2+c*31^1+d*31^0;此时长度超出3个---->hashcode=a*31^3+b*31^2+c*31^1+d*31^0-a*31^3=b*31^2+c*31^1+d*31^0
+     * 5 bcde ......
+     * .....
+     * cdef hashcode=d*31^2+e*31^1+f*31^0
+     * 就找到了
      *
      * @param source
      * @param target
@@ -18,7 +30,7 @@ public class StringTest01 {
      */
     public static int strStr2(String source, String target) {
         //防止越界，每次模这个
-        final int BASE = 1000000;
+        final int BASE = 10000000;
         // write your code here
         if (source == null || target == null) {
             return -1;
