@@ -186,5 +186,4 @@ public class DoubleSequence {
 		return f[m][n];
 	}
 
-
 }

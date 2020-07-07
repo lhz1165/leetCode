@@ -5,6 +5,9 @@ package org.example.leetcode300.specified.string.lintcode;
  * @date: 2020/7/6
  **/
 public class StringTest01 {
+    public static void main(String[] args) {
+        System.out.println(strStr2("abcde", "cde"));
+    }
     /**
      * 使用rabin-karp 解决字符串字串问题
      * 使用hash表来记录字符串的值
@@ -13,7 +16,7 @@ public class StringTest01 {
      * @param target
      * @return
      */
-    public int strStr2(String source, String target) {
+    public static int strStr2(String source, String target) {
         //防止越界，每次模这个
         final int BASE = 1000000;
         // write your code here
