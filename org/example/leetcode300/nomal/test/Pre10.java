@@ -1,6 +1,6 @@
 package org.example.leetcode300.nomal.test;
 
-import org.example.leetcode300.demo.ListNode;
+import org.example.leetcode300.basic.ListNode;
 
 import java.util.*;
 

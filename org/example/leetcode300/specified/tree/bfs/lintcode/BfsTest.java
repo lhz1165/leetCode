@@ -1,7 +1,7 @@
-package org.example.leetcode300.specified.tree.dfs.lintcode;
+package org.example.leetcode300.specified.tree.bfs.lintcode;
 
 
-import org.example.leetcode300.demo.TreeNode;
+import org.example.leetcode300.basic.TreeNode;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

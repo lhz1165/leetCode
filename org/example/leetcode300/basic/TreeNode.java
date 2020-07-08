@@ -1,4 +1,4 @@
-package org.example.leetcode300.demo;
+package org.example.leetcode300.basic;
 
 /**
  * @author: lhz
