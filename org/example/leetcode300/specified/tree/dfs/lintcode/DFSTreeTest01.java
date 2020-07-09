@@ -2,6 +2,7 @@ package org.example.leetcode300.specified.tree.dfs.lintcode;
 
 
 import org.example.leetcode300.basic.TreeNode;
+import sun.print.SunMinMaxPage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,4 +104,31 @@ public class DFSTreeTest01 {
         }
         return Math.max(leftVal,rightVal)+1;
     }
+
+    /**
+     * 求二叉树的最小子树和
+     */
+    private TreeNode subTreeNode = null;
+    private int subSum = Integer.MAX_VALUE;
+    public TreeNode minimumSubTree(TreeNode root) {
+
+        return subTreeNode;
+    }
+
+    public int helperMinSubTree(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int leftSub = helper(root.left);
+        int rightSub = helper(root.right);
+        int val = leftSub + rightSub + root.val;
+        subSum = Math.min(subSum, val);
+        subTreeNode = subSum == val ? root : subTreeNode;
+        return subSum;
+    }
+
+
+
+
+
 }
