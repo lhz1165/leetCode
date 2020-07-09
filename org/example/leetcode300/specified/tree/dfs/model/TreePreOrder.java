@@ -20,7 +20,6 @@ public class TreePreOrder {
     public List<Integer> preorderTraversal(TreeNode root) {
         Stack<TreeNode> stack = new Stack<TreeNode>();
         List<Integer> result = new ArrayList<Integer>();
-
         if (root == null) {
             return result;
         }
