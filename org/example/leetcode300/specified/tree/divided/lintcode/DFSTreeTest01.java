@@ -1,8 +1,7 @@
-package org.example.leetcode300.specified.tree.dfs.lintcode;
+package org.example.leetcode300.specified.tree.divided.lintcode;
 
 
 import org.example.leetcode300.basic.TreeNode;
-import sun.print.SunMinMaxPage;
 
 import java.util.ArrayList;
 import java.util.List;

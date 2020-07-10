@@ -1,4 +1,4 @@
-package org.example.leetcode300.specified.tree.dfs.model;
+package org.example.leetcode300.specified.tree.divided.model;
 
 import org.example.leetcode300.basic.TreeNode;
 

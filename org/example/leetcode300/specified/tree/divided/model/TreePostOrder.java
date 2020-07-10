@@ -1,4 +1,4 @@
-package org.example.leetcode300.specified.tree.dfs.model;
+package org.example.leetcode300.specified.tree.divided.model;
 
 import org.example.leetcode300.basic.TreeNode;
 
@@ -29,10 +29,10 @@ public class TreePostOrder {
             TreeNode node = stack.pop();
             output.addFirst(node.val);
             if (node.left != null) {
-                stack.add(node.left);
+                stack.push(node.left);
             }
             if (node.right != null) {
-                stack.add(node.right);
+                stack.push(node.right);
             }
         }
         return output;

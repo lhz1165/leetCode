@@ -40,6 +40,9 @@ public class Pre10 {
 //        System.out.println(intToRoman(40));
         int[] a = {-4, -1, -1, 0, 1, 2};
         System.out.println(threeSum(a));
+        System.out.println(longestPalindrome2("aaaa"));
+        int[] aa = {5,-3, 1, 2, -3, 4};
+        System.out.println(subarraySum(aa));
     }
 
     /**
@@ -201,6 +204,56 @@ public class Pre10 {
      */
     public static String longestPalindrome(String s) {
         return mgetLCSLength(s, reverse(s));
+    }
+
+    /**
+     * 动态规划
+     *
+     * @param s
+     * @return
+     */
+    public static String longestPalindrome2(String s) {
+        if (s == null || s.length() == 0) {
+            return "";
+        }
+
+        int n = s.length();
+        String result = s.substring(0, 1);
+        //代表第 i到j位是否回文串
+        boolean[][] f = new boolean[n][n];
+
+        for (int i = 0; i < n; i++) {
+            f[i][i] = true;
+        }
+        for (int j = 1; j < n; j++) {
+            for (int i = 0; i < n; i++) {
+                if (j > i) {
+                    //两位
+                    if (j - i == 1) {
+                        boolean b = s.charAt(i) == s.charAt(j);
+                        if (b) {
+                            f[i][j] = true;
+                            if (j - i + 1 > result.length()) {
+                                result = s.substring(i, j + 1);
+                            }
+
+                            continue;
+                        }
+                    }
+                    //两位以上
+                    if (j - i > 1) {
+                        boolean b = s.charAt(i) == s.charAt(j);
+                        f[i][j] = f[i + 1][j - 1] && b;
+                        if (f[i][j]) {
+                            if (j - i + 1 > result.length()) {
+                                result = s.substring(i, j + 1);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     /**
@@ -498,9 +551,9 @@ public class Pre10 {
                         while (LO < HI && nums[HI] == nums[HI - 1]) HI--;
                         LO++;
                         HI--;
-                    }else if (nums[LO] + nums[HI]<target){
+                    } else if (nums[LO] + nums[HI] < target) {
                         LO++;
-                    }else {
+                    } else {
                         HI--;
                     }
                 }
@@ -510,6 +563,32 @@ public class Pre10 {
         }
         return result;
     }
+
+    public static ArrayList<Integer> subarraySum(int[] nums) {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        HashMap<Integer, Integer> hash = new HashMap<Integer, Integer>();
+        // 初始化
+        hash.put(0, -1);
+        int sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            // 累加前缀和
+            sum += nums[i];
+            // 前缀和曾经出现，即这个区间的和为0
+            if (hash.containsKey(sum)) {
+                result.add(hash.get(sum) + 1);
+                result.add(i);
+                break;
+            }
+            //前缀和第一次出现，存入hash
+            hash.put(sum, i);
+        }
+        return result;
+
+    }
+
+
+
+
 
 
 }

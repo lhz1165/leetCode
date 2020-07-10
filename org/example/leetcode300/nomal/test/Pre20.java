@@ -1,5 +1,7 @@
 package org.example.leetcode300.nomal.test;
 
+import org.example.leetcode300.basic.TreeNode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,6 +14,10 @@ public class Pre20 {
     public static void main(String[] args) {
         int[] a = {0,1,2};
         System.out.println(threeSumClosest(a,3));
+
+        System.out.println(lengthOfLongestSubstring("pwwkewabccd"));
+        int [] aa={1, -1, 5, -2, 3};
+        System.out.println(maxSubArrayLen(aa, 3));
 
     }
 
@@ -82,6 +88,61 @@ public class Pre20 {
         for (int i = 0; i < letters.length(); i++) {
             recursive(keys,result,digits,index+1,prefix+letters.charAt(i));
         }
+    }
+
+    /**
+     * 3. 无重复字符的最长子串
+     * @param s
+     * @return
+     */
+    public static int lengthOfLongestSubstring(String s) {
+
+        if (s.length() < 2) {
+            return s.length();
+        }
+        int n = s.length();
+        boolean[][] f = new boolean[n][n];
+        int result = 1;
+        for (int i = 0; i < n; i++) {
+            f[i][i] = true;
+        }
+        for (int j = 1; j < n; j++) {
+            for (int i = 0; i < n; i++) {
+                if (j > i) {
+                    f[i][j] = f[i][j - 1] && (s.substring(i, j).indexOf(s.charAt(j))==-1);
+                    if (f[i][j]) {
+                        result = Math.max(result, j - i + 1);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    //1,-1,5,-2,3,3
+    // f[i][j] = f[i][j-1]+nums[j]
+    public static int maxSubArrayLen(int[] nums, int k) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        int n = nums.length;
+        //数组中i-j的和
+        int[][] f = new int[n][n];
+        int result = 0;
+        for (int i = 0; i < n; i++) {
+            f[i][i] = nums[i];
+        }
+        for (int j = 1; j < n; j++) {
+            for (int i = 0; i < n; i++) {
+                if (j > i) {
+                    f[i][j] = f[i][j - 1] + nums[j];
+                    if (f[i][j] == 4) {
+                        result = Math.max(result, j - i + 1);
+                    }
+                }
+            }
+        }
+        return result;
     }
 
 
