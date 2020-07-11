@@ -15,6 +15,18 @@ public class ListNode {
         this.val = val;
     }
 
+    public static void print(ListNode node) {
+        while (node.next != null) {
+            System.out.print(node.val);
+            System.out.print("->");
+            node = node.next;
+        }
+        if (node.next == null) {
+            System.out.print(node.val);
+        }
+
+    }
+
     public static void main(String[] args) {
 
         List<Integer> a = Arrays.asList(1, 2, 3);
