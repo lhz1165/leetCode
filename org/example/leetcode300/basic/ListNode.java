@@ -36,4 +36,11 @@ public class ListNode {
     public static void ad(List<Integer> list) {
         list.add(4);
     }
+
+    @Override
+    public String toString() {
+        return "ListNode{" +
+                "val=" + val +
+                '}';
+    }
 }
