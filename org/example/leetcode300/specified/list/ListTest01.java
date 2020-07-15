@@ -3,6 +3,8 @@ package org.example.leetcode300.specified.list;
 import org.example.leetcode300.basic.ListNode;
 import sun.util.resources.cldr.xh.CurrencyNames_xh;
 
+import javax.swing.*;
+
 /**
  * @author lhzlhz
  * @create 2020/7/11
@@ -10,9 +12,9 @@ import sun.util.resources.cldr.xh.CurrencyNames_xh;
 public class ListTest01 {
 	public static void main(String[] args) {
 		ListNode n1 = new ListNode(1);
-		ListNode n2 = new ListNode(4);
-		ListNode n3 = new ListNode(2);
-		ListNode n4 = new ListNode(3);
+		ListNode n2 = new ListNode(2);
+		ListNode n3 = new ListNode(3);
+		ListNode n4 = new ListNode(4);
 		n1.next = n2;
 		n2.next = n3;
 		n3.next = n4;
@@ -22,7 +24,7 @@ public class ListTest01 {
 //		System.out.println();
 
 		//ListNode.print(reverseKGroup(n1,2));
-		ListNode.print(partition(n1, 3));
+		ListNode.print(rotateRight2(n1, 0));
 	}
 
 	/**
@@ -280,15 +282,23 @@ public class ListTest01 {
 	}
 
 
-
-
+    /**
+     * 旋转链表
+     * @param head
+     * @param k
+     * @return
+     */
 	public static ListNode rotateRight2(ListNode head, int k) {
 		if (head == null) {
 			return null;
 		}
 		int cont = 0;
+        ListNode tail = null;
 		ListNode cur = head;
 		while (cur != null) {
+            if (cur.next == null) {
+                tail = cur;
+            }
 			cur = cur.next;
 			cont++;
 		}
@@ -300,23 +310,30 @@ public class ListTest01 {
 			return head;
 		}
 		ListNode dummyNode = new ListNode(0);
-		ListNode prev = null;
-		cur = head;
-		ListNode tail = null;
-		for (int i = 0; i < k; i++) {
-			cur = cur.next;
-		}
-		prev = cur;
-		dummyNode.next = cur.next;
-		while (cur != null) {
-			if (cur.next == null) {
-				tail = cur;
-			}
-			cur = cur.next;
-		}
-		prev.next = null;
-		tail.next = head;
-		return dummyNode.next;
+		//找出倒数第K个节点,为新的头节点
+        ListNode newHead = getLastNumber(head, k);
+        //新的尾节点
+        ListNode prev = getLastNumber(head, k+1);
+        dummyNode.next=newHead;
+        tail.next = head;
+        prev.next = null;
+        return dummyNode.next;
 	}
+
+    public static ListNode getLastNumber(ListNode head, int k) {
+        ListNode first = head;
+        ListNode slow = head;
+
+        for (int i = 0; i < k; i++) {
+            first = first.next;
+        }
+        while (first != null) {
+            first = first.next;
+            slow = slow.next;
+        }
+        return slow;
+
+    }
+
 
 }

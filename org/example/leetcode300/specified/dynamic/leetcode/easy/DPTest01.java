@@ -6,8 +6,8 @@ package org.example.leetcode300.specified.dynamic.leetcode.easy;
  **/
 public class DPTest01 {
     public static void main(String[] args) {
-        int[] a = {10, 15, 20};
-        divisorGame(4);
+        int[] a = {-2,2,-3,4,-1,2,1,-5,3};
+        maxSubArray(a);
     }
 
 
@@ -61,7 +61,7 @@ public class DPTest01 {
      * @param nums
      * @return
      */
-    public int maxSubArray(int[] nums) {
+    public static int maxSubArray(int[] nums) {
         int n = nums.length;
         int f[] = new int[n];
         f[0] = nums[0];
