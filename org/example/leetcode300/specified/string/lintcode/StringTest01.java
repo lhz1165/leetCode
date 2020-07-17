@@ -9,6 +9,8 @@ public class StringTest01 {
         //"mississippi"
         //"issi"
         System.out.println(strStr2("abcdef", "def"));
+        String s = "abcdefg";
+        rotateString(s.toCharArray(),0);
     }
     /**
      * 使用rabin-karp 解决字符串字串问题
@@ -82,4 +84,40 @@ public class StringTest01 {
         }
         return -1;
     }
+
+    /**
+     * 旋转字符串------->三步反转法
+     * @param str
+     * @param offset
+     */
+    public static void rotateString(char[] str, int offset) {
+        if(str.length == 0 || offset == 0){
+            return;
+        }
+        // write your code here
+        offset  %= str.length;
+        //向右offset 等于向左 length -offset
+        offset= str.length - offset;
+        //从0开始
+         offset -= 1;
+         //1先反转前面几位
+        reverseChar(str, 0, offset);
+        //2再反转后面几位
+        reverseChar(str, offset+1, str.length-1);
+        //3再全部反转
+        reverseChar(str,0,str.length-1);
+    }
+
+    public static void reverseChar(char[] str, int start,int end) {
+        while (start < end) {
+            char tmp = str[start];
+            str[start] = str[end];
+            str[end] = tmp;
+            start++;
+            end--;
+        }
+
+    }
+
+
 }
