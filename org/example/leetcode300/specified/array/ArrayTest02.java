@@ -10,7 +10,9 @@ import java.util.List;
  **/
 public class ArrayTest02 {
     public static void main(String[] args) {
-        int[] a = {1, 2, 3};
+        int[] a = {1, 1, 3};
+        //System.out.println(subsets(a));
+        System.out.println(subsetsWithDup(a));
         System.out.println(subsets(a));
     }
 
@@ -70,13 +72,14 @@ public class ArrayTest02 {
      * @return: A list of lists. All valid subsets.
      * 使用搜索的方案，深度优先(递归+去重)
      */
-    public List<List<Integer>> subsetsWithDup(int[] nums) {
+    public static List<List<Integer>> subsetsWithDup(int[] nums) {
         // write your code here
         List<List<Integer>> result = new ArrayList<>();
         if (null == nums || nums.length == 0) {
             return result;
         }
-
+        List<Integer> subset = new ArrayList<>();
+        subsetHelper(nums,0,subset,result);
         return result;
 
     }
@@ -112,10 +115,9 @@ public class ArrayTest02 {
 
         for (int i = startIndex; i < nums.length; i++) {
             //上一个数 startindex-1
-            if (i != 0 && nums[i] == nums[i - 1] && startIndex < i) {
+            if (i != 0 && nums[i] == nums[i - 1] && startIndex != i) {
                 continue;
             }
-
             subset.add(nums[i]);
             //下一个
             subsetHelper(nums, i + 1, subset, results);
