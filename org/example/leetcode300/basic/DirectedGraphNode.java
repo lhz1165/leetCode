@@ -12,6 +12,6 @@ public class DirectedGraphNode {
 
     public DirectedGraphNode(int x) {
         label = x;
-        neighbors = new ArrayList<DirectedGraphNode>();
+        neighbors = new ArrayList<>();
     }
 }
