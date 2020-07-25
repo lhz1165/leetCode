@@ -2,6 +2,7 @@ package org.example.leetcode300.specified.dfs;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -14,7 +15,11 @@ public class DfsTest01 {
 //        System.out.println(combinationSum(candidates, 8));
 //
 //        System.out.println(partition("abac"));
+
+
         System.out.println(permuteUnique(candidates));
+
+        solveNQueens(4);
 
 
     }
@@ -210,6 +215,7 @@ public class DfsTest01 {
             if (visited[i]) {
                 continue;
             }
+            //不等于前一个，并且不能早于前一个出现
             if (i != 0 && nums[i] == nums[i - 1]&&!visited[i - 1]) {
                 continue;
             }
@@ -220,6 +226,83 @@ public class DfsTest01 {
             subSet.remove(subSet.size() - 1);
             visited[i] = false;
         }
+    }
+
+    /**
+     * n皇后
+     * @param n
+     * @return
+     */
+    public static List<List<String>> solveNQueens(int n) {
+        // write your code here
+        List<List<String>> result = new ArrayList<>();
+
+        if (n < 0) {
+            return result;
+        }
+        //集合下标i表示第几排，get（i）表示第几行
+        List<List<Integer>> resultAbs = new ArrayList<>();
+        search(resultAbs,new ArrayList<Integer>(),n);
+        return result;
+    }
+
+    private static void search(List<List<Integer>> resultAbs,
+                        List<Integer> clos,
+                        int n) {
+        if (clos.size() == n) {
+            resultAbs.add(new ArrayList<>(clos));
+            return;
+        }
+        //接下来的棋子 放在哪一列（colIndex）合适
+        for (int colIndex = 0; colIndex < n; colIndex++) {
+            if (!isValid(clos, colIndex)) {
+                continue;
+            }
+            clos.add(colIndex);
+            search(resultAbs,clos,n);
+            clos.remove(clos.size() - 1);
+        }
+
+
+    }
+
+    /**
+     * 这颗棋子放在在哪一列
+     * @param cols 已知棋子位置
+     * @param col 放置棋子位置列
+     * 下标i表示第几列，get（i）表示第几行
+     * @return
+     */
+    public static boolean isValid(List<Integer> cols, int col) {
+        //已经放了几行了
+        int row = cols.size();
+        //和每一行作比较 判断是否同列或者斜着
+        for (int rowIndex = 0; rowIndex < cols.size(); rowIndex++) {
+            //若有其他皇后在同一列或同一斜线上则不合法
+            if (cols.get(rowIndex) == col) {
+                return false;
+            }
+            //斜率是否相同 y = -x+k
+            if (row + col == rowIndex + cols.get(rowIndex)) {
+                return false;
+            }
+            //斜率是否相同 y = x+k
+            if (row - col == rowIndex - cols.get(rowIndex)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public List<List<String>> draw(List<List<String>> resultAbs) {
+        List<List<String>> results = new ArrayList<>();
+        for (List<String> resultAb : resultAbs) {
+            for (String s : resultAb) {
+
+            }
+        }
+
+
     }
 
 }

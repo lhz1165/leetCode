@@ -18,9 +18,12 @@ public class DymicTest {
         int[] data = {2, 5, 7};
         System.out.println(coinChange(data,25));
     }
+
     /**
      *  A =[2, 5, 7]三枚硬币
-     *  M=凑成27最小的硬币数
+     *
+     *  M=凑成27,最小的硬币数
+     *
      *  f(x)=min{f(x-2)+1,f(x-5)+1,f(x-7)+1}
      *
      * @return
