@@ -19,7 +19,9 @@ public class DfsTest01 {
 
         System.out.println(permuteUnique(candidates));
 
-        solveNQueens(4);
+
+
+        System.out.println(solveNQueens(4));
 
 
     }
@@ -149,8 +151,6 @@ public class DfsTest01 {
             l--;
         }
         return true;
-
-
     }
 
     /**
@@ -243,7 +243,7 @@ public class DfsTest01 {
         //集合下标i表示第几排，get（i）表示第几行
         List<List<Integer>> resultAbs = new ArrayList<>();
         search(resultAbs,new ArrayList<Integer>(),n);
-        return result;
+        return draw(resultAbs);
     }
 
     private static void search(List<List<Integer>> resultAbs,
@@ -262,8 +262,6 @@ public class DfsTest01 {
             search(resultAbs,clos,n);
             clos.remove(clos.size() - 1);
         }
-
-
     }
 
     /**
@@ -293,16 +291,29 @@ public class DfsTest01 {
         }
         return true;
     }
-
-    public List<List<String>> draw(List<List<String>> resultAbs) {
+    public static List<List<String>> draw(List<List<Integer>> resultAbs) {
         List<List<String>> results = new ArrayList<>();
-        for (List<String> resultAb : resultAbs) {
-            for (String s : resultAb) {
+        for (List<Integer> resultAb : resultAbs) {
+            List<String> result = new ArrayList<>();
+            for (Integer res : resultAb) {
+                String s = construct(res, resultAb.size());
+                result.add(s);
+            }
+            results.add(result);
+        }
+        return results;
+    }
 
+    public static String construct(int res,int n) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i <n ; i++) {
+            if (i == res) {
+                sb.append("Q");
+            }else {
+                sb.append(".");
             }
         }
-
-        return results;
+        return sb.toString();
     }
 
 }
