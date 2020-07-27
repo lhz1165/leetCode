@@ -10,7 +10,7 @@ import java.util.List;
  **/
 public class ArrayTest02 {
     public static void main(String[] args) {
-        int[] a = {1, 1, 3};
+        int[] a = {1, 2, 2};
         //System.out.println(subsets(a));
         System.out.println(subsetsWithDup(a));
         System.out.println(subsets(a));
