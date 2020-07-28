@@ -1,7 +1,9 @@
 package org.example.leetcode300.specified.two_point;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * @author: lhz
@@ -10,8 +12,19 @@ import java.util.Comparator;
 public class TwoPointTest01 {
 
     public static void main(String[] args) {
-        int[] arr = {2, 7, 11, 15};
-        System.out.println(Arrays.toString(twoSum2(arr, 9)));
+        TwoPointTest01 t = new TwoPointTest01();
+        List<Integer> num = new ArrayList<>();
+
+        num.add(1);
+        num.add(2);
+        num.add(3);
+        num.add(4);
+        num.add(5);
+        t.recoverRotatedSortedArray(num);
+        System.out.println(num);
+        int[] arr = {-1, 0, 1, 2, -1, -4};
+        List<List<Integer>> lists = t.threeSum(arr);
+        System.out.println(lists);
 
     }
 
@@ -74,6 +87,7 @@ public class TwoPointTest01 {
 
     /**
      * 两数之和
+     *
      * @param numbers
      * @param target
      * @return
@@ -138,6 +152,165 @@ public class TwoPointTest01 {
 
         }
         return result;
+
+    }
+
+    /**
+     * 给定一个旋转排序数组，在原地恢复其排序。（升序）
+     * [4, 5, 1, 2, 3] -> [1, 2, 3, 4, 5]
+     *
+     * @param nums
+     */
+    public void recoverRotatedSortedArray(List<Integer> nums) {
+        // write your code here
+        if (nums == null || nums.size() == 0) {
+            return;
+        }
+        int tmp = nums.get(0);
+        int head = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            if (tmp > nums.get(i)) {
+                head = i;
+                break;
+            }
+        }
+        if (head != 0) {
+            reverseArr(0, head - 1, nums);
+            reverseArr(head, nums.size() - 1, nums);
+            reverseArr(0, nums.size() - 1, nums);
+        }
+    }
+
+    public void reverseArr(int start, int end, List<Integer> nums) {
+        int l = start;
+        int r = end;
+        while (l < r) {
+            int tmp = nums.get(l);
+            nums.set(l, nums.get(r));
+            nums.set(r, tmp);
+            l++;
+            r--;
+        }
+    }
+
+    /**
+     * 587. 两数之和 - 不同组成
+     * 给一整数数组, 找到数组中有多少组 不同的元素对 有相同的和, 且和为给出的 target 值, 返回对数
+     * <p>
+     * 输入: nums = [1,1,2,45,46,46], target = 47
+     * 输出: 2
+     * 解释:
+     * <p>
+     * 1 + 46 = 47
+     * 2 + 45 = 47
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int twoSum6(int[] nums, int target) {
+        // write your code here
+        Arrays.sort(nums);
+        int left = 0;
+        int right = nums.length - 1;
+        int result = 0;
+
+        while (left < right) {
+            if (nums[left] + nums[right] < target) {
+                left++;
+            } else if (nums[left] + nums[right] > target) {
+                right--;
+            } else {
+                if (left != 0 && right != nums.length - 1 && nums[left] == nums[left - 1] && nums[right] == nums[right + 1]) {
+
+                    left++;
+                    right--;
+                    continue;
+                }
+                left++;
+                right--;
+                result++;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 57. 三数之和
+     * 中文English
+     * 给出一个有n个整数的数组S，在S中找到三个整数a, b, c，找到所有使得a + b + c = 0的三元组。
+     * <p>
+     * 样例
+     * 例1:
+     * <p>
+     * 输入:[2,7,11,15]
+     * 输出:[]
+     * 例2:
+     * 输入:[-1,0,1,2,-1,-4]
+     * 输出:[[-1, 0, 1],[-1, -1, 2]]
+     *
+     * @param numbers
+     * @return
+     */
+    public List<List<Integer>> threeSum(int[] numbers) {
+        // write your code here
+        List<List<Integer>> results = new ArrayList<>();
+        if (numbers == null || numbers.length == 0) {
+            return results;
+        }
+        Arrays.sort(numbers);
+        for (int i = 0; i < numbers.length - 2; i++) {
+
+            if (i > 0 && numbers[i] == numbers[i - 1]) {
+                continue;
+            }
+            //变成了两数之和
+            int target = -numbers[i];
+
+            int left = i + 1;
+            int right = numbers.length - 1;
+
+            while (left < right) {
+                List<Integer> result = new ArrayList<>();
+                if (numbers[left] + numbers[right] < target) {
+                    left++;
+                } else if (numbers[left] + numbers[right] > target) {
+                    right--;
+                } else {
+                    result.add(numbers[i]);
+                    result.add(numbers[left]);
+                    result.add(numbers[right]);
+                    results.add(result);
+                    left++;
+                    right--;
+
+                    // skip duplicate pairs with the same left
+                    while (left < right && numbers[left] == numbers[left - 1]) {
+                        left++;
+                    }
+                    // skip duplicate pairs with the same right
+                    while (left < right && numbers[right] == numbers[right + 1]) {
+                        right--;
+                    }
+                }
+            }
+        }
+        return results;
+    }
+
+    /**
+     * 给定一个整数数组，在该数组中，寻找三个数，分别代表三角形三条边的长度，问，可以寻找到多少组这样的三个数来组成三角形？
+     * [3, 4, 6, 7]
+     * @param S
+     * @return
+     */
+    public int triangleCount(int[] S) {
+        // write your code here
+        Arrays.sort(S);
+        int result = 0;
+        for (int i = 2; i <S.length ; i++) {
+
+        }
 
     }
 
