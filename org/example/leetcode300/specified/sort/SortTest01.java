@@ -8,7 +8,7 @@ import java.util.Arrays;
  **/
 public class SortTest01 {
     public static void main(String[] args) {
-        int[] arr = {3, 4,5, 2, 1,8,10,0,2,3};
+        int[] arr = {1,2,5,3,4};
         quickSort(arr, 0, arr.length - 1);
         System.out.println(Arrays.toString(arr));
     }
