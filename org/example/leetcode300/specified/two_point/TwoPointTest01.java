@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * @author: lhz
@@ -13,18 +14,8 @@ public class TwoPointTest01 {
 
     public static void main(String[] args) {
         TwoPointTest01 t = new TwoPointTest01();
-        List<Integer> num = new ArrayList<>();
-
-        num.add(1);
-        num.add(2);
-        num.add(3);
-        num.add(4);
-        num.add(5);
-        t.recoverRotatedSortedArray(num);
-        System.out.println(num);
-        int[] arr = {-1, 0, 1, 2, -1, -4};
-        List<List<Integer>> lists = t.threeSum(arr);
-        System.out.println(lists);
+        int[] arr = {-5,-3,-2,1,2,2,3,4,9};
+        System.out.println(t.threeSumClosest(arr, 1));
 
     }
 
@@ -283,15 +274,16 @@ public class TwoPointTest01 {
                     results.add(result);
                     left++;
                     right--;
-
                     // skip duplicate pairs with the same left
                     while (left < right && numbers[left] == numbers[left - 1]) {
                         left++;
                     }
+
                     // skip duplicate pairs with the same right
                     while (left < right && numbers[right] == numbers[right + 1]) {
                         right--;
                     }
+
                 }
             }
         }
@@ -320,6 +312,80 @@ public class TwoPointTest01 {
           }
         }
         return result;
+    }
+
+    /**
+     * 两数和-小于或等于目标值
+     * 给定一个整数数组，找出这个数组中有多少对的和是小于或等于目标值。返回对数
+     * nums = [2, 7, 11, 15]
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int twoSum5(int[] nums, int target) {
+        int ans = 0;
+        int left = 0;
+        int right = nums.length-1;
+        while (left < right) {
+            if (nums[left] + nums[right] > target) {
+                right--;
+            }else{
+                ans+=(right-left);
+                left++;
+            }
+        }
+        return ans;
+    }
+
+    /**
+     * 给一组整数，问能找出多少对整数，他们的和大于一个给定的目标值
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int twoSum21(int[] nums, int target) {
+        if (nums == null || nums.length < 2) {
+            return 0;
+        }
+        int ans = 0;
+        int left = 0;
+        int right = nums.length-1;
+        Arrays.sort(nums);
+        while (left < right) {
+            if (nums[left] + nums[right] < target) {
+                right--;
+            }else{
+                ans+=(right-left);
+                left++;
+            }
+        }
+        return ans;
+    }
+
+    /**
+     * 59. 最接近的三数之和
+     * @param numbers
+     * @param target
+     * @return
+     */
+    public int threeSumClosest(int[] numbers, int target) {
+        // write your code here
+        int ans = Integer.MAX_VALUE;
+        Arrays.sort(numbers);
+        for (int i = 0; i < numbers.length; i++) {
+            int left = i + 1;
+            int right = numbers.length - 1;
+            while (left < right) {
+                int sum = numbers[i] + numbers[left] + numbers[right];
+                ans = Math.min(ans, Math.abs(target-sum));
+                if (numbers[i] + numbers[left] + numbers[right] - target > 0) {
+                    right--;
+                }else{
+                    left++;
+                }
+            }
+        }
+        return ans+target;
     }
 
 
