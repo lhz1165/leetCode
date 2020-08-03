@@ -11,10 +11,12 @@ import java.util.Map;
 public class LRUCache {
 	public static void main(String[] args) {
 		LRUCache cache = new LRUCache(3);
-		cache.set(1,2);
-		cache.set(2,3);
-		cache.set(3,3);
-		cache.set(4,3);
+		cache.set(2, 1);
+		cache.set(1, 1);
+		cache.get(2);
+		cache.set(4,1);
+		cache.get(1);
+		cache.get(2);
 
 	}
 
@@ -84,7 +86,9 @@ public class LRUCache {
 		if (prev.next != null) {
 			keyToPrev.put(prev.next.key, prev);
 		}
+		keyToPrev.put(curt.key, tail);
 		tail=curt;
+		System.out.println();
 	}
 
 	/*
@@ -100,7 +104,7 @@ public class LRUCache {
 			return;
 		}
 
-		//淘汰最后一个
+
 		if (size < capacity) {
 			size++;
 			ListNode curt = new ListNode(key, value);
@@ -110,7 +114,7 @@ public class LRUCache {
 			tail = curt;
 			return;
 		}
-
+		//淘汰最后一个
 		//先把最旧的点换成新来的节点
 		//然后再把这个新来的节点移动到最后面去
 		ListNode first = dummy.next;

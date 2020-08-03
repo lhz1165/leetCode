@@ -6,6 +6,7 @@ import java.util.Map;
 /**
  * @author lhzlhz
  * @create 2020/8/1
+ * test全部通过！！！
  */
 public class MyLRUCache {
 	public static void main(String[] args) {
@@ -25,7 +26,7 @@ public class MyLRUCache {
 	private ListNode tail;
 	private int size;
 
-	private Map<Integer,ListNode> keyOfPrev;
+	private Map<Integer,ListNode> keyToPrev;
 
 	/*
 	 * @param capacity: An integer
@@ -33,7 +34,7 @@ public class MyLRUCache {
 	public MyLRUCache(int capacity) {
 		this.size = 0;
 		this.capacity = capacity;
-		keyOfPrev = new HashMap<>();
+		keyToPrev = new HashMap<>();
 		dummy = new ListNode(0,0);
 		tail = dummy;
 	}
@@ -44,7 +45,7 @@ public class MyLRUCache {
 	 */
 	public int get(int key) {
 		// write your code here
-		if (!keyOfPrev.containsKey(key)) {
+		if (!keyToPrev.containsKey(key)) {
 			return -1;
 		}
 		//先把它移动到最尾部
@@ -53,18 +54,22 @@ public class MyLRUCache {
 	}
 
 	public void moveToTail(int key) {
-		ListNode prev = keyOfPrev.get(key);
+		ListNode prev = keyToPrev.get(key);
 		ListNode cur = prev.next;
 		//如果是最后一位无需移动
 		if (cur.next == null) {
 			return;
 		}
+
+
 		//修改prev
-		ListNode newPrev = tail;
-		keyOfPrev.put(cur.key, newPrev);
-		keyOfPrev.put(cur.next.key, prev);
 		prev.next = prev.next.next;
 		tail.next = cur;
+		//有些时候
+		keyToPrev.put(cur.next.key, prev);
+
+		keyToPrev.put(cur.key, tail);
+
 		tail = cur;
 		tail.next = null;
 
@@ -78,28 +83,30 @@ public class MyLRUCache {
 	 * 添加的同时记住把pre也存进去
 	 */
 	public void set(int key, int value) {
-		if (keyOfPrev.containsKey(key)) {
-			ListNode listNode = keyOfPrev.get(key);
-			listNode.val = value;
+		//不能这样写 set了之后还要放到最前面去
+		if (keyToPrev.containsKey(key)) {
+			ListNode prev = keyToPrev.get(key);
+			prev.next.val = value;
+			return;
 		}
 		ListNode cur=new ListNode(key,value);
 		if (size < capacity) {
 			tail.next = cur;
-			ListNode prev = tail;
-			keyOfPrev.put(key, prev);
+			keyToPrev.put(key, tail);
 			tail = cur;
 			size++;
 			return;
 		}
+
 		//如果溢出了，移除最落后的
-		ListNode prev = tail;
 		tail.next = cur;
-		keyOfPrev.put(key, prev);
-		keyOfPrev.remove(dummy.next.key);
+		keyToPrev.put(key, tail);
+
+		keyToPrev.remove(dummy.next.key);
 		tail = cur;
 		ListNode futureNext = dummy.next.next;
 		dummy.next = futureNext;
-		keyOfPrev.put(futureNext.key, dummy);
+		keyToPrev.put(futureNext.key, dummy);
 	}
 
 
