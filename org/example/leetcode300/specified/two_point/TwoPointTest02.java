@@ -9,11 +9,13 @@ import java.util.Arrays;
 public class TwoPointTest02 {
     public static void main(String[] args) {
         TwoPointTest02 t = new TwoPointTest02();
-        int[] nums ={2,0,2,2,1,2,2,1,2,0,0,0,1};
+        int[] nums ={0,2,2,2,2,1,0,1,0,0,0,1,0,2,0};
         t.sortColors2(nums);
         System.out.println(Arrays.toString(nums));
-//        int[] nums2 = {3, 2, 1,3,1, 3, 2, 1};
-//        t.partitionArray(nums2, 2);
+
+
+        int[] arr = {3,5,4,6,1,2};
+        t.kthLargestElement( 4,arr);
 
     }
 
@@ -112,7 +114,7 @@ public class TwoPointTest02 {
      * 思路1：先把小于1的挪到最左边，再把小于2的挪动一次 就好
      * 这里如果 nums[start] <= 1 ，nums[end] > 1 那么会让所有比1大的2先放在一起 start作为2的头
      * 这里如果 nums[start] < 1 ，nums[end] >= 1 那么会让所有所有比1小的0先放在一起 start作为1的头
-     *这里如果 nums[start] <= 1 ，nums[end] >= 1 那么会让所有的0先放在一起 end作为1的头
+     * 这里如果 nums[start] <= 1 ，nums[end] >= 1 那么会让所有的0先放在一起 end作为1的头
      *
      * 思路2：如果不用挪两次
      * @param nums
@@ -166,7 +168,7 @@ public class TwoPointTest02 {
         int l = 0;
         int r = nums.length - 1;
         int i = 0;
-        while (i < r) {
+        while (i <= r) {
             if (nums[i] == 0) {
                 swap(nums, l, i);
                 l++;

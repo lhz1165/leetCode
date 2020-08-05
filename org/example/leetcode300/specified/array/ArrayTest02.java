@@ -18,7 +18,6 @@ public class ArrayTest02 {
 
     public int[] mergeSortedArray(int[] A, int[] B) {
         // write your code here
-
         int[] result = new int[A.length + B.length];
         int i = 0;
         int j = 0;
