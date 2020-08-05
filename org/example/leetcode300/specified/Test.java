@@ -10,8 +10,13 @@ import java.util.List;
 public class Test {
 
     public static void main(String[] args) {
-        int[] nums = {1, 2, 2};
-        System.out.println(subsets(nums));
+        List<Integer> a1 = new ArrayList<>();
+        a1.add(1);
+        List<Integer> a2 = new ArrayList<>();
+        a2.addAll(a1);
+        System.out.println(a2);
+        a1.add(2);
+        System.out.println(a2);
     }
 
 
