@@ -8,8 +8,12 @@ import java.util.Arrays;
  **/
 public class SortTest01 {
     public static void main(String[] args) {
-        int[] arr = {1,2,5,3,4};
-        quickSort(arr, 0, arr.length - 1);
+        int[] arr = {1,2,8,9,5,3,4,0,6,7};
+        //quickSort(arr, 0, arr.length - 1);
+
+        SortTest01 s = new SortTest01();
+        s.mergeSort(arr,0,arr.length-1,new int[arr.length]);
+
         System.out.println(Arrays.toString(arr));
     }
 
@@ -49,6 +53,40 @@ public class SortTest01 {
        quickSort(nums, left, end);
     }
 
+    public void mergeSort(int[] arr, int start, int end,int[] tmp) {
+        if (start >= end) {
+            return;
+        }
+        int mid = (start + end) / 2;
+        mergeSort(arr, start, mid,tmp);
+        mergeSort(arr, mid+1, end,tmp);
+        merge(arr,start,end,tmp);
+    }
+
+    private void merge(int[] arr, int start, int end,int[] tmp) {
+        int i = start;
+        int mid = (start + end) / 2;
+        int j = mid+1;
+        int index = start;
+        while (j<=end&&i<=mid) {
+            if (arr[i] >= arr[j]) {
+                tmp[index++] = arr[j++];
+            }else {
+                tmp[index++] = arr[i++];
+            }
+        }
+        while (i <= mid) {
+            tmp[index++] = arr[i++];
+        }
+        while (j <= end) {
+            tmp[index++] = arr[j++];
+        }
+        for (int i1 = start; i1 <= end; i1++) {
+            arr[i1] = tmp[i1];
+        }
+
+
+    }
 
 
 }
