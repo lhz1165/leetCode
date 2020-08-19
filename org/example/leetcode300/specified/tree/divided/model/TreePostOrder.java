@@ -12,7 +12,7 @@ import java.util.Stack;
  * @date: 2020/7/8
  * 后续遍历
  **/
-public class TreePostOrder {
+public class  TreePostOrder {
     /**
      * 非递归迭代的方式后续遍历
      * @param root
