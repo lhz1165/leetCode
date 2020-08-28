@@ -11,8 +11,9 @@ public class ArrayTest01 {
     public static void main(String[] args) {
         //subarraySum
         int[] a = {2, 1, -1, 1, 2};
-        System.out.println(subarraySum(a, 3));
-        System.out.println(subarraySumEqualsKII(a, 3));
+        int[] a2 = {1,2,3};
+        //System.out.println(subarraySum(a, 3));
+        //System.out.println(subarraySumEqualsKII(a, 3));
         System.out.println(subarraySumEqualsKIII(a, 3));
     }
 
@@ -121,34 +122,38 @@ public class ArrayTest01 {
      * @return
      */
     public static List<List<Integer>> subarraySumEqualsKIII(int[] nums, int k){
-        List<List<Integer>> result = new ArrayList<>();
-        Map<Integer, Integer> map = new HashMap<>();
-        // 初始化
-        map.put(-1, 0);
-        int sum = 0;
-        for (int i = 0; i < nums.length; i++) {
-            // 累加前缀和
-            sum += nums[i];
-            map.put(i, sum);
-            if (map.containsValue(sum-k)){
-                int finalSum = sum;
-                //符合要求的所有index
-                List<Integer> indexList = map.entrySet()
-                        .stream()
-                        .filter(e -> e.getValue() == (finalSum - k))
-                        .map(Map.Entry::getKey)
-                        .collect(Collectors.toList());
-                for (Integer index : indexList) {
-                    int start = index+1;
-                    int end = i;
-                    List<Integer> node = new LinkedList<>();
-                    node.add(start);
-                    node.add(end);
-                    result.add(node);
-                }
-            }
+        List<List<Integer>> results = new ArrayList<>();
+        List<Integer> result = new ArrayList<>();
+        Arrays.sort(nums);
+        boolean[] valid = new boolean[nums.length];
+        subHelper(nums, k, result, results,0,valid);
+        return results;
+    }
+
+    private static void subHelper(int[] nums, int k, List<Integer> result, List<List<Integer>> results,int sum,boolean[] valid) {
+        if (sum == k) {
+            results.add(new ArrayList<>(result));
+            return;
         }
-        return result;
+        if (sum > k) {
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (valid[i]) {
+                continue;
+            }
+            if (i != 0 && nums[i] != nums[i - 1] && valid[i-1]) {
+                continue;
+            }
+
+            sum += nums[i];
+            result.add(nums[i]);
+            valid[i] = true;
+            subHelper(nums,k,result,results,sum,valid);
+            valid[i] = false;
+            result.remove(result.size() - 1);
+            sum -= nums[i];
+        }
     }
 }
 
