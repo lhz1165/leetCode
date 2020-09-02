@@ -25,7 +25,7 @@ public class AreaQuestion {
      * @param s: the maximum length of s is 1000
      * @return: the longest palindromic subsequence's length
      */
-    public static int longestPalindromeSubseq(String s) {
+    public static int longestPalindromeSubSeq(String s) {
         // write your code here
         if (s == null || s.length() == 0) {
             return 0;
