@@ -11,10 +11,13 @@ public class SortTest01 {
         int[] arr = {1, 2, 8, 9, 5, 3, 4, 0, 6, 7};
         //quickSort(arr, 0, arr.length - 1);
 
-        SortTest01 s = new SortTest01();
-        s.mergeSort(arr, 0, arr.length - 1, new int[arr.length]);
+//        SortTest01 s = new SortTest01();
+//        s.mergeSort(arr, 0, arr.length - 1, new int[arr.length]);
 
+
+        quickSort(arr, 0, arr.length - 1);
         System.out.println(Arrays.toString(arr));
+
     }
 
     /**
@@ -34,7 +37,7 @@ public class SortTest01 {
         //1 注意pivot选取最好中间
         int pivot = nums[(left + end) / 2];
         //2 left <= right 而不是 lef t< right
-        while (left <= right) {
+        while (left-1 < right) {
             while (left <= right && nums[left] < pivot) {
                 left++;
             }

@@ -1,5 +1,8 @@
 package org.algorithm.java8.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author: lhz
  * @date: 2020/8/19
@@ -27,5 +30,12 @@ public class Demo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public static void main(String[] args) {
+        List<Demo> d = new ArrayList<>();
+        int count = (int)d.stream().filter(e-> "aa".equals(e.getName())).count();
+        System.out.println(count);
+
     }
 }
