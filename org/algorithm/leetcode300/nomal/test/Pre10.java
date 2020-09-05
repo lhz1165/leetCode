@@ -322,6 +322,7 @@ public class Pre10 {
      */
     public static int reverse(int x) {
         int result = 0;
+
         while (x != 0) {
             int tmp = x % 10;
             x /= 10;
