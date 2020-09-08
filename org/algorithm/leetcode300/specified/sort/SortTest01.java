@@ -1,6 +1,9 @@
 package org.algorithm.leetcode300.specified.sort;
 
 import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author: lhz
@@ -44,12 +47,14 @@ public class SortTest01 {
             while (left <= right && nums[right] > pivot) {
                 right--;
             }
-            if (left <= right) {
+            if (left-1 < right) {
                 int tmp = nums[left];
                 nums[left] = nums[right];
                 nums[right] = tmp;
                 left++;
                 right--;
+
+
             }
         }
         //left 交错了了

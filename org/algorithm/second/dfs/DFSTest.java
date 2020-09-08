@@ -20,7 +20,7 @@ public class DFSTest {
     public static void main(String[] args) {
         DFSTest d = new DFSTest();
         // System.out.println(d.combinationSum(new int[]{1, 1, 2}, 4));
-        System.out.println(d.permute2(new int[]{0,3,3,3}));
+        System.out.println(d.permute2(new int[]{3,3,0,3}));
     }
 
     public List<List<Integer>> combinationSum(int[] candidates, int target) {

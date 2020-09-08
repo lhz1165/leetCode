@@ -10,12 +10,17 @@ import java.util.List;
  **/
 public class Pre20 {
     public static void main(String[] args) {
-        int[] a = {0,1,2};
-        System.out.println(threeSumClosest(a,3));
+//        int[] a = {0,1,2};
+//        System.out.println(threeSumClosest(a,3));
+//
+//        System.out.println(lengthOfLongestSubstring("pwwkewabccd"));
+//        int [] aa={1, -1, 5, -2, 3};
+//        System.out.println(maxSubArrayLen(aa, 3));
+        Pre20 p = new Pre20();
+        int[] a = {1, 1, 2, 2, 3, 3, 4,4,4,4,4,4};
+        int i = p.removeDuplicates(a);
+        System.out.println();
 
-        System.out.println(lengthOfLongestSubstring("pwwkewabccd"));
-        int [] aa={1, -1, 5, -2, 3};
-        System.out.println(maxSubArrayLen(aa, 3));
 
     }
 
@@ -142,6 +147,36 @@ public class Pre20 {
         }
         return result;
     }
+    public int[] plusOne(int[] digits) {
+        for (int i = digits.length - 1; i >= 0; i--) {
+            digits[i]++;
+            digits[i] = digits[i] % 10;
+            if (digits[i] != 0) return digits;
+        }
+        digits = new int[digits.length + 1];
+        digits[0] = 1;
+        return digits;
+    }
+
+    public int removeDuplicates(int[] nums) {
+        if (nums.length < 2) {
+            return nums.length;
+        }
+        int prev = nums[0];
+        int result = 1;
+        int index = 1;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] != prev) {
+                result++;
+                prev = nums[i];
+                nums[index] = nums[i];
+                index++;
+            }
+        }
+        return result;
+
+    }
+
 
 
 }
