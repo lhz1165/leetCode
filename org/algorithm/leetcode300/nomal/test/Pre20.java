@@ -3,6 +3,7 @@ package org.algorithm.leetcode300.nomal.test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.TreeMap;
 
 /**
  * @author: lhz
@@ -17,9 +18,9 @@ public class Pre20 {
 //        int [] aa={1, -1, 5, -2, 3};
 //        System.out.println(maxSubArrayLen(aa, 3));
         Pre20 p = new Pre20();
-        int[] a = {1, 1, 2, 2, 3, 3, 4,4,4,4,4,4};
-        int i = p.removeDuplicates(a);
-        System.out.println();
+
+        int i = p.countPrimes(12);
+        System.out.println(i);
 
 
     }
@@ -174,8 +175,28 @@ public class Pre20 {
             }
         }
         return result;
-
     }
+    public int countPrimes(int n) {
+
+        boolean[] f = new boolean[n];
+        Arrays .fill(f,true);
+        for (int i = 2; i < n; i++) {
+            if (f[i]) {
+                for (int j = 2*i; j < n; j=i+j) {
+                    f[j] = false;
+                }
+            }
+        }
+        int count = 0;
+        for (int i =2; i < f.length; i++) {
+            if (f[i]) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+
 
 
 
