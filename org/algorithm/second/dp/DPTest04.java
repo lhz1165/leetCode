@@ -8,7 +8,25 @@ package org.algorithm.second.dp;
 public class DPTest04 {
 	public static void main(String[] args) {
 		DPTest04 t = new DPTest04();
+		t.maxSubArray(new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4});
 		System.out.println(t.numSquares(1000));
+	}
+
+
+	public int maxSubArray(int[] nums) {
+		int n = nums.length;
+		//以i为最后一位的连续数组的最值
+		int[] f =new int[n];
+		f[0]=nums[0];
+		for(int i = 1; i < n; i++){
+			f[i] = Math.max(f[i - 1] + nums[i], nums[i]);
+		}
+		int res = Integer.MIN_VALUE;
+		for(int num : f){
+			res=Math.max(res,num);
+		}
+		return res;
+
 	}
 
 	/**
