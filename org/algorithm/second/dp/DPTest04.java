@@ -8,25 +8,8 @@ package org.algorithm.second.dp;
 public class DPTest04 {
 	public static void main(String[] args) {
 		DPTest04 t = new DPTest04();
-		t.maxSubArray(new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4});
 		System.out.println(t.numSquares(1000));
-	}
-
-
-	public int maxSubArray(int[] nums) {
-		int n = nums.length;
-		//以i为最后一位的连续数组的最值
-		int[] f =new int[n];
-		f[0]=nums[0];
-		for(int i = 1; i < n; i++){
-			f[i] = Math.max(f[i - 1] + nums[i], nums[i]);
-		}
-		int res = Integer.MIN_VALUE;
-		for(int num : f){
-			res=Math.max(res,num);
-		}
-		return res;
-
+		t.copyBooks2(new int[]{3, 2, 4}, 2);
 	}
 
 	/**
@@ -123,16 +106,6 @@ public class DPTest04 {
 	}
 
 
-
-
-
-
-
-
-
-
-
-
 	/**
 	 * 描述
 	 * 有 n 个硬币排成一条线。两个参赛者轮流从右边依次拿走 1 或 2 个硬币，直到没有硬币为止。拿到最后一枚硬币的人获胜。
@@ -160,5 +133,97 @@ public class DPTest04 {
 			}
 		}
 		return f[n];
+	}
+
+	/**
+	 *
+	 * 给定 n 本书, 第 i 本书的页数为 pages[i]. 现在有 k 个人来复印这些书籍, 而每个人只能复印编号连续的一段的书,
+	 * 比如一个人可以复印 pages[0], pages[1], pages[2], 但是不可以只复印 pages[0], pages[2], pages[3] 而不复印 pages[1].
+	 * 所有人复印的速度是一样的, 复印一页需要花费一分钟, 并且所有人同时开始复印. 怎样分配这 k 个人的任务, 使得这 n 本书能够被尽快复印完?
+	 * 返回完成复印任务最少需要的分钟数.
+	 *
+	 * 前k个人抄完i本书子问题：前k-1个人抄完j本书的最小事件
+	 *           j         i
+	 *[][][][]...[] [] [] []
+	 * j要枚举到i 有可能第k个人不用抄写
+	 *0
+	 *
+	 */
+	public int copyBooks2(int[] pages, int k) {
+		// write your code here
+		if (pages == null || pages.length == 0) {
+			return 0;
+		}
+		int n = pages.length;
+		//k个人抄完前n本书的最短时间
+		int[][] f = new int[k+1][n+1];
+
+		for (int i = 0; i < k + 1; i++) {
+			for (int j = 0; j < n + 1; j++) {
+				if (i == 0 && j == 0) {
+					f[i][j] = 0;
+					continue;
+				}
+				if (j == 0) {
+					f[i][j] = 0;
+					continue;
+				}
+				if (i == 0 ) {
+					f[i][j] = Integer.MAX_VALUE;
+					continue;
+				}
+				//j从i开始，假设第k个人不用抄书
+				f[i][j] = Integer.MAX_VALUE;
+				int sum = 0;
+				for (int l = j; l >=0 ; l--) {
+					f[i][j] = Math.min(f[i][j], Math.max(f[i - 1][l], sum));
+					if (l > 0) {
+						sum += pages[l - 1];
+					}
+					
+				}
+
+
+
+			}
+		}
+		return f[k][n];
+
+
+
+	}
+	public int copyBooks(int[] pages, int k) {
+		// write your code here
+		if (pages == null || pages.length == 0) {
+			return 0;
+		}
+
+		int n = pages.length;
+		if (k >n ) {
+			k=n;
+		}
+		int[][] f = new int[k+1][n+1];
+		f[0][0] = 0;
+
+		for (int i = 1; i <= n; i++) {
+			f[0][i] = Integer.MAX_VALUE;
+		}
+		for (int i = 1; i <= k; i++) {
+			f[i][0] = 0;
+			for (int j = 1; j <= n; j++) {
+				f[i][j] = Integer.MAX_VALUE;
+				int sum = 0;
+				//这个循环sum代表第k个人写l--j本书的时间
+				//第k个人不写书---->第k个人写所有书
+				for (int l = j; l >=0 ; l--) {
+					f[i][j] = Math.min(f[i][j], Math.max(f[i - 1][l], sum));
+					if (l > 0) {
+						sum += pages[l-1];
+					}
+				}
+			}
+
+		}
+		return f[k][n];
 	}
 }
