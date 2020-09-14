@@ -41,7 +41,6 @@ public class BfsTest {
         List<List<Integer>> result = new ArrayList<>();
         //1定义一个队列，把每一层的节点放进去
         Queue<TreeNode> queue = new LinkedList<>();
-
         queue.offer(root);
         if (null == root) {
             return result;

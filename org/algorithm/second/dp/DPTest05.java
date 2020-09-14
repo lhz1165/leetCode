@@ -12,7 +12,7 @@ import java.util.List;
 public class DPTest05 {
 	public static void main(String[] args) {
 		DPTest05 d = new DPTest05();
-		d.backPackV2(new int[]{2,2,3},5);
+		//d.backPackV2(new int[]{2,2,3},5);
 	}
 
 	/**
@@ -47,6 +47,7 @@ public class DPTest05 {
 		return 1;
 
 	}
+
 	//滚动数组版本
 	public int backPack2(int m, int[] A) {
 		// write your code here
@@ -102,36 +103,29 @@ public class DPTest05 {
 			}
 		}
 		return f[n][target];
-
 	}
 
-	public int backPackV2(int[] nums, int target) {
-		List<List<Integer>> results = new ArrayList<>();
-		if (nums == null || nums.length == 0) {
-			return 0;
-		}
-		//dfs
-		Arrays.sort(nums);
-		subHelper(target, results, new ArrayList<Integer>(), 0, nums, 0);
-		return results.size();
-	}
-
-	private void subHelper(int target, List<List<Integer>> results, List<Integer> result, int curSum, int[] candidates, int index) {
-		if (curSum == target) {
-			results.add(new ArrayList<>(result));
-			return;
-		} else if (curSum > target) {
-			return;
-		}
-		for (int i = index; i < candidates.length; i++) {
-			//节省时间复杂度，只要这个大了，下面的一定也都大了不接着遍历
-			if (curSum + candidates[i] > target) {
-				break;
+	/**
+	 * 给出一个都是正整数的数组 nums，其中没有重复的数。从中找出所有的和为 target 的组合个数。
+	 *
+	 */
+	public int backPackVI(int[] nums, int target) {
+		// write your code here
+		int n = nums.length;
+		int[] f = new int[target+1];
+		f[0] = 1;
+		for (int i = 1; i < target+1; i++) {
+			for (int j = 0; j < n; j++) {
+				if (i - nums[j] >= 0) {
+					f[i] += f[i - nums[j]];
+				}
 			}
-			result.add(candidates[i]);
-			subHelper(target, results, result, curSum + candidates[i], candidates, i + 1);
-			result.remove(result.size() - 1);
+
 		}
+		return f[target];
+
 	}
+
+
 
 }
