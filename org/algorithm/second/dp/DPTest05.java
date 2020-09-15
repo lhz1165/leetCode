@@ -125,6 +125,49 @@ public class DPTest05 {
 		return f[target];
 
 	}
+	/**
+	 *有 n 个物品和一个大小为 m 的背包. 给定数组 A 表示每个物品的大小和数组 V 表示每个物品的价值.
+	 *
+	 * 问最多能装入背包的总价值是多大?
+	 */
+	public int backPackII(int m, int[] A, int[] V) {
+		// write your code here
+		//前n个物品 拼出V重量的
+		int n = A.length;
+		int[][] f = new int[n + 1][m + 1];
+		f[0][0] = 0;
+		for (int i = 0; i <= m; i++) {
+			f[0][i] = -1;
+		}
+
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= m; j++) {
+				f[i][j] = f[i - 1][j];
+				if ( j - A[i - 1] >= 0&&f[i - 1][j - A[i - 1]]!=-1) {
+					f[i][j] = Math.max(f[i][j], f[i - 1][j - A[i - 1]] + V[i - 1]);
+				}
+			}
+		}
+		int res = 0;
+		for (int i = m; i >= 0; i--) {
+			if (f[n][i] != -1) {
+				res = Math.max(res, f[n][i]);
+			}
+		}
+		return res;
+
+
+	}
+	/**
+	 * 给定 n 种物品, 每种物品都有无限个. 第 i 个物品的体积为 A[i], 价值为 V[i].
+	 *
+	 * 再给定一个容量为 m 的背包. 问可以装入背包的最大价值是多少?
+	 *
+	 * f[i][w]  前i【种】拼出w的最大总价值
+	 * */
+	public int backPackIII(int[] A, int[] V, int m) {
+
+	}
 
 
 
