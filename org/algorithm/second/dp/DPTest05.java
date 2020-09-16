@@ -166,7 +166,28 @@ public class DPTest05 {
 	 * f[i][w]  前i【种】拼出w的最大总价值
 	 * */
 	public int backPackIII(int[] A, int[] V, int m) {
+		int n = A.length;
+		int[][] f = new int[n + 1][m + 1];
+		f[0][0] = 0;
+		for (int i = 0; i <= m; i++) {
+			f[0][i] = -1;
+		}
 
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= m; j++) {
+				f[i][j] = f[i - 1][j];
+				if ( j - A[i - 1] >= 0&&f[i - 1][j - A[i - 1]]!=-1) {
+					f[i][j] = Math.max(f[i][j], f[i][j - A[i - 1]] + V[i - 1]);
+				}
+			}
+		}
+		int res = 0;
+		for (int i = m; i >= 0; i--) {
+			if (f[n][i] != -1) {
+				res = Math.max(res, f[n][i]);
+			}
+		}
+		return res;
 	}
 
 
