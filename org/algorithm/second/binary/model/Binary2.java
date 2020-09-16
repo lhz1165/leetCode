@@ -129,7 +129,30 @@ public class Binary2 {
             return end;
         }
         return -1;
+    }
 
+    public int mySqrt(int x) {
+        int l = 1;
+        int r = x;
+        int s = 0;
+        while (l + 1 < r) {
+            int mid = (l + r) / 2;
+             s = x / mid;
+            if (s == mid) {
+                return s;
+            } else if (s > mid) {
+                l = mid;
+            }else {
+                r = mid;
+            }
+        }
+        if (l * l < x) {
+            return l;
+        }
+        if (r * r < x) {
+            return r;
+        }
+        return -1;
 
     }
 
