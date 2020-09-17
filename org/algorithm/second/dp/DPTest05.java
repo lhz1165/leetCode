@@ -191,5 +191,21 @@ public class DPTest05 {
 	}
 
 
+	/**
+	 * 有 n 个硬币排成一条线, 第 i 枚硬币的价值为 values[i].
+	 *
+	 * 两个参赛者轮流从任意一边取一枚硬币, 直到没有硬币为止. 拿到硬币总价值更高的获胜.
+	 *
+	 * 请判定 第一个玩家 会赢还是会输.
+	 *
+	 * f[i][j]表示 当前人面对i-j这些数字的最大差值
+	 * values[i] - f[i-1][j]
+	 */
+	public boolean firstWillWin(int[] values) {
+
+	}
+
+
+
 
 }
