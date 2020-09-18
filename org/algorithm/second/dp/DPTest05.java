@@ -202,8 +202,26 @@ public class DPTest05 {
 	 * values[i] - f[i-1][j]
 	 */
 	public boolean firstWillWin(int[] values) {
-
+		int n = values.length;
+		int[][] f = new int[n][n];
+		//len = 1
+		for (int i = 0; i < n - 1; i++) {
+			f[i][i] = values[i];
+		}
+		for (int len = 2; len <= n; len++) {
+			for (int i = 0; i < n - len + 1; i++) {
+				int j = i + len - 1;
+				f[i][j]=Math.max(values[i]-f[i+1][j],values[j]-f[i][j-1]);
+			}
+		}
+		return f[0][n - 1] > 0;
 	}
+
+//	public int longestCommonSubsequence(String A, String B) {
+//		// write your code here
+//	}
+
+
 
 
 

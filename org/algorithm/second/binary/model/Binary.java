@@ -7,8 +7,8 @@ package org.algorithm.second.binary.model;
 public class Binary {
 	public static void main(String[] args) {
 		Binary binary = new Binary();
-		int[] a ={5,5,5,5,5,5,5,5,5,5};
-		int[] ints = binary.searchRange(a, 7);
+		int[] a ={1,1,5,5,5,5,5,5,5,5,5,5,8,8,8};
+		binary.binaryLeft(a, 5);
 		System.out.println();
 
 	}
