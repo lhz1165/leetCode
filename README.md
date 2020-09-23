@@ -2,13 +2,14 @@
 
 ### leetcode做题的答案
 - [指定数据结构和基本算法](https://github.com/lhz1165/leetCode/tree/master/org/algorithm/leetcode300/specified)
-- DFS
-- BFS
-- 二分
-- 数组
-- 动态规划
-- 字符串
-- 双指针
-- 二叉树
-- 哈希和堆
-- 链表
+- [DFS](https://github.com/lhz1165/leetCode/tree/master/org/algorithm/leetcode300/specified)
+- [BFS](https://github.com/lhz1165/leetCode/tree/master/org/algorithm/leetcode300/specified)
+- [二分](https://github.com/lhz1165/leetCode/tree/master/org/algorithm/leetcode300/specified)
+- [数组](org/algorithm/leetcode300/specified/array/)
+- [动态规划](https://github.com/lhz1165/leetCode/tree/master/org/algorithm/leetcode300/specified)
+- [字符串](https://github.com/lhz1165/leetCode/tree/master/org/algorithm/leetcode300/specified)
+- [双指针](https://github.com/lhz1165/leetCode/tree/master/org/algorithm/leetcode300/specified)
+- [二叉树](https://github.com/lhz1165/leetCode/tree/master/org/algorithm/leetcode300/specified)
+- [哈希和堆](https://github.com/lhz1165/leetCode/tree/master/org/algorithm/leetcode300/specified)
+- [链表](https://github.com/lhz1165/leetCode/tree/master/org/algorithm/leetcode300/specified)
+
