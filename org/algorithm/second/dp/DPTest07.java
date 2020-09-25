@@ -1,5 +1,9 @@
 package org.algorithm.second.dp;
 
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 /**
  * @author: lhz
  * @date: 2020/9/18
@@ -119,6 +123,47 @@ public class DPTest07 {
         }
         return f[n][m];
 
+    }
+    public int findMaxForm(String[] strs, int m, int n) {
+        //设f[i][j][k]为前i个01串最多能有多少个被j个0和k个1组成
+        int t =strs.length;
+        int[][][] f =new int[t+1][m+1][n+1];
+        for(int i = 0; i <= t; i++){
+            int count0 = getZero(strs[i]);
+            int count1 = getOne(strs[i]);
+            for(int j = 0; j <= m; j++){
+                for(int k = 0; k <= n; k++){
+                    if(i == 0){
+                        f[i][j][k] = 0;
+                        continue;
+                    }
+                    if(j == 0 && k == 0){
+                        f[i][j][k] = 0;
+                        continue;
+                    }
+                    if (j >= count0 && k >= count1) {
+                        f[i][j][k] = Math.max(f[i - 1][j][k], f[i - 1][j - count0][k - count1] + 1);
+                    } else {
+                        f[i][j][k] = f[i - 1][j][k];
+                    }
+
+                }
+            }
+        }
+        return f[strs.length][m][n];
+    }
+
+    public int getZero(String str){
+        int count = 0;
+        for (char c : str.toCharArray()) {
+            if (c=='0'){
+                count++;
+            }
+        }
+        return count;
+    }
+    public int getOne(String str){
+        return str.length() - getZero(str);
     }
 
 

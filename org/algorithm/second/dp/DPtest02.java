@@ -1,5 +1,7 @@
 package org.algorithm.second.dp;
 
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+
 /**
  * @author lhzlhz
  * @create 2020/9/6
@@ -16,6 +18,8 @@ public class DPtest02 {
 		t.numDecodings("12");
 
 		t.longestIncreasingSubsequence(new int[]{1,3,6,7,9,4,10,5,6});
+
+
 	}
 
 	/**
@@ -176,7 +180,10 @@ public class DPtest02 {
 				ans = dp[i];
 			}
 		}
-		return dp[nums.length - 1];
+		return ans;
 	}
+
+
+
 }
 
