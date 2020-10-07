@@ -125,6 +125,7 @@ public class ArrayTest01 {
         List<List<Integer>> results = new ArrayList<>();
         List<Integer> result = new ArrayList<>();
         Arrays.sort(nums);
+        //是否访问过
         boolean[] valid = new boolean[nums.length];
         subHelper(nums, k, result, results,0,valid);
         return results;
