@@ -1,5 +1,7 @@
 package org.algorithm.leetcode300.specified.dfs;
 
+import org.algorithm.leetcode300.basic.TreeNode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,17 +12,24 @@ import java.util.List;
  **/
 public class DfsTest01 {
     public static void main(String[] args) {
+        DfsTest01 d = new DfsTest01();
         int[] candidates = {1, 1, 2};
-//        System.out.println(combinationSum(candidates, 8));
+////        System.out.println(combinationSum(candidates, 8));
+////
+////        System.out.println(partition("abac"));
 //
-//        System.out.println(partition("abac"));
-
-
-        System.out.println(permuteUnique(candidates));
-
-
-
-        System.out.println(solveNQueens(4));
+//
+//        System.out.println(permuteUnique(candidates));
+//
+//
+//
+//        System.out.println(solveNQueens(4));
+        TreeNode root = new TreeNode(5);
+        TreeNode l = new TreeNode(2);
+        TreeNode r = new TreeNode(13);
+        root.left = l;
+        root.right = r;
+        d.convertBST(root);
 
 
     }
@@ -313,6 +322,43 @@ public class DfsTest01 {
             }
         }
         return sb.toString();
+    }
+
+
+    /**
+     * 给定二叉搜索树(BST)，将其转换为更大的树，使原始BST上每个节点的值都更改为在原始树中大于等于该节点值的节点值之和
+     * 输入 : {5,2,13}
+     * 5
+     * /   \
+     * 2     13
+     * 输出 : {18,20,13}
+     * 18
+     * /   \
+     * 20     13
+     * <p>
+     * 以右中左的方式遍历----》以sum记录遍历的和 然后加起来
+     *
+     * @param root
+     * @return
+     */
+    int sum = 0;
+    public TreeNode convertBST(TreeNode root) {
+        // write your code here
+        dfs(root);
+        return root;
+    }
+
+    public void dfs(TreeNode node) {
+        if (node == null) {
+            return;
+        }
+        //右
+        dfs(node.right);
+        //中
+        sum += node.val;
+        node.val = sum;
+        //左
+        dfs(node.left);
     }
 
 }
