@@ -106,7 +106,8 @@ public class DPTest05 {
 	}
 
 	/**
-	 * 给出一个都是正整数的数组 nums，其中没有重复的数。从中找出所有的和为 target 的组合个数。
+	 * 给出一个都是正整数的数组 nums，每个可以使用多次
+     * 从中找出所有的和为 target 的组合个数。
 	 *
 	 */
 	public int backPackVI(int[] nums, int target) {

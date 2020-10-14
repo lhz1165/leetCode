@@ -25,11 +25,18 @@ public class DfsTest01 {
 //
 //        System.out.println(solveNQueens(4));
         TreeNode root = new TreeNode(5);
-        TreeNode l = new TreeNode(2);
-        TreeNode r = new TreeNode(13);
-        root.left = l;
-        root.right = r;
-        d.convertBST(root);
+        TreeNode r1 = new TreeNode(1);
+        TreeNode r2 = new TreeNode(2);
+        TreeNode r3 = new TreeNode(3);
+        TreeNode r5 = new TreeNode(6);
+        TreeNode rr = new TreeNode(4);
+        root.right = r5;
+        root.left = r2;
+        r2.left = r1;
+        r2.right = r3;
+        r3.right=rr;
+        d.inorderSuccessor(root,new TreeNode(3));
+
 
 
     }
@@ -360,5 +367,24 @@ public class DfsTest01 {
         //左
         dfs(node.left);
     }
+
+    /**
+     * 给定一个二叉查找树(什么是二叉查找树)，以及一个节点，求该节点在中序遍历的后继，如果没有则返回null
+     *
+     */
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        // write your code here
+        if (root == null || p == null) {
+            return null;
+        }
+
+        if (root.val <= p.val) {
+            return inorderSuccessor(root.right, p);
+        } else {
+            TreeNode left = inorderSuccessor(root.left, p);
+            return (left != null) ? left : root;
+        }
+    }
+
 
 }
