@@ -19,8 +19,8 @@ import java.util.List;
 public class DFSTest {
     public static void main(String[] args) {
         DFSTest d = new DFSTest();
-        // System.out.println(d.combinationSum(new int[]{1, 1, 2}, 4));
-        System.out.println(d.permute2(new int[]{3,3,0,3}));
+         //System.out.println(d.combinationSum(new int[]{1, 1, 2}, 4));
+        System.out.println(d.permute2(new int[]{0,3,3}));
     }
 
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
@@ -48,8 +48,8 @@ public class DFSTest {
                 break;
             }
             //******  预防[2,2,3]   结果出现[2,3][2,3]-->跳过相同的数
-            //******    index!=i(也可以index < i) 也特别重要 代表了如果第一遍循环可以无视重复
-            if (i != 0 && candidates[i] == candidates[i - 1]) {
+            //******    index!=i(也可以index < i) 也特别重要 代表了如果第一遍循环可以无视重复 [2,2,3]求7 这样才会有[2,2,3]作为结果
+            if (i != 0 && candidates[i] == candidates[i - 1]&&index != i) {
                 continue;
             }
             result.add(candidates[i]);
@@ -133,6 +133,11 @@ public class DFSTest {
                 continue;
             }
             //*******  条件如果当前和前一个元素相同，并且前一个已经用过了，那么跳过
+            //表示每次接着的元素遇到相同的，只取第一个
+            //【3(1)，3(2),0】-->[3(1),3(2),0]x [3(1),0,3(2)]x
+            // [3(2),3(1),0]ok [3(2),0,3(1)]
+            // [3(2),0,3(1)]ok[3(1),0,3(2)]x 不能去2即第二个
+            // [0,3,3]
             if (i != 0 && nums[i - 1] == nums[i] && valid[i-1]) {
                 continue;
             }
