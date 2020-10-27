@@ -197,6 +197,7 @@ public class ArrayTest01 {
         int gap = Integer.MAX_VALUE;
         for (int i = 0; i < nums.length; i++) {
             sum += nums[i];
+            map.entrySet()
 
         }
 
