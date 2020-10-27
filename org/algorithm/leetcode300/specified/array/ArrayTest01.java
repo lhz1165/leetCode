@@ -8,35 +8,57 @@ import java.util.stream.Collectors;
  * @date: 2020/7/10
  **/
 public class ArrayTest01 {
-    public static void main(String[] args) {
-        //subarraySum
-        int[] a = {2, 1, -1, 1, 2};
-        int[] a2 = {1,2,3};
-        //System.out.println(subarraySum(a, 3));
-        //System.out.println(subarraySumEqualsKII(a, 3));
-        System.out.println(subarraySumEqualsKIII(a, 3));
-    }
+    /**
+     * 最大子数组
+     * 动态规划
+     * @param nums
+     * @return
+     */
+    public int maxSubArray2(int[] nums) {
+        // write your code here
+        //Dp 以nums[i]结尾的数组的最大和
 
-    public static ArrayList<Integer> subarraySum(int[] nums) {
-        ArrayList<Integer> result = new ArrayList<>();
-        Map<Integer, Integer> hash = new HashMap<>();
-        // 初始化
-        hash.put(0, -1);
-        int sum = 0;
-        for (int i = 0; i < nums.length; i++) {
-            // 累加前缀和
-            sum += nums[i];
-            // 前缀和曾经出现，即这个区间的和为0
-            if (hash.containsKey(sum)) {
-                result.add(hash.get(sum) + 1);
-                result.add(i);
-                break;
+        //要么nums[i]要和就它一个
+        // 要么在nums[i]+之前的；
+        int n = nums.length;
+        int[] f =new int[n];
+        f[0] = nums[0];
+        int result = nums[0];
+        for (int i = 1; i < n; i++) {
+            if (f[i - 1] > 0) {
+                f[i] = f[i - 1] + nums[i];
+            }else{
+                f[i] = nums[i];
             }
-            //前缀和第一次出现，存入hash
-            hash.put(sum, i);
+            result = Math.max(result, f[i]);
         }
         return result;
 
+    }
+
+    /**
+     * 子数组和为0
+     * @param nums
+     * @return
+     */
+    public  List<Integer> subarraySum(int[] nums) {
+        Map<Integer,Integer> map =new HashMap<>();
+        List<Integer> result = new ArrayList<>();
+        map.put(0, -1);
+        int sum = 0;
+        for(int i = 0; i < nums.length; i++){
+            sum += nums[i];
+            if(map.containsKey(sum)){
+                int result1 = map.get(sum) + 1;
+                int result2 = i;
+                result.add(result1);
+                result.add(result2);
+                break;
+            }else{
+                map.put(sum,i);
+            }
+        }
+        return result;
     }
 
 
@@ -156,5 +178,38 @@ public class ArrayTest01 {
             sum -= nums[i];
         }
     }
+
+    public double findMedianSortedArrays(int[] A, int[] B) {
+        // write your code here
+        return 0.0;
+    }
+
+    /**
+     * 最接近零的子数组和
+     * @param nums
+     * @return
+     */
+    public int[] subarraySumClosest(int[] nums) {
+        // write your code here
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, -1);
+        int sum = 0;
+        int gap = Integer.MAX_VALUE;
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+
+        }
+
+
+    }
+
+
+    public static void main(String[] args) {
+        ArrayTest01 a = new ArrayTest01();
+        a.subarraySum2(new int[]{-3, 1, -4, 2, -3, 4},1);
+
+    }
+
+
 }
 
