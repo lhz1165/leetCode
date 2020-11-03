@@ -13,57 +13,73 @@ import java.util.*;
  * @date: 2020/7/22
  **/
 public class BFSGraphTest01 {
-    public static void main(String[] args) {
-
-        DirectedGraphNode n4 = new DirectedGraphNode(4);
-        DirectedGraphNode n0 = new DirectedGraphNode(0);
-        DirectedGraphNode n1 = new DirectedGraphNode(1);
-        DirectedGraphNode n2 = new DirectedGraphNode(2);
-        DirectedGraphNode n3 = new DirectedGraphNode(3);
-        DirectedGraphNode n5 = new DirectedGraphNode(5);
-        ArrayList<DirectedGraphNode> ne0 = new ArrayList<>();
-        ne0.add(n1);
-        ne0.add(n2);
-        ne0.add(n3);
-        n0.neighbors = ne0;
-        ArrayList<DirectedGraphNode> ne1 = new ArrayList<>();
-        ne1.add(n4);
-        n1.neighbors = ne1;
-        ArrayList<DirectedGraphNode> ne2 = new ArrayList<>();
-        ne2.add(n4);
-        ne2.add(n5);
-        n2.neighbors = ne2;
-        ArrayList<DirectedGraphNode> ne3 = new ArrayList<>();
-        ne3.add(n4);
-        ne3.add(n5);
-        n3.neighbors = ne3;
-        ArrayList<DirectedGraphNode> ne4 = new ArrayList<>();
-        ArrayList<DirectedGraphNode> ne5 = new ArrayList<>();
-        ArrayList<DirectedGraphNode> graph = new ArrayList<>();
-        graph.add(n5);
-        graph.add(n4);
-        graph.add(n3);
-        graph.add(n2);
-        graph.add(n1);
-        graph.add(n0);
-        topSort(graph);
-
-    }
+//    public static void main(String[] args) {
+//
+//        DirectedGraphNode n4 = new DirectedGraphNode(4);
+//        DirectedGraphNode n0 = new DirectedGraphNode(0);
+//        DirectedGraphNode n1 = new DirectedGraphNode(1);
+//        DirectedGraphNode n2 = new DirectedGraphNode(2);
+//        DirectedGraphNode n3 = new DirectedGraphNode(3);
+//        DirectedGraphNode n5 = new DirectedGraphNode(5);
+//        DirectedGraphNode n6 = new DirectedGraphNode(6);
+//        ArrayList<DirectedGraphNode> ne0 = new ArrayList<>();
+//        ne0.add(n1);
+//        ne0.add(n2);
+//        ne0.add(n3);
+//        n0.neighbors = ne0;
+//        ArrayList<DirectedGraphNode> ne1 = new ArrayList<>();
+//        ne1.add(n4);
+//        n1.neighbors = ne1;
+//        ArrayList<DirectedGraphNode> ne2 = new ArrayList<>();
+//        ne2.add(n4);
+//        ne2.add(n5);
+//        n2.neighbors = ne2;
+//        ArrayList<DirectedGraphNode> ne3 = new ArrayList<>();
+//        ne3.add(n4);
+//        ne3.add(n5);
+//        n3.neighbors = ne3;
+//        ArrayList<DirectedGraphNode> ne6 = new ArrayList<>();
+//        ne6.add(n3);
+//        n6.neighbors = ne6;
+//        ArrayList<DirectedGraphNode> graph = new ArrayList<>();
+//        graph.add(n5);
+//        graph.add(n4);
+//        graph.add(n3);
+//        graph.add(n2);
+//        graph.add(n1);
+//        graph.add(n0);
+//        graph.add(n6);
+//        topSort(graph);
+//
+//    }
 
     /**
      * 图是否树
      * <p>
      * 宽度优先搜索
-     * 是否都连通 ，n个点，n-1条边
+     * 1.是否都连通 ，
+     * 2.n个点，n-1条边
      *
      * @param n
      * @param edges
      * @return
      */
     public boolean validTree(int n, int[][] edges) {
-        // write your code here
+        if (n == 0) {
+            return false;
+        }
 
-        return false;
+
+
+    }
+
+    public static void main(String[] args) {
+        BFSGraphTest01 b = new BFSGraphTest01();
+        b.validTree(5, new int[][]{{0, 1}, {1,2}, {2,3}, {1, 3}, {1,4}});
+    }
+
+    private Map<Integer, Set<Integer>> initializeGraph(int n, int[][] edges) {
+
     }
 
 
@@ -152,8 +168,7 @@ public class BFSGraphTest01 {
     private static Map<DirectedGraphNode, Integer> getInDegree(ArrayList<DirectedGraphNode> graph) {
         Map<DirectedGraphNode, Integer> in = new HashMap<>();
         int n = graph.size();
-        for (int i = 0; i < n; i++) {
-            DirectedGraphNode currentNode = graph.get(i);
+        for (DirectedGraphNode currentNode : graph) {
             if (!in.containsKey(currentNode)) {
                 in.put(currentNode, 0);
             }
@@ -161,15 +176,15 @@ public class BFSGraphTest01 {
             ArrayList<DirectedGraphNode> point = currentNode.neighbors;
             int m = point.size();
             // 记录每个点的入度
-            for (int j = 0; j < m; j++) {
-                //下一级的点
-                DirectedGraphNode tmp = point.get(j);
-                if (in.containsKey(tmp)) {
-                    in.put(tmp, in.get(tmp) + 1);
+            for (DirectedGraphNode currentNeighbors : point) {
+                if (in.containsKey(currentNeighbors)) {
+                    in.put(currentNeighbors, in.get(currentNeighbors) + 1);
                 } else {
-                    in.put(tmp, 1);
+                    in.put(currentNeighbors, 1);
                 }
+
             }
+
         }
         return in;
 
