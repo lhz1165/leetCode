@@ -8,10 +8,10 @@ import java.util.List;
  * @date: 2020/7/22
  **/
 public class UndirectedGraphNode {
-    int label;
-    List<UndirectedGraphNode> neighbors;
+    public int label;
+    public List<UndirectedGraphNode> neighbors;
 
-    UndirectedGraphNode(int x) {
+    public UndirectedGraphNode(int x) {
         label = x;
         neighbors = new ArrayList<>();
     }

@@ -85,6 +85,6 @@ public class Test01 {
      */
     public int minimumEffortPath(int[][] heights) {
 
-
+        return 0;
     }
 }

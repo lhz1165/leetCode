@@ -1,5 +1,7 @@
 package org.algorithm.second.binary.model;
 
+import java.util.Scanner;
+
 /**
  * @author: lhz
  * @date: 2020/8/25
@@ -9,6 +11,7 @@ public class Binary2 {
         Binary2 b = new Binary2();
 
         System.out.println(b.search(new int[]{1,2,3,4,5,9}, 9));
+
 
     }
 
