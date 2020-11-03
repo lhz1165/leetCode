@@ -48,8 +48,9 @@ public class TreeTest02 {
         if (cur.val <= min || cur.val >= max) {
             return false;
         }
-        boolean isRightValid=isValidBSTHelper(cur.left,min,Math.min(cur.val,max));
-        boolean isLeftValid=isValidBSTHelper(cur.right,Math.max(cur.val,min),max);
+        //左边的所有数都 必须比根节点的最小值小
+        boolean isLeftValid=isValidBSTHelper(cur.left,min,Math.min(cur.val,max));
+        boolean isRightValid=isValidBSTHelper(cur.right,Math.max(cur.val,min),max);
         return isLeftValid && isRightValid;
 
     }

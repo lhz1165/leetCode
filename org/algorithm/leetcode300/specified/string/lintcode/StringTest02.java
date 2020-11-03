@@ -1,8 +1,6 @@
 package org.algorithm.leetcode300.specified.string.lintcode;
 
-import java.lang.annotation.ElementType;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author: lhz
@@ -11,12 +9,7 @@ import java.util.Map;
 public class StringTest02 {
 
 
-    public static void main(String[] args) {
-        StringTest02 s = new StringTest02();
 
-        System.out.println(s.validWordAbbreviation("sdkabk",
-                "sd3k"));
-    }
 
     public boolean isIsomorphic(String s, String t) {
         // write your code here
@@ -95,10 +88,10 @@ public class StringTest02 {
                     int val = target[j] - '0';
                     count = count * 10 + val;
                     j++;
-                }else {
+                } else {
                     if (source[i] != target[j]) {
                         return false;
-                    }else {
+                    } else {
                         i++;
                         j++;
                         count = 0;
@@ -117,5 +110,262 @@ public class StringTest02 {
         }
         return true;
     }
+
+    /**
+     * 640. 一次编辑距离
+     */
+    public boolean isOneEditDistance(String s, String t) {
+        if (s.length() == 0 && t.length() == 0) {
+            return true;
+        }
+
+        if (s.length() < t.length()) {
+            String tmp = "";
+            tmp = s;
+            s = t;
+            t = tmp;
+        }
+        char[] sc = s.toCharArray();
+        char[] tc = t.toCharArray();
+        int sl = sc.length;
+        int tl = tc.length;
+        if (sl - tl > 1) {
+            return false;
+        }
+        if (sl - tl == 1) {
+            for (int i = 0; i < tl; i++) {
+                if (sc[i] != tc[i]) {
+                    return s.substring(i + 1, sl)
+                            .equals(t.substring(i, tl));
+                }
+            }
+            return true;
+        }
+        if (sl == tl) {
+            for (int i = 0; i < sl; i++) {
+                if (sc[i] != tc[i]) {
+                    return s.substring(i + 1, sl)
+                            .equals(t.substring(i + 1, tl));
+                }
+            }
+
+        }
+        return true;
+    }
+
+    /**
+     * 字符串编解码
+     *
+     * @param strs
+     * @return
+     */
+    public String encode(List<String> strs) {
+        // write your code here
+        StringBuilder sb = new StringBuilder();
+        for (String str : strs) {
+            sb.append(str.length());
+            sb.append("&");
+            sb.append(str);
+        }
+        return sb.toString();
+    }
+
+    /*
+     * @param str: A string
+     * @return: dcodes a single string to a list of strings
+     */
+    public List<String> decode(String str) {
+        List<String> results = new ArrayList<>();
+        char[] chars = str.toCharArray();
+        int num = 0;
+        boolean isAnd = false;
+        boolean isStr = false;
+        for (int i = 0; i < chars.length; ) {
+            while (chars[i] >= '0' && chars[i] <= '9') {
+                num = num * 10 + (chars[i] - '0');
+                i++;
+                isAnd = true;
+            }
+            if (isAnd) {
+                i++;
+                isStr = true;
+            }
+
+            if (isStr) {
+                StringBuilder sb = new StringBuilder();
+                for (int j = 0; j < num; j++) {
+                    sb.append(chars[i]);
+                    i++;
+                }
+                results.add(sb.toString());
+                isAnd = false;
+                isStr = false;
+                num = 0;
+
+            }
+        }
+        return results;
+    }
+
+    /**
+     * 罗马数字转化为整数
+     *
+     */
+    public int romanToInt(String s) {
+        // write your code here
+        Map<Character, Integer> romanMap = new HashMap<>();
+        romanMap.put('I', 1);
+        romanMap.put('V', 5);
+        romanMap.put('X', 10);
+        romanMap.put('L', 50);
+        romanMap.put('C', 100);
+        romanMap.put('D', 500);
+        romanMap.put('M', 1000);
+        if (s.length() == 0) {
+            return 0;
+        }
+        char[] chars = s.toCharArray();
+        int result = 0;
+        int prev = 0;
+        for (int i = 0; i < chars.length; i++) {
+            Integer cur = romanMap.get(chars[i]);
+            if (prev < cur) {
+                result = result - prev;
+                result += (cur - prev);
+
+            } else {
+                result += cur;
+            }
+            prev = romanMap.get(chars[i]);
+        }
+        return result;
+    }
+
+    /**
+     * 整数转化为罗马数字
+     *
+     */
+    public String intToRoman(int n) {
+        // write your code here
+        Map<Integer, String> romanMap = new HashMap<>();
+        romanMap.put(1, "I");
+        romanMap.put(5, "V");
+        romanMap.put(10, "X");
+        romanMap.put(50, "L");
+        romanMap.put(100, "C");
+        romanMap.put(500, "D");
+        romanMap.put(1000, "M");
+        romanMap.put(4, "IV");
+        romanMap.put(9, "IX");
+        StringBuilder sb = new StringBuilder();
+        //个 - 》 十 - 》百 - 》千
+        int qian = n / 1000;
+        for (int i = 0; i < qian; i++) {
+            sb.append("M");
+        }
+        n = n % 1000;
+
+        //900?
+        if (n / 100 == 9) {
+            sb.append("CM");
+            n = n - 900;
+        } else if (n / 100 == 5) {
+            //500?
+            sb.append("D");
+            n = n - 500;
+        } else if (n / 100 == 4) {
+            sb.append("CD");
+            n = n - 400;
+        }
+        //100?
+        int bai1 = n / 100;
+        for (int i = 0; i < bai1; i++) {
+            sb.append("C");
+        }
+        n = n % 100;
+
+
+        //90-40
+        if (n / 10 == 9) {
+            sb.append("XC");
+            n = n - 90;
+        } else if (n / 10 >= 5) {
+            //50?
+            sb.append("L");
+            n = n - 50;
+        } else if (n / 10 == 4) {
+            sb.append("XL");
+            n = n - 40;
+        }
+        //10
+        int shi1 = n / 10;
+        for (int i = 0; i < shi1; i++) {
+            sb.append("X");
+        }
+        n = n % 10;
+
+        if (n == 9) {
+            sb.append("IX");
+        } else if (n == 4) {
+            sb.append("IV");
+        } else if (n == 5) {
+            sb.append("V");
+        } else {
+            if (n >= 5) {
+                sb.append("V");
+                n = n - 5;
+                for (int i = 0; i < n; i++) {
+                    sb.append("I");
+                }
+            } else {
+                for (int i = 0; i < n; i++) {
+                    sb.append("I");
+                }
+            }
+        }
+        return sb.toString();
+    }
+    /**
+     * 645. 识别名人
+     */
+    public int findCelebrity(int n) {
+        // Write your code here
+        Map<Integer, Integer> mapKnown = new TreeMap<>();
+        for (int i = 0; i < n; i++) {
+            mapKnown.put(i, 0);
+        }
+        for (int i = 0; i < n; i++) {
+
+            for (int j = 0; j < n; j++) {
+                if (i != j) {
+                    if (knows(j, i)) {
+                        Integer jKnown = mapKnown.get(i);
+                        mapKnown.put(i, ++jKnown);
+                    }
+                }
+
+            }
+        }
+        int result=-1;
+        for (Map.Entry<Integer, Integer> entry : mapKnown.entrySet()) {
+            if (entry.getValue() == n - 1) {
+                result = entry.getKey();
+            }
+        }
+        return result;
+
+    }
+    boolean knows(int a, int b){
+        return true;
+    }
+
+
+
+    public static void main(String[] args) {
+        StringTest02 s = new StringTest02();
+        // System.out.println(s.encode(new ArrayList<>(Arrays.asList("123", "4567","890101010"))));
+        System.out.println(s.intToRoman(6));
+    }
+
 
 }
