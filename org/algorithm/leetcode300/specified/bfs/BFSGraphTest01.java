@@ -53,30 +53,30 @@ public class BFSGraphTest01 {
 //
 //    }
 
-	/**
-	 * 图是否树
-	 * <p>
-	 * 宽度优先搜索
-	 * 1.是否都连通 ，
-	 * 2.n个点，n-1条边
-	 *
-	 * @param n
-	 * @param edges
-	 * @return
-	 */
-	public boolean validTree(int n, int[][] edges) {
-		if (n == 0) {
-			return false;
-		}
-		//n个点，n-1条边
-		if (n != edges.length + 1) {
-			return false;
-		}
-		//bfs验证是否联通
-		Map<Integer, Set<Integer>> map = initializeGraph(n, edges);
-		Set<Integer> set = bfsValidTree(map);
-		return n == set.size();
-	}
+    /**
+     * 图是否树
+     * <p>
+     * 宽度优先搜索
+     * 1.是否都连通 ，
+     * 2.n个点，n-1条边
+     *
+     * @param n
+     * @param edges
+     * @return
+     */
+    public boolean validTree(int n, int[][] edges) {
+        if (n == 0) {
+            return false;
+        }
+        //n个点，n-1条边
+        if (n != edges.length + 1) {
+            return false;
+        }
+        //bfs验证是否联通
+        Map<Integer, Set<Integer>> map = initializeGraph(n, edges);
+        Set<Integer> set = bfsValidTree(map);
+        return n == set.size();
+    }
 
 //    public static void main(String[] args) {
 //        BFSGraphTest01 b = new BFSGraphTest01();
@@ -89,457 +89,457 @@ public class BFSGraphTest01 {
 //        b.cloneGraph(n1);
 //    }
 
-	public Set<Integer> bfsValidTree(Map<Integer, Set<Integer>> map) {
-		Queue<Integer> nodes = new LinkedList<>();
-		Set<Integer> hasReach = new HashSet<>();
-		nodes.add(0);
-		while (!nodes.isEmpty() && !map.isEmpty()) {
-			Integer node = nodes.poll();
-			hasReach.add(node);
-			Set<Integer> nebs = map.get(node);
-			for (Integer neb : nebs) {
-				if (!hasReach.contains(neb)) {
-					nodes.add(neb);
-				}
-			}
+    public Set<Integer> bfsValidTree(Map<Integer, Set<Integer>> map) {
+        Queue<Integer> nodes = new LinkedList<>();
+        Set<Integer> hasReach = new HashSet<>();
+        nodes.add(0);
+        while (!nodes.isEmpty() && !map.isEmpty()) {
+            Integer node = nodes.poll();
+            hasReach.add(node);
+            Set<Integer> nebs = map.get(node);
+            for (Integer neb : nebs) {
+                if (!hasReach.contains(neb)) {
+                    nodes.add(neb);
+                }
+            }
 
-		}
-		return hasReach;
-
-
-	}
-
-	//点和他的邻居点
-	private Map<Integer, Set<Integer>> initializeGraph(int n, int[][] edges) {
-		Map<Integer, Set<Integer>> map = new HashMap<>();
-		for (int i = 0; i < n; i++) {
-			map.put(i, new HashSet<>());
-		}
-		for (int i = 0; i < edges.length; i++) {
-			Set<Integer> set = map.get(edges[i][0]);
-			set.add(edges[i][1]);
-			Set<Integer> set2 = map.get(edges[i][1]);
-			set2.add(edges[i][0]);
-		}
-		return map;
-	}
+        }
+        return hasReach;
 
 
-	/**
-	 * 克隆图
-	 * deep copy
-	 *
-	 * @param node
-	 * @return
-	 */
-	public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
-		if (null == node) {
-			return node;
-		}
-		// write your code here
-		List<UndirectedGraphNode> allNodes = getNodes(node);
-		Map<Integer, UndirectedGraphNode> newMap = new HashMap<>();
-		for (UndirectedGraphNode curNode : allNodes) {
-			UndirectedGraphNode newNode = getCloenNode(curNode, newMap);
-			List<UndirectedGraphNode> neighbors = curNode.neighbors;
-			for (UndirectedGraphNode neighbor : neighbors) {
-				UndirectedGraphNode undirectedGraphNode = getCloenNode(neighbor, newMap);
-				newNode.neighbors.add(undirectedGraphNode);
-			}
-		}
-		return newMap.get(node.label);
-	}
+    }
 
-	public UndirectedGraphNode getCloenNode(UndirectedGraphNode curNode, Map<Integer, UndirectedGraphNode> newMap) {
-		UndirectedGraphNode newNode = null;
-
-		if (newMap.containsKey(curNode.label)) {
-			newNode = newMap.get(curNode.label);
-		} else {
-			newNode = new UndirectedGraphNode(curNode.label);
-			newMap.put(curNode.label, newNode);
-		}
-		return newNode;
-	}
+    //点和他的邻居点
+    private Map<Integer, Set<Integer>> initializeGraph(int n, int[][] edges) {
+        Map<Integer, Set<Integer>> map = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            map.put(i, new HashSet<>());
+        }
+        for (int i = 0; i < edges.length; i++) {
+            Set<Integer> set = map.get(edges[i][0]);
+            set.add(edges[i][1]);
+            Set<Integer> set2 = map.get(edges[i][1]);
+            set2.add(edges[i][0]);
+        }
+        return map;
+    }
 
 
-	//获取所有的点
-	private List<UndirectedGraphNode> getNodes(UndirectedGraphNode node) {
-		Queue<UndirectedGraphNode> queue = new LinkedList<>();
-		HashSet<UndirectedGraphNode> set = new HashSet<>();
+    /**
+     * 克隆图
+     * deep copy
+     *
+     * @param node
+     * @return
+     */
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        if (null == node) {
+            return node;
+        }
+        // write your code here
+        List<UndirectedGraphNode> allNodes = getNodes(node);
+        Map<Integer, UndirectedGraphNode> newMap = new HashMap<>();
+        for (UndirectedGraphNode curNode : allNodes) {
+            UndirectedGraphNode newNode = getCloenNode(curNode, newMap);
+            List<UndirectedGraphNode> neighbors = curNode.neighbors;
+            for (UndirectedGraphNode neighbor : neighbors) {
+                UndirectedGraphNode undirectedGraphNode = getCloenNode(neighbor, newMap);
+                newNode.neighbors.add(undirectedGraphNode);
+            }
+        }
+        return newMap.get(node.label);
+    }
 
-		queue.offer(node);
-		set.add(node);
-		while (!queue.isEmpty()) {
-			UndirectedGraphNode head = queue.poll();
-			for (UndirectedGraphNode neighbor : head.neighbors) {
-				if (!set.contains(neighbor)) {
-					set.add(neighbor);
-					queue.offer(neighbor);
-				}
-			}
-		}
-		return new ArrayList<>(set);
-	}
+    public UndirectedGraphNode getCloenNode(UndirectedGraphNode curNode, Map<Integer, UndirectedGraphNode> newMap) {
+        UndirectedGraphNode newNode = null;
 
-	/**
-	 * 拓扑排序 [重要]
-	 * 宽度优先搜索
-	 *
-	 * @param graph`
-	 * @return
-	 */
-	public static ArrayList<DirectedGraphNode> topSort(ArrayList<DirectedGraphNode> graph) {
-		// write your code here
-		ArrayList<DirectedGraphNode> order = new ArrayList<>();
-		if (graph == null) {
-			return order;
-		}
-		//1 统计图每个点的入度
-		Map<DirectedGraphNode, Integer> inDegree = getInDegree(graph);
-		//2 拿到入度为0的点，作为起点  0
-		ArrayList<DirectedGraphNode> startNodes = getStartNodes(inDegree, graph);
-
-		//3 bfs
-		order = bfs(inDegree, startNodes);
-		if (order.size() == graph.size()) {
-			return order;
-		}
-		return null;
-
-	}
-
-	private static ArrayList<DirectedGraphNode> bfs(Map<DirectedGraphNode, Integer> inDegree, ArrayList<DirectedGraphNode> startNodes) {
-		ArrayList<DirectedGraphNode> order = new ArrayList<>();
-		Queue<DirectedGraphNode> queue = new LinkedList<>();
-		for (DirectedGraphNode node : startNodes) {
-			order.add(node);
-			queue.offer(node);
-		}
-		while (!queue.isEmpty()) {
-			DirectedGraphNode node = queue.poll();
-			for (DirectedGraphNode neighbor : node.neighbors) {
-				inDegree.put(neighbor, inDegree.get(neighbor) - 1);
-				if (inDegree.get(neighbor) == 0) {
-					queue.offer(neighbor);
-					order.add(neighbor);
-				}
-			}
-		}
-		return order;
-	}
-
-	/**
-	 * 找出入度为0的点作为起点q
-	 *
-	 * @param inDegree
-	 * @param graph
-	 * @return
-	 */
-	private static ArrayList<DirectedGraphNode> getStartNodes(Map<DirectedGraphNode, Integer> inDegree, ArrayList<DirectedGraphNode> graph) {
-		ArrayList<DirectedGraphNode> startNodes = new ArrayList<>();
-		for (DirectedGraphNode directedGraphNode : graph) {
-			if (inDegree.get(directedGraphNode) == 0) {
-				startNodes.add(directedGraphNode);
-			}
-		}
-		return startNodes;
-	}
-
-	/**
-	 * 每个点的入度是多少
-	 *
-	 * @param graph
-	 * @return
-	 */
-	private static Map<DirectedGraphNode, Integer> getInDegree(ArrayList<DirectedGraphNode> graph) {
-		Map<DirectedGraphNode, Integer> in = new HashMap<>();
-		int n = graph.size();
-		for (DirectedGraphNode currentNode : graph) {
-			if (!in.containsKey(currentNode)) {
-				in.put(currentNode, 0);
-			}
-			//点的邻居们
-			ArrayList<DirectedGraphNode> point = currentNode.neighbors;
-			int m = point.size();
-			// 记录每个点的入度
-			for (DirectedGraphNode currentNeighbors : point) {
-				if (in.containsKey(currentNeighbors)) {
-					in.put(currentNeighbors, in.get(currentNeighbors) + 1);
-				} else {
-					in.put(currentNeighbors, 1);
-				}
-
-			}
-
-		}
-		return in;
-	}
-
-	/**
-	 * 搜索图中节点 · Search Graph Nodes
-	 * 给定一张 无向图，一个 节点 以及一个 目标值，返回距离这个节点最近 且 值为目标值的节点，如果不能找到则返回 NULL。
-	 * 在给出的参数中, 我们用 map 来存节点的值
-	 * 输入:
-	 * {1,2,3,4#2,1,3#3,1,2#4,1,5#5,4}
-	 * [3,4,5,50,50]
-	 * 1
-	 * 50
-	 * 输出:
-	 * 4
-	 * 解释:
-	 * 2------3  5
-	 * \     |  |
-	 * \    |  |
-	 * \   |  |
-	 * \  |  |
-	 * 1 --4
-	 * Give a node 1, target is 50
-	 * <p>
-	 * there a hash named values which is [3,4,10,50,50], represent:
-	 * Value of node 1 is 3
-	 * Value of node 2 is 4
-	 * Value of node 3 is 10
-	 * Value of node 4 is 50
-	 * Value of node 5 is 50
-	 * <p>
-	 * Return node 4
-	 * 太简单..
-	 */
-	public UndirectedGraphNode searchNode(ArrayList<UndirectedGraphNode> graph,
-										  Map<UndirectedGraphNode, Integer> values,
-										  UndirectedGraphNode node,
-										  int target) {
-		// Write your code here
-		Queue<UndirectedGraphNode> queue = new LinkedList<>();
-		Set<UndirectedGraphNode> hash = new HashSet<>();
-		queue.offer(node);
-		hash.add(node);
-		while (!queue.isEmpty()) {
-			UndirectedGraphNode head = queue.poll();
-			if (values.get(head) == target) {
-				return head;
-			}
-			for (UndirectedGraphNode nei : head.neighbors) {
-				if (!hash.contains(nei)) {
-					queue.offer(nei);
-					hash.add(nei);
-				}
-			}
-		}
-		return null;
-	}
-
-	public static void main(String[] args) {
-		boolean[][] ints = new boolean[][]{{
-				true, true, false, false, false},
-				{false, true, false, false, true},
-				{false, false, false, true, true},
-				{false, false, false, false, false},
-				{false, false, false, false, true}};
-		BFSGraphTest01 b = new BFSGraphTest01();
-		b.numIslands(ints);
-
-	}
+        if (newMap.containsKey(curNode.label)) {
+            newNode = newMap.get(curNode.label);
+        } else {
+            newNode = new UndirectedGraphNode(curNode.label);
+            newMap.put(curNode.label, newNode);
+        }
+        return newNode;
+    }
 
 
-	/**
-	 * [1,1,0,0,0],
-	 * [0,1,0,0,1],
-	 * [0,0,0,1,1],
-	 * [0,0,0,0,0],
-	 * [0,0,0,0,1]
-	 * <p>
-	 * 岛屿数量
-	 * 思路 bfs遍历，遇到1改成0 coutn++
-	 *
-	 * @param grid
-	 * @return
-	 */
-	public int numIslands(boolean[][] grid) {
-		// write your code here
-		int count = 0;
-		List<List<Node>> grids = convertArrayToNode(grid);
-		for (int i = 0; i < grids.size(); i++) {
-			List<Node> nodes = grids.get(i);
-			for (int j = 0; j < nodes.size(); j++) {
-				//bfs
-				Node node = nodes.get(j);
-				if (node.val) {
-					bfsFill(grids, node);
-					count++;
-				}
-			}
-		}
-		return count;
-	}
+    //获取所有的点
+    private List<UndirectedGraphNode> getNodes(UndirectedGraphNode node) {
+        Queue<UndirectedGraphNode> queue = new LinkedList<>();
+        HashSet<UndirectedGraphNode> set = new HashSet<>();
 
-	/**
-	 * 给一个二维网格，每一个格子都有一个值，2 代表墙，1 代表僵尸，0 代表人类(数字 0, 1, 2)。
-	 * 僵尸每天可以将上下左右最接近的人类感染成僵尸，但不能穿墙。将所有人类感染为僵尸需要多久，如果不能感染所有人则返回 -1
-	 *
-	 * @param grid
-	 * @return
-	 */
-	public int zombie(int[][] grid) {
-		// write your code here
-		int PEOPLE = 0;
-		int ZOMBIE = 1;
-		int WALL = 2;
-		int[] deltaX = new int[]{1, 0, 0, -1};
-		int[] deltaY = new int[]{0, 1, -1, 0};
-		if (grid == null || grid.length == 0 || grid[0].length == 0) {
-			return 0;
-		}
-		int n = grid.length;
-		int m = grid[0].length;
-		int people = 0;
-		Queue<NodeZ> queue = new LinkedList<>();
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				if (grid[i][j] == PEOPLE) {
-					people++;
-				} else if (grid[i][j] == ZOMBIE) {
-					queue.offer(new NodeZ(i, j));
-				}
-			}
-		}
-		int days = 0;
-		while (!queue.isEmpty()) {
-			int size = queue.size();
-			for (int i = 0; i < size; i++) {
-				NodeZ zb = queue.poll();
-				//上下左右感染
-				for (int direction = 0; direction < 4; direction++) {
-					NodeZ adj = new NodeZ(zb.i + deltaX[direction], zb.j + deltaY[direction]);
-					//不是人不感染
-					if (!isPeople(adj, grid)) {
-						continue;
-					}
-					grid[adj.i][adj.j] = ZOMBIE;
-					people--;
-					if (people == 0) {
-						return days;
-					}
-					queue.offer(adj);
+        queue.offer(node);
+        set.add(node);
+        while (!queue.isEmpty()) {
+            UndirectedGraphNode head = queue.poll();
+            for (UndirectedGraphNode neighbor : head.neighbors) {
+                if (!set.contains(neighbor)) {
+                    set.add(neighbor);
+                    queue.offer(neighbor);
+                }
+            }
+        }
+        return new ArrayList<>(set);
+    }
 
-				}
+    /**
+     * 拓扑排序 [重要]
+     * 宽度优先搜索
+     *
+     * @param graph`
+     * @return
+     */
+    public static ArrayList<DirectedGraphNode> topSort(ArrayList<DirectedGraphNode> graph) {
+        // write your code here
+        ArrayList<DirectedGraphNode> order = new ArrayList<>();
+        if (graph == null) {
+            return order;
+        }
+        //1 统计图每个点的入度
+        Map<DirectedGraphNode, Integer> inDegree = getInDegree(graph);
+        //2 拿到入度为0的点，作为起点  0
+        ArrayList<DirectedGraphNode> startNodes = getStartNodes(inDegree, graph);
 
-			}
+        //3 bfs
+        order = bfs(inDegree, startNodes);
+        if (order.size() == graph.size()) {
+            return order;
+        }
+        return null;
 
-		}
-		return -1;
-	}
+    }
 
-	private boolean isPeople(NodeZ adj, int[][] grid) {
-		int n = grid.length;
-		int m = grid[0].length;
+    private static ArrayList<DirectedGraphNode> bfs(Map<DirectedGraphNode, Integer> inDegree, ArrayList<DirectedGraphNode> startNodes) {
+        ArrayList<DirectedGraphNode> order = new ArrayList<>();
+        Queue<DirectedGraphNode> queue = new LinkedList<>();
+        for (DirectedGraphNode node : startNodes) {
+            order.add(node);
+            queue.offer(node);
+        }
+        while (!queue.isEmpty()) {
+            DirectedGraphNode node = queue.poll();
+            for (DirectedGraphNode neighbor : node.neighbors) {
+                inDegree.put(neighbor, inDegree.get(neighbor) - 1);
+                if (inDegree.get(neighbor) == 0) {
+                    queue.offer(neighbor);
+                    order.add(neighbor);
+                }
+            }
+        }
+        return order;
+    }
 
-		if (adj.i < 0 || adj.i >= n) {
-			return false;
-		}
-		if (adj.j < 0 || adj.j >= m) {
-			return false;
-		}
-		return (grid[adj.i][adj.j] == 0);
-	}
+    /**
+     * 找出入度为0的点作为起点q
+     *
+     * @param inDegree
+     * @param graph
+     * @return
+     */
+    private static ArrayList<DirectedGraphNode> getStartNodes(Map<DirectedGraphNode, Integer> inDegree, ArrayList<DirectedGraphNode> graph) {
+        ArrayList<DirectedGraphNode> startNodes = new ArrayList<>();
+        for (DirectedGraphNode directedGraphNode : graph) {
+            if (inDegree.get(directedGraphNode) == 0) {
+                startNodes.add(directedGraphNode);
+            }
+        }
+        return startNodes;
+    }
+
+    /**
+     * 每个点的入度是多少
+     *
+     * @param graph
+     * @return
+     */
+    private static Map<DirectedGraphNode, Integer> getInDegree(ArrayList<DirectedGraphNode> graph) {
+        Map<DirectedGraphNode, Integer> in = new HashMap<>();
+        int n = graph.size();
+        for (DirectedGraphNode currentNode : graph) {
+            if (!in.containsKey(currentNode)) {
+                in.put(currentNode, 0);
+            }
+            //点的邻居们
+            ArrayList<DirectedGraphNode> point = currentNode.neighbors;
+            int m = point.size();
+            // 记录每个点的入度
+            for (DirectedGraphNode currentNeighbors : point) {
+                if (in.containsKey(currentNeighbors)) {
+                    in.put(currentNeighbors, in.get(currentNeighbors) + 1);
+                } else {
+                    in.put(currentNeighbors, 1);
+                }
+
+            }
+
+        }
+        return in;
+    }
+
+    /**
+     * 搜索图中节点 · Search Graph Nodes
+     * 给定一张 无向图，一个 节点 以及一个 目标值，返回距离这个节点最近 且 值为目标值的节点，如果不能找到则返回 NULL。
+     * 在给出的参数中, 我们用 map 来存节点的值
+     * 输入:
+     * {1,2,3,4#2,1,3#3,1,2#4,1,5#5,4}
+     * [3,4,5,50,50]
+     * 1
+     * 50
+     * 输出:
+     * 4
+     * 解释:
+     * 2------3  5
+     * \     |  |
+     * \    |  |
+     * \   |  |
+     * \  |  |
+     * 1 --4
+     * Give a node 1, target is 50
+     * <p>
+     * there a hash named values which is [3,4,10,50,50], represent:
+     * Value of node 1 is 3
+     * Value of node 2 is 4
+     * Value of node 3 is 10
+     * Value of node 4 is 50
+     * Value of node 5 is 50
+     * <p>
+     * Return node 4
+     * 太简单..
+     */
+    public UndirectedGraphNode searchNode(ArrayList<UndirectedGraphNode> graph,
+                                          Map<UndirectedGraphNode, Integer> values,
+                                          UndirectedGraphNode node,
+                                          int target) {
+        // Write your code here
+        Queue<UndirectedGraphNode> queue = new LinkedList<>();
+        Set<UndirectedGraphNode> hash = new HashSet<>();
+        queue.offer(node);
+        hash.add(node);
+        while (!queue.isEmpty()) {
+            UndirectedGraphNode head = queue.poll();
+            if (values.get(head) == target) {
+                return head;
+            }
+            for (UndirectedGraphNode nei : head.neighbors) {
+                if (!hash.contains(nei)) {
+                    queue.offer(nei);
+                    hash.add(nei);
+                }
+            }
+        }
+        return null;
+    }
+
+    public static void main(String[] args) {
+        boolean[][] ints = new boolean[][]{{
+                true, true, false, false, false},
+                {false, true, false, false, true},
+                {false, false, false, true, true},
+                {false, false, false, false, false},
+                {false, false, false, false, true}};
+        BFSGraphTest01 b = new BFSGraphTest01();
+        b.numIslands(ints);
+
+    }
+
+
+    /**
+     * [1,1,0,0,0],
+     * [0,1,0,0,1],
+     * [0,0,0,1,1],
+     * [0,0,0,0,0],
+     * [0,0,0,0,1]
+     * <p>
+     * 岛屿数量
+     * 思路 bfs遍历，遇到1改成0 coutn++
+     *
+     * @param grid
+     * @return
+     */
+    public int numIslands(boolean[][] grid) {
+        // write your code here
+        int count = 0;
+        List<List<Node>> grids = convertArrayToNode(grid);
+        for (int i = 0; i < grids.size(); i++) {
+            List<Node> nodes = grids.get(i);
+            for (int j = 0; j < nodes.size(); j++) {
+                //bfs
+                Node node = nodes.get(j);
+                if (node.val) {
+                    bfsFill(grids, node);
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    /**
+     * 给一个二维网格，每一个格子都有一个值，2 代表墙，1 代表僵尸，0 代表人类(数字 0, 1, 2)。
+     * 僵尸每天可以将上下左右最接近的人类感染成僵尸，但不能穿墙。将所有人类感染为僵尸需要多久，如果不能感染所有人则返回 -1
+     *
+     * @param grid
+     * @return
+     */
+    public int zombie(int[][] grid) {
+        // write your code here
+        int PEOPLE = 0;
+        int ZOMBIE = 1;
+        int WALL = 2;
+        int[] deltaX = new int[]{1, 0, 0, -1};
+        int[] deltaY = new int[]{0, 1, -1, 0};
+        if (grid == null || grid.length == 0 || grid[0].length == 0) {
+            return 0;
+        }
+        int n = grid.length;
+        int m = grid[0].length;
+        int people = 0;
+        Queue<NodeZ> queue = new LinkedList<>();
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (grid[i][j] == PEOPLE) {
+                    people++;
+                } else if (grid[i][j] == ZOMBIE) {
+                    queue.offer(new NodeZ(i, j));
+                }
+            }
+        }
+        int days = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                NodeZ zb = queue.poll();
+                //上下左右感染
+                for (int direction = 0; direction < 4; direction++) {
+                    NodeZ adj = new NodeZ(zb.i + deltaX[direction], zb.j + deltaY[direction]);
+                    //不是人不感染
+                    if (!isPeople(adj, grid)) {
+                        continue;
+                    }
+                    grid[adj.i][adj.j] = ZOMBIE;
+                    people--;
+                    if (people == 0) {
+                        return days;
+                    }
+                    queue.offer(adj);
+
+                }
+
+            }
+
+        }
+        return -1;
+    }
+
+    private boolean isPeople(NodeZ adj, int[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+
+        if (adj.i < 0 || adj.i >= n) {
+            return false;
+        }
+        if (adj.j < 0 || adj.j >= m) {
+            return false;
+        }
+        return (grid[adj.i][adj.j] == 0);
+    }
 
 
 
 
-	public void bfsFill(List<List<Node>> grids, Node node) {
-		Queue<Node> queue = new LinkedList<>();
-		queue.add(node);
-		while (!queue.isEmpty()) {
-			Node n = queue.poll();
-			n.val = false;
-			//查看上下左右是否是1，然后加入队列
-			int i = n.i;
-			int j = n.j;
-			//上
-			if (i - 1 >= 0) {
-				Node nt = getNode(i - 1, j, grids);
-				if (nt.val) {
-					queue.add(nt);
-				}
-			}
-			//下
-			if (i + 1 <= grids.size() - 1) {
-				Node nt = getNode(i + 1, j, grids);
-				if (nt.val) {
-					queue.add(nt);
+    public void bfsFill(List<List<Node>> grids, Node node) {
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(node);
+        while (!queue.isEmpty()) {
+            Node n = queue.poll();
+            n.val = false;
+            //查看上下左右是否是1，然后加入队列
+            int i = n.i;
+            int j = n.j;
+            //上
+            if (i - 1 >= 0) {
+                Node nt = getNode(i - 1, j, grids);
+                if (nt.val) {
+                    queue.add(nt);
+                }
+            }
+            //下
+            if (i + 1 <= grids.size() - 1) {
+                Node nt = getNode(i + 1, j, grids);
+                if (nt.val) {
+                    queue.add(nt);
 
-				}
-			}
-			//左
-			if (j - 1 >= 0) {
-				Node nt = getNode(i, j - 1, grids);
-				if (nt.val) {
-					queue.add(nt);
+                }
+            }
+            //左
+            if (j - 1 >= 0) {
+                Node nt = getNode(i, j - 1, grids);
+                if (nt.val) {
+                    queue.add(nt);
 
-				}
-			}
-			//右
-			if (j + 1 <= grids.get(0).size() - 1) {
-				Node nt = getNode(i, j + 1, grids);
-				if (nt.val) {
-					queue.add(nt);
+                }
+            }
+            //右
+            if (j + 1 <= grids.get(0).size() - 1) {
+                Node nt = getNode(i, j + 1, grids);
+                if (nt.val) {
+                    queue.add(nt);
 
-				}
-			}
-		}
-	}
+                }
+            }
+        }
+    }
 
-	public Node getNode(int i, int j, List<List<Node>> grids) {
-		for (int i1 = 0; i1 < grids.size(); i1++) {
-			for (int i2 = 0; i2 < grids.get(i1).size(); i2++) {
-				if (i == i1 && j == i2) {
-					return grids.get(i1)
-							.get(i2);
-				}
-			}
-		}
-		return null;
+    public Node getNode(int i, int j, List<List<Node>> grids) {
+        for (int i1 = 0; i1 < grids.size(); i1++) {
+            for (int i2 = 0; i2 < grids.get(i1).size(); i2++) {
+                if (i == i1 && j == i2) {
+                    return grids.get(i1)
+                            .get(i2);
+                }
+            }
+        }
+        return null;
 
-	}
+    }
 
-	public List<List<Node>> convertArrayToNode(boolean[][] grid) {
-		List<List<Node>> results = new ArrayList<>();
-		for (int i = 0; i < grid.length; i++) {
-			List<Node> result = new ArrayList<>();
-			for (int j = 0; j < grid[i].length; j++) {
-				result.add(new Node(i, j, grid[i][j]));
-			}
-			results.add(result);
-		}
-		return results;
-	}
+    public List<List<Node>> convertArrayToNode(boolean[][] grid) {
+        List<List<Node>> results = new ArrayList<>();
+        for (int i = 0; i < grid.length; i++) {
+            List<Node> result = new ArrayList<>();
+            for (int j = 0; j < grid[i].length; j++) {
+                result.add(new Node(i, j, grid[i][j]));
+            }
+            results.add(result);
+        }
+        return results;
+    }
 
 
 }
 
 class Node {
-	int i;
-	int j;
-	Boolean val;
+    int i;
+    int j;
+    Boolean val;
 
-	public Node() {
-	}
+    public Node() {
+    }
 
-	public Node(int i, int j, Boolean val) {
-		this.i = i;
-		this.j = j;
-		this.val = val;
-	}
+    public Node(int i, int j, Boolean val) {
+        this.i = i;
+        this.j = j;
+        this.val = val;
+    }
 }
 class NodeZ {
-	int i;
-	int j;
+    int i;
+    int j;
 
-	public NodeZ(int i, int j) {
-		this.i = i;
-		this.j = j;
-	}
+    public NodeZ(int i, int j) {
+        this.i = i;
+        this.j = j;
+    }
 }
 
 
