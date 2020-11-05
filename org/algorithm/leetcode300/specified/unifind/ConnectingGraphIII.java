@@ -1,26 +1,29 @@
 package org.algorithm.leetcode300.specified.unifind;
 
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 /**
  * @author lhzlhz
  * @create 2020/11/5
  * 连接图II · Connecting GraphII
-给一个图中的 n 个节点, 记为 1 到 n .在开始的时候图中没有边.
-你需要完成下面两个方法：
+给一个图中的 n 个节点, 记为 1 到 n . 在开始的时候图中没有边.
+你需要完成下面两个方法:
 
 connect(a, b), 添加一条连接节点 a, b的边
-query(a), 返回图中含 a 的联通区域内节点个数
+query(), 返回图中联通区域个数
  */
-public class ConnectingGraphII {
+public class ConnectingGraphIII {
 	public static void main(String[] args) {
-		ConnectingGraphII g = new ConnectingGraphII(6);
+		ConnectingGraphIII g = new ConnectingGraphIII(6);
 		g.connect(2, 1);
 		g.connect(1, 3);
 		g.connect(3, 2);
 		//g.connect(6, 3);
-		int i = g.query(1);
+		int i = g.query();
 		System.out.println(i);
 	}
-
 	private int[] father=null;
     private int[] size = null;
 
@@ -33,7 +36,7 @@ public class ConnectingGraphII {
 		return father[x] = find(father[x]);
 	}
 
-	public ConnectingGraphII(int n) {//初始化
+	public ConnectingGraphIII(int n) {//初始化
 		father = new int[n + 1];
         size = new int[n + 1];
         for (int i = 0; i <= n; i++) {
@@ -58,7 +61,13 @@ public class ConnectingGraphII {
 	 * @param b: An integer
 	 * @return: A boolean
 	 */
-	public int query(int a) {//询问
-        return size[find(a)];
+	public int query() {//询问
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < father.length; i++) {
+            if (i != 0) {
+                set.add(father[i]);
+            }
+        }
+        return set.size();
 	}
 }

@@ -331,12 +331,7 @@ public class BFSGraphTest01 {
     }
 
     public static void main(String[] args) {
-        boolean[][] ints = new boolean[][]{{
-                true, true, false, false, false},
-                {false, true, false, false, true},
-                {false, false, false, true, true},
-                {false, false, false, false, false},
-                {false, false, false, false, true}};
+        boolean[][] ints = new boolean[][]{{true,true}};
         BFSGraphTest01 b = new BFSGraphTest01();
         b.numIslands(ints);
 
@@ -358,21 +353,36 @@ public class BFSGraphTest01 {
      */
     public int numIslands(boolean[][] grid) {
         // write your code here
+        if (grid == null || grid.length == 0 || grid[0].length == 0) {
+            return 0;
+        }
         int count = 0;
-        List<List<Node>> grids = convertArrayToNode(grid);
-        for (int i = 0; i < grids.size(); i++) {
-            List<Node> nodes = grids.get(i);
-            for (int j = 0; j < nodes.size(); j++) {
-                //bfs
-                Node node = nodes.get(j);
-                if (node.val) {
-                    bfsFill(grids, node);
+        int n = grid.length;
+        int m = grid[0].length;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                //把小岛变成
+                if (grid[i][j]) {
+                    bfsFill(i, j, grid);
                     count++;
                 }
             }
         }
+
         return count;
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * 给一个二维网格，每一个格子都有一个值，2 代表墙，1 代表僵尸，0 代表人类(数字 0, 1, 2)。
@@ -407,26 +417,26 @@ public class BFSGraphTest01 {
         int days = 0;
         while (!queue.isEmpty()) {
             int size = queue.size();
+            days++;
             for (int i = 0; i < size; i++) {
                 NodeZ zb = queue.poll();
                 //上下左右感染
                 for (int direction = 0; direction < 4; direction++) {
-                    NodeZ adj = new NodeZ(zb.i + deltaX[direction], zb.j + deltaY[direction]);
+                    int x = zb.i + deltaX[direction];
+                    int y = zb.j + deltaY[direction];
+                    NodeZ adj = new NodeZ(x,y);
                     //不是人不感染
                     if (!isPeople(adj, grid)) {
                         continue;
                     }
-                    grid[adj.i][adj.j] = ZOMBIE;
+                    grid[x][y] = ZOMBIE;
                     people--;
                     if (people == 0) {
                         return days;
                     }
                     queue.offer(adj);
-
                 }
-
             }
-
         }
         return -1;
     }
@@ -447,47 +457,34 @@ public class BFSGraphTest01 {
 
 
 
-    public void bfsFill(List<List<Node>> grids, Node node) {
+    public void bfsFill(int i,int j,boolean[][] grid) {
+        int n = grid.length;//有几行
+        int m = grid[0].length; //有几列
+        int[] directionX = new int[]{0, 0, 1, -1};
+        int[] directionY = new int[]{1, -1, 0, 0};
         Queue<Node> queue = new LinkedList<>();
-        queue.add(node);
+        queue.offer(new Node(i, j));
+        grid[i][j] = false;
         while (!queue.isEmpty()) {
-            Node n = queue.poll();
-            n.val = false;
-            //查看上下左右是否是1，然后加入队列
-            int i = n.i;
-            int j = n.j;
-            //上
-            if (i - 1 >= 0) {
-                Node nt = getNode(i - 1, j, grids);
-                if (nt.val) {
-                    queue.add(nt);
-                }
-            }
-            //下
-            if (i + 1 <= grids.size() - 1) {
-                Node nt = getNode(i + 1, j, grids);
-                if (nt.val) {
-                    queue.add(nt);
+            Node node = queue.poll();
 
+            for (int k = 0; k < 4; k++) {
+                int x = node.i + directionX[k];
+                int y = node.j + directionY[k];
+                if (x < 0 || x >= n) {
+                    continue;
                 }
-            }
-            //左
-            if (j - 1 >= 0) {
-                Node nt = getNode(i, j - 1, grids);
-                if (nt.val) {
-                    queue.add(nt);
-
+                if (y < 0 || y >= m) {
+                    continue;
                 }
-            }
-            //右
-            if (j + 1 <= grids.get(0).size() - 1) {
-                Node nt = getNode(i, j + 1, grids);
-                if (nt.val) {
-                    queue.add(nt);
+                if (grid[x][y]) {
+                    grid[node.i][node.j] = false;
 
+                    queue.offer(new Node(x, y));
                 }
             }
         }
+
     }
 
     public Node getNode(int i, int j, List<List<Node>> grids) {
@@ -503,17 +500,7 @@ public class BFSGraphTest01 {
 
     }
 
-    public List<List<Node>> convertArrayToNode(boolean[][] grid) {
-        List<List<Node>> results = new ArrayList<>();
-        for (int i = 0; i < grid.length; i++) {
-            List<Node> result = new ArrayList<>();
-            for (int j = 0; j < grid[i].length; j++) {
-                result.add(new Node(i, j, grid[i][j]));
-            }
-            results.add(result);
-        }
-        return results;
-    }
+
 
 
 }
@@ -521,15 +508,11 @@ public class BFSGraphTest01 {
 class Node {
     int i;
     int j;
-    Boolean val;
 
-    public Node() {
-    }
 
-    public Node(int i, int j, Boolean val) {
+    public Node(int i, int j) {
         this.i = i;
         this.j = j;
-        this.val = val;
     }
 }
 class NodeZ {
