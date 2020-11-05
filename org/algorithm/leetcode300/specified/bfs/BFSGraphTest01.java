@@ -72,9 +72,11 @@ public class BFSGraphTest01 {
         if (n != edges.length + 1) {
             return false;
         }
-        //bfs验证是否联通
+       //点和他的邻居
         Map<Integer, Set<Integer>> map = initializeGraph(n, edges);
+        //bfs验证是否联通
         Set<Integer> set = bfsValidTree(map);
+        //是否所有的点都连通了
         return n == set.size();
     }
 

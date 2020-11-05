@@ -17,6 +17,8 @@ public class UnionFindTest {
 //				{false, false, false, false, true}};
         boolean[][] ints = {{false, true, false}, {true, false, true}, {false, true, false}};
         u.numIslands(ints);
+        int[][] ints1={{0, 1},{0,2},{1,2}};
+        System.out.println(u.validTree(4, ints1));
     }
 
     /**
@@ -75,6 +77,28 @@ public class UnionFindTest {
         // write your code here
         return null;
 
+    }
+
+    /**
+     *  图是否是树
+     *  n个点 n-1条边 是否都联通
+     */
+    public boolean validTree(int n, int[][] edges) {
+        if (n == 0) {
+            return false;
+        }
+        ConnectingGraphIII uf = new ConnectingGraphIII(n);
+        if (n - 1 != edges.length) {
+
+            return false;
+        }
+
+        for (int i = 0; i < edges.length; i++) {
+            int a = edges[i][0];
+            int b = edges[i][1];
+            uf.connect(a, b);
+        }
+        return uf.query()==1;
     }
 
 
