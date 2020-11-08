@@ -126,7 +126,6 @@ public class ArrayTest02 {
         //递归出口
         //return;
     }
-
     private static void subsetHelper2(int[] nums, int start, List<Integer> subset, List<List<Integer>> results) {
         results.add(new ArrayList<>(subset));
         for (int i = start; i < nums.length; i++) {
