@@ -36,7 +36,6 @@ public class Driver {
 		stattLacth.countDown();
 		System.out.println("wait 5 job");
 		doLacth.await();
-
 		System.out.println("all 5 job over: "+d.i);
 
 	}
