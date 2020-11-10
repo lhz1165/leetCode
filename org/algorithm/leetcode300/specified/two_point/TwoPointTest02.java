@@ -1,5 +1,7 @@
 package org.algorithm.leetcode300.specified.two_point;
 
+import javafx.util.Pair;
+
 import java.util.Arrays;
 
 /**
@@ -10,7 +12,7 @@ public class TwoPointTest02 {
     public static void main(String[] args) {
         TwoPointTest02 t = new TwoPointTest02();
         int[] nums ={0,2,2,2,2,1,0,1,0,0,0,1,0,2,0};
-        t.sortColors2(nums);
+        t.sortColors(nums);
         System.out.println(Arrays.toString(nums));
 
 
@@ -35,12 +37,12 @@ public class TwoPointTest02 {
         while (start <= end) {
             //end 如果等于k 那么会把所有比k小得找出来,(start左边的一段)，然后大于或等于k的另一段无序（start另一段，包含start）
             //0---end小于， start----length大于等于
-            while (start <= end&&nums[end] >= k) {
+            while (start <= end && nums[end] >= k) {
                 end--;
             }
             //start 如果等于k 那么会把所有比k大的找出来,(start右边的一段，包含start)
             // 0---end小于等于， start----length大于
-            while (start <= end&&nums[start] < k) {
+            while (start <= end && nums[start] < k) {
                 start++;
             }
             //如果都等于k，那么狠混乱，start左边右边都有等于k的，0---end小于等于 start----length大于等于
