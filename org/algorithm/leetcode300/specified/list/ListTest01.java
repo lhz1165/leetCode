@@ -2,26 +2,33 @@ package org.algorithm.leetcode300.specified.list;
 
 import org.algorithm.leetcode300.basic.ListNode;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author lhzlhz
  * @create 2020/7/11
  */
 public class ListTest01 {
 	public static void main(String[] args) {
-		ListNode n1 = new ListNode(1);
-		ListNode n2 = new ListNode(2);
-		ListNode n3 = new ListNode(3);
-		ListNode n4 = new ListNode(4);
+		ListNode n1 = new ListNode(4);
+		ListNode n2 = new ListNode(5);
+		ListNode n3 = new ListNode(1);
+		ListNode n4 = new ListNode(9);
 		n1.next = n2;
 		n2.next = n3;
 		n3.next = n4;
+
 		ListNode.print(n1);
 		System.out.println();
 //		ListNode.print(reverse(n1));
 //		System.out.println();
 
 		//ListNode.print(reverseKGroup(n1,2));
-		ListNode.print(rotateRight2(n1, 0));
+		//ListNode.print(rotateRight2(n1, 0));
+        int[] a = new int[]{1,1,1,1};
+        ListTest01 l = new ListTest01();
+        l.numIdenticalPairs(a);
 	}
 
 	/**
@@ -38,8 +45,31 @@ public class ListTest01 {
 			pre = cur;
 			cur = next;
 		}
+        String a = "abcde";
 		return pre;
+
 	}
+
+
+
+    public int numIdenticalPairs(int[] nums) {
+        int result = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            Integer val = map.get(num);
+            if (val == null) {
+                map.put(num, 1);
+            }else {
+                map.put(num, map.get(val)+1);
+            }
+        }
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            Integer value = entry.getValue();
+            result += (value - 1) * (value) / 2;
+        }
+
+        return result;
+    }
 
 	/**
 	 *
