@@ -9,12 +9,12 @@ import java.util.Arrays;
 public class TwoPointTest02 {
     public static void main(String[] args) {
         TwoPointTest02 t = new TwoPointTest02();
-        int[] nums ={0,2,2,2,2,1,0,1,0,0,0,1,0,2,0};
-        t.sortColors2(nums);
-        System.out.println(Arrays.toString(nums));
+//        int[] nums ={0,2,2,2,2,1,0,1,0,0,0,1,0,2,0};
+//        t.sortColors2(nums);
+//        System.out.println(Arrays.toString(nums));
+//
 
-
-        int[] arr = {3,5,4,6,1,2};
+        int[] arr = {3,5,6,4,1,2,0};
         t.kthLargestElement( 4,arr);
 
     }
