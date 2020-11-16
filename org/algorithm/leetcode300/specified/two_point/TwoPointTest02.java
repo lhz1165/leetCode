@@ -16,9 +16,9 @@ public class TwoPointTest02 {
         System.out.println(Arrays.toString(nums));
 
 
-        int[] arr = {3,5,4,6,1,2};
-        t.kthLargestElement( 4,arr);
-
+        int[] arr = {3,5,4,6,1,2,4};
+        t.quickSort2(arr, 4);
+        System.out.println();
     }
 
     /**
@@ -189,5 +189,25 @@ public class TwoPointTest02 {
         nums[l] = nums[i];
         nums[i] = tmp;
     }
+
+    private void quickSort2(int[] nodes, int pivot) {
+        int start = 0;
+        int end = nodes.length - 1;
+        int index = 0;
+        while (index  != end) {
+            if (nodes[index] < pivot) {
+                swap(nodes, start, index);
+                start++;
+                index++;
+            } else if (nodes[index] > pivot) {
+                swap(nodes, end, index);
+                end--;
+            }else {
+                index++;
+            }
+
+        }
+    }
+
 
 }

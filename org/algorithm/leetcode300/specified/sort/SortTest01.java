@@ -53,8 +53,6 @@ public class SortTest01 {
                 nums[right] = tmp;
                 left++;
                 right--;
-
-
             }
         }
         //left 交错了了
