@@ -21,10 +21,18 @@ public class TreeTest02 {
         r1.right = r3;
         r2.left = r4;
         r2.right = r5;
-        r3.left = r6;
-        r3.right = r7;
+        //r3.left = r6;
+        //r3.right = r7;
         TreeTest02 t = new TreeTest02();
-        System.out.println(t.findSubtree(r1));
+        System.out.println(t.getHeight(r1,0));
+
+    }
+
+    public int getHeight(TreeNode node, int h) {
+        if (node == null) {
+            return h;
+        }
+        return Math.max(getHeight(node.left, h + 1), getHeight(node.left, h + 1));
 
     }
 
@@ -62,11 +70,13 @@ public class TreeTest02 {
      * 输出： [[4, 5, 3], [2], [1]].
      * 解释：
      * <p>
-     *   1
+     *     1
+     *    / \
+     *   2   3
      *  / \
-     * 2   3
-     * / \
      * 4   5
+     *
+     *
      */
     public List<List<Integer>> findLeaves(TreeNode root) {
         // write your code here
@@ -86,7 +96,7 @@ public class TreeTest02 {
         if (cur == null) {
             return 0;
         }
-        //和左右子树的最大深度
+        //当前几点的左右子树的最大深度来分组
         int maxDepth = Math.max(findLeavesDfs(cur.left, map), findLeavesDfs(cur.right, map)) + 1;
         List<Integer> integerList = map.get(maxDepth);
         if (integerList != null) {
