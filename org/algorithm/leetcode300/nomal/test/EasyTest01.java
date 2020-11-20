@@ -1,7 +1,10 @@
 package org.algorithm.leetcode300.nomal.test;
 
+import org.algorithm.leetcode300.basic.ListNode;
+
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * @author: lhz
@@ -10,8 +13,20 @@ import java.util.Comparator;
 public class EasyTest01 {
     public static void main(String[] args) {
         EasyTest01 e = new EasyTest01();
-        e.shuffle(new int[]{2, 5, 1, 3, 4, 7}, 3);
+        ListNode n1 = new ListNode(-1);
+        ListNode n2 = new ListNode(5);
+        ListNode n3 = new ListNode(3);
+        ListNode n4 = new ListNode(4);
+        ListNode n5 = new ListNode(6);
+        ListNode n6 = new ListNode(0);
+        n1.next = n2;
+        n2.next = n3;
+        n3.next = n4;
+        n4.next = n5;
+        n5.next = n6;
+        e.insertionSortList(n1);
     }
+
     /**
      * 1470. 重新排列数组
      * 给你一个数组 nums ，数组中有 2n 个元素，按 [x1,x2,...,xn,y1,y2,...,yn] 的格式排列。
@@ -34,6 +49,7 @@ public class EasyTest01 {
         }
         return result;
     }
+
     /**
      * 1030. 距离顺序排列矩阵单元格
      */
@@ -47,4 +63,65 @@ public class EasyTest01 {
         Arrays.sort(ret, Comparator.comparingInt(a -> (Math.abs(a[0] - r0) + Math.abs(a[1] - c0))));
         return ret;
     }
+
+    /**
+     * 283. 移动零
+     * 输入: [0,1,0,3,12]
+     * 输出: [1,3,12,0,0]
+     *
+     * @param nums
+     */
+    public void moveZeroes(int[] nums) {
+        int n = nums.length, left = 0, right = 0;
+        while (right < n) {
+            if (nums[right] != 0) {
+                swap(nums, left, right);
+                left++;
+            }
+            right++;
+        }
+    }
+
+    public void swap(int[] nums, int left, int right) {
+        int temp = nums[left];
+        nums[left] = nums[right];
+        nums[right] = temp;
+    }
+
+    /* ***********************
+     * 147. 对链表进行插入排序  *
+     * **********************
+     *
+     * @param head
+     * @return
+     */
+    public ListNode insertionSortList(ListNode head) {
+        if (null == head) {
+            return head;
+        }
+        ListNode dummyHead = new ListNode(0);
+        dummyHead.next = head;
+
+        ListNode tail = head;//最大的尾巴
+        ListNode  curr = head.next;
+        while (curr != null) {
+            if (curr.val >= tail.val) {
+
+                tail = tail.next;
+            }else {
+                ListNode start = dummyHead;
+
+                while (start.next.val <= curr.val) {
+                    start = start.next;
+                }
+                tail.next = curr.next;
+                curr.next = start.next;
+                start.next = curr;
+            }
+            curr = tail.next;
+        }
+        return dummyHead.next;
+
+    }
+
 }
