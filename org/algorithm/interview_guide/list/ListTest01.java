@@ -28,14 +28,15 @@ public class ListTest01 {
         n4.next = n5;
         n5.next = n6;
         n6.next = n7;
-//        n7.next = n8;
+        n7.next = n1;
 //		//n8.next = n1;
 //		t.listPartition(n1, 6);
         System.out.println();
-        t.removeElements(n1,6);
+        t.josephusKill1(n1,2);
         System.out.println();
 
     }
+
 
     /**
      * 约瑟夫环问题

@@ -1,5 +1,7 @@
 package org.algorithm.leetcode300.specified.sort;
 
+import org.algorithm.leetcode300.basic.ListNode;
+
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -11,14 +13,14 @@ import java.util.stream.Stream;
  **/
 public class SortTest01 {
     public static void main(String[] args) {
-        int[] arr = {1, 2, 8, 9, 5, 3, 4, 0, 6, 7};
+        int[] arr = {1, 2, 8, 9, 5, 3, 4, 0, 6, 7,3,4,3,1};
         //quickSort(arr, 0, arr.length - 1);
 
 //        SortTest01 s = new SortTest01();
 //        s.mergeSort(arr, 0, arr.length - 1, new int[arr.length]);
 
 
-        quickSort(arr, 0, arr.length - 1);
+        quickSort22(arr, 3);
         System.out.println(Arrays.toString(arr));
 
     }
@@ -93,5 +95,40 @@ public class SortTest01 {
         }
     }
 
+    /**
+     * index 必须保证index左边的小与或等于pivot
+     * left
+     * right
+     * @param nums
+     * @param pivot
+     */
+    public static void quickSort22(int[] nums, int pivot) {
+        int index = 0;
+        int left = 0;
+        int right = nums.length - 1;
+        while (index-1 < right) {
+            if (nums[index] < pivot) {
+                swap(nums, left, index);
+                left++;
+                index++;
+            } else if (nums[index] > pivot) {
+                swap(nums, index, right);
+                right--;
+            } else {
+                index++;
+            }
+
+        }
+        System.out.println();
+
+    }
+
+
+
+    public static void swap(int[] nums, int a, int b) {
+        int tmp = nums[a];
+        nums[a] = nums[b];
+        nums[b] = tmp;
+    }
 
 }
