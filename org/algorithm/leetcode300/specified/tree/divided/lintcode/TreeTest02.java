@@ -39,26 +39,28 @@ public class TreeTest02 {
     /**
      * 分治法
      * 要求右边的任何数都要比root大，左边的任何数都要比root小
+     * 左子树下界是负无穷，上界是根节点
+     * 右子树上界是正无穷，下界是根节点
      * @param root
      * @return
      */
     public boolean isValidBST(TreeNode root) {
 
-        Long leftMax = Long.MIN_VALUE;
-        Long rightMin = Long.MAX_VALUE;
-        return isValidBSTHelper(root, leftMax, rightMin);
+        Long lower = Long.MIN_VALUE;
+        Long upper = Long.MAX_VALUE;
+        return isValidBSTHelper(root, lower, upper);
     }
 
-    public boolean isValidBSTHelper(TreeNode cur, Long min, Long max) {
+    public boolean isValidBSTHelper(TreeNode cur, Long lower, Long upper) {
         if (cur == null) {
             return true;
         }
-        if (cur.val <= min || cur.val >= max) {
+        if (cur.val <= lower || cur.val >= upper) {
             return false;
         }
         //左边的所有数都 必须比根节点的最小值小
-        boolean isLeftValid=isValidBSTHelper(cur.left,min,Math.min(cur.val,max));
-        boolean isRightValid=isValidBSTHelper(cur.right,Math.max(cur.val,min),max);
+        boolean isLeftValid=isValidBSTHelper(cur.left,lower, (long) cur.val);
+        boolean isRightValid=isValidBSTHelper(cur.right,(long)cur.val,upper);
         return isLeftValid && isRightValid;
 
     }
@@ -115,12 +117,12 @@ public class TreeTest02 {
      * 输入： {3,9,20,#,#,15,7}
      * 输出： [[9],[3,15],[20],[7]]
      * 解释：
-     * 3
-     * /\
-     * /  \
-     * 9  20
-     * /\
-     * /  \
+     *        3
+     *       /\
+     *      /  \
+     *     9  20
+     *    /\
+     *   /  \
      * 15   7
      */
     public List<List<Integer>> verticalOrder(TreeNode root) {

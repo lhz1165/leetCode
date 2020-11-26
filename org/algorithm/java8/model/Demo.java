@@ -1,7 +1,9 @@
 package org.algorithm.java8.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author: lhz
@@ -32,10 +34,21 @@ public class Demo {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "Demo{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
     public static void main(String[] args) {
-        List<Demo> d = new ArrayList<>();
-        int count = (int)d.stream().filter(e-> "aa".equals(e.getName())).count();
-        System.out.println(count);
+        List<Demo> ds = new ArrayList<>(Arrays.asList(new Demo(1,"2"),new Demo(2,"22"),new Demo(3,"33"),new Demo(4,"44")));
+        ds.stream()
+                .peek(d -> d.setId(5)).collect(Collectors.toList());
+        System.out.println(ds);
+
+
 
     }
 }

@@ -38,6 +38,7 @@ public class Codec {
         stack.offer(root);
         while (!stack.isEmpty()) {
             TreeNode cur = stack.poll();
+
             if (cur.val == -1) {
                 sb.append("#")
                         .append(",");
@@ -46,11 +47,13 @@ public class Codec {
                 sb.append(cur.val)
                         .append(",");
             }
+
             if (cur.left != null) {
                 stack.offer(cur.left);
             } else {
                 stack.offer(new TreeNode(-1));
             }
+
             if (cur.right != null) {
                 stack.offer(cur.right);
             } else {
@@ -63,7 +66,7 @@ public class Codec {
 
     public TreeNode deserialize(String data) {
         String[] nodes = data.split(",");
-        if (nodes.length == 1&&nodes[0].equals("")) {
+        if (nodes.length == 1 && nodes[0].equals("")) {
             return null;
         }
         Queue<TreeNode> queue = new LinkedList<>();
@@ -80,7 +83,7 @@ public class Codec {
                 parent.left = left;
                 queue.add(left);
             }
-            //上面如果不为空就是左子节点的值，这里是右子节点的值，注意这里有个i++，
+            //上面如果不为空就是左子节点的值，这里是右子节点的值，注意这里有个++i，
             if (!"#".equals(nodes[++i])) {
                 TreeNode right = new TreeNode(Integer.parseInt(nodes[i]));
                 parent.right = right;
