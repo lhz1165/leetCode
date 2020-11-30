@@ -21,46 +21,36 @@ public class TreeTest02 {
         r1.right = r3;
         r2.left = r4;
         r2.right = r5;
-        //r3.left = r6;
-        //r3.right = r7;
+        r3.left = r6;
+        r3.right = r7;
         TreeTest02 t = new TreeTest02();
-        System.out.println(t.getHeight(r1,0));
-
-    }
-
-    public int getHeight(TreeNode node, int h) {
-        if (node == null) {
-            return h;
-        }
-        return Math.max(getHeight(node.left, h + 1), getHeight(node.left, h + 1));
+        System.out.println(t.findSubtree(r1));
 
     }
 
     /**
      * 分治法
      * 要求右边的任何数都要比root大，左边的任何数都要比root小
-     * 左子树下界是负无穷，上界是根节点
-     * 右子树上界是正无穷，下界是根节点
      * @param root
      * @return
      */
     public boolean isValidBST(TreeNode root) {
 
-        Long lower = Long.MIN_VALUE;
-        Long upper = Long.MAX_VALUE;
-        return isValidBSTHelper(root, lower, upper);
+        Long leftMax = Long.MIN_VALUE;
+        Long rightMin = Long.MAX_VALUE;
+        return isValidBSTHelper(root, leftMax, rightMin);
     }
 
-    public boolean isValidBSTHelper(TreeNode cur, Long lower, Long upper) {
+    public boolean isValidBSTHelper(TreeNode cur, Long min, Long max) {
         if (cur == null) {
             return true;
         }
-        if (cur.val <= lower || cur.val >= upper) {
+        if (cur.val <= min || cur.val >= max) {
             return false;
         }
         //左边的所有数都 必须比根节点的最小值小
-        boolean isLeftValid=isValidBSTHelper(cur.left,lower, (long) cur.val);
-        boolean isRightValid=isValidBSTHelper(cur.right,(long)cur.val,upper);
+        boolean isLeftValid=isValidBSTHelper(cur.left,min,Math.min(cur.val,max));
+        boolean isRightValid=isValidBSTHelper(cur.right,Math.max(cur.val,min),max);
         return isLeftValid && isRightValid;
 
     }
@@ -72,13 +62,11 @@ public class TreeTest02 {
      * 输出： [[4, 5, 3], [2], [1]].
      * 解释：
      * <p>
-     *     1
-     *    / \
-     *   2   3
+     *   1
      *  / \
+     * 2   3
+     * / \
      * 4   5
-     *
-     *
      */
     public List<List<Integer>> findLeaves(TreeNode root) {
         // write your code here
@@ -98,7 +86,7 @@ public class TreeTest02 {
         if (cur == null) {
             return 0;
         }
-        //当前几点的左右子树的最大深度来分组
+        //和左右子树的最大深度
         int maxDepth = Math.max(findLeavesDfs(cur.left, map), findLeavesDfs(cur.right, map)) + 1;
         List<Integer> integerList = map.get(maxDepth);
         if (integerList != null) {
@@ -117,12 +105,12 @@ public class TreeTest02 {
      * 输入： {3,9,20,#,#,15,7}
      * 输出： [[9],[3,15],[20],[7]]
      * 解释：
-     *        3
-     *       /\
-     *      /  \
-     *     9  20
-     *    /\
-     *   /  \
+     * 3
+     * /\
+     * /  \
+     * 9  20
+     * /\
+     * /  \
      * 15   7
      */
     public List<List<Integer>> verticalOrder(TreeNode root) {
