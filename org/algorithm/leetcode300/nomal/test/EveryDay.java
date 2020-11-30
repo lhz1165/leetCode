@@ -3,6 +3,8 @@ package org.algorithm.leetcode300.nomal.test;
 import org.algorithm.leetcode300.basic.TreeNode;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author: lhz
@@ -14,7 +16,7 @@ public class EveryDay {
         //[7,0], [4,4], [7,1], [5,0], [6,1], [5,2]
 //        int[][] p = {{7, 0}, {4, 4}, {7, 1}, {5, 0}, {6, 1}, {5, 2},{3,0}};
 //        e.reconstructQueue(p);
-        System.out.println(e.sortString("aaaabbbbcccc"));
+        System.out.println(e.fourSumCount(new int[]{-1,-1},new int[]{-1,1 },new int[]{-1,1},new int[]{1,-1}));
 
     }
 
@@ -104,6 +106,37 @@ public class EveryDay {
 
         }
         return sb.toString();
+    }
+
+    /**
+     *
+     * 454. 四数相加 II
+     */
+    public int fourSumCount(int[] A, int[] B, int[] C, int[] D) {
+        //A+B的和《 == 》 次数
+        Map<Integer, Integer> map1 = new HashMap<>();
+        for (int a : A) {
+            for (int b : B) {
+                int sum = a + b;
+                if (map1.containsKey(sum)) {
+                    map1.put(sum, map1.get(sum) + 1);
+                }else {
+                    map1.put(sum, 1);
+                }
+            }
+        }
+        int result = 0;
+        for (int c : C) {
+            for (int d : D) {
+                int sum = c + d;
+                if (map1.containsKey(-sum)) {
+                    result += (map1.get(-sum));
+                }
+            }
+        }
+
+        return result;
+
     }
 
 
