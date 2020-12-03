@@ -1,8 +1,9 @@
 package org.algorithm.leetcode300.specified.tree.divided.lintcode;
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import org.algorithm.leetcode300.basic.TreeNode;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -18,6 +19,10 @@ public class TreeTest03 {
      * 给定一棵二叉搜索树，请找出其中第k大的节点。
      */
     int K = 0;
+    /**
+     * 二叉树直径
+     */
+    int result = 0;
 
     public static void main(String[] args) {
         TreeTest03 t = new TreeTest03();
@@ -40,7 +45,7 @@ public class TreeTest03 {
 //        n3.left = n4;
 //        n3.right = n5;
 
-        t.lowestCommonAncestor(n1,n4,n3);
+        t.lowestCommonAncestor(n1, n4, n3);
         //System.out.println(isSymmetric);
 
     }
@@ -102,7 +107,7 @@ public class TreeTest03 {
         TreeNode tmp = root.left;
         root.left = root.right;
         root.right = tmp;
-     }
+    }
 
     /**
      * 617. 合并二叉树
@@ -145,6 +150,7 @@ public class TreeTest03 {
             return;
         }
         list.push(root.val);
+
         if (k == list.size()) {
             return;
         }
@@ -152,7 +158,6 @@ public class TreeTest03 {
             kthLargestHelper(root.left, k, list);
         }
     }
-
 
     /**
      * 二叉树的最近公共祖先
@@ -174,6 +179,7 @@ public class TreeTest03 {
         }
         return root;
     }
+
     /**
      * 二叉搜索树的最近公共祖先
      */
@@ -195,11 +201,11 @@ public class TreeTest03 {
         if (root == null) {
             return true;
         }
-        return isLeftAndRightSymmetric(root.left,root.right);
+        return isLeftAndRightSymmetric(root.left, root.right);
 
     }
 
-    private boolean isLeftAndRightSymmetric(TreeNode left,TreeNode right) {
+    private boolean isLeftAndRightSymmetric(TreeNode left, TreeNode right) {
         if (left == null && right == null) {
             return true;
         }
@@ -208,30 +214,30 @@ public class TreeTest03 {
         }
         boolean lr = isLeftAndRightSymmetric(left.left, right.right);
         boolean rl = isLeftAndRightSymmetric(left.right, right.left);
-        return left.val == right.val&&lr && rl ;
+        return left.val == right.val && lr && rl;
 
     }
 
     /**
-     *是否平衡二叉树
-     *
+     * 是否平衡二叉树
      */
     public boolean isBalanced(TreeNode root) {
         if (root == null) {
             return true;
         }
 
-        return isSearch(root,Integer.MIN_VALUE,Integer.MAX_VALUE) && isHeight(root);
+        return isSearch(root, Integer.MIN_VALUE, Integer.MAX_VALUE) && isHeight(root);
     }
 
     /**
      * 是否二叉搜索树
+     *
      * @param root
      * @param lower
      * @param upper
      * @return
      */
-    public boolean isSearch(TreeNode root,int lower,int upper) {
+    public boolean isSearch(TreeNode root, int lower, int upper) {
         if (root == null) {
             return true;
         }
@@ -244,6 +250,7 @@ public class TreeTest03 {
 
     /**
      * 高度差是否不为2
+     *
      * @param root
      * @return
      */
@@ -265,15 +272,11 @@ public class TreeTest03 {
         return Math.max(height(node.left), height(node.right)) + 1;
     }
 
-    /**
-     * 二叉树直径
-     */
-    int result = 0;
     public int diameterOfBinaryTree(TreeNode root) {
         if (root == null) {
             return 0;
         }
-        return helperDiameterOfBinaryTree(root)-1;
+        return helperDiameterOfBinaryTree(root) - 1;
     }
 
     private int helperDiameterOfBinaryTree(TreeNode root) {
@@ -306,7 +309,6 @@ public class TreeTest03 {
         return root;
 
     }
-
 
 
 

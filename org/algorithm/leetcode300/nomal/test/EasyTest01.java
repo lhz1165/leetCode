@@ -2,6 +2,7 @@ package org.algorithm.leetcode300.nomal.test;
 
 import org.algorithm.leetcode300.basic.ListNode;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -24,7 +25,12 @@ public class EasyTest01 {
         n3.next = n4;
         n4.next = n5;
         n5.next = n6;
-        e.insertionSortList(n1);
+        //e.insertionSortList(n1);
+
+
+        //e.getRow(3);
+        //System.out.println(e.getBinary(5, new StringBuilder(), true));
+        System.out.println(e.bitwiseComplement2(5));
     }
 
     /**
@@ -103,12 +109,12 @@ public class EasyTest01 {
         dummyHead.next = head;
 
         ListNode tail = head;//最大的尾巴
-        ListNode  curr = head.next;
+        ListNode curr = head.next;
         while (curr != null) {
             if (curr.val >= tail.val) {
 
                 tail = tail.next;
-            }else {
+            } else {
                 ListNode start = dummyHead;
 
                 while (start.next.val <= curr.val) {
@@ -121,7 +127,139 @@ public class EasyTest01 {
             curr = tail.next;
         }
         return dummyHead.next;
-
     }
 
+    /**
+     * 杨辉三角
+     *
+     * @param rowIndex
+     * @return
+     */
+    public List<Integer> getRow(int rowIndex) {
+        List<List<Integer>> sanjiao = new ArrayList<>();
+        for (int i = 1; i <= rowIndex; i++) {
+            List<Integer> result = new ArrayList<>();
+            for (int j = 0; j < i; j++) {
+                if (j == 0) {
+                    result.add(1);
+                    continue;
+                }
+                if (j == i - 1) {
+                    result.add(1);
+                    continue;
+                }
+                List<Integer> last = sanjiao.get(sanjiao.size() - 1);
+                int num = last.get(j - 1) + last.get(j);
+                result.add(num);
+            }
+            sanjiao.add(result);
+
+        }
+        return sanjiao.get(sanjiao.size() - 1);
+    }
+
+    /**
+     * 三角形最大周长
+     *
+     * @param A
+     * @return
+     */
+    public int largestPerimeter(int[] A) {
+        Arrays.sort(A);
+        for (int i = A.length - 1; i >= 2; i--) {
+            if (A[i - 1] + A[i - 2] > A[i]) {
+                return A[i - 1] + A[i - 2] + A[i];
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * 1009. 十进制整数的反码
+     * 输入：5
+     * 输出：2
+     * 解释：5 的二进制表示为 "101"，其二进制反码为 "010"，也就是十进制中的 2 。
+     */
+    public int bitwiseComplement(int N) {
+        String binary = getBinary(N, new StringBuilder(), true);
+        String revsrse = getReverse(binary);
+        return binaryToInt(revsrse);
+    }
+
+    /**
+     * 反码 = 数字 异或 11111.。。
+     * @param N
+     * @return
+     */
+    public int bitwiseComplement2(int N) {
+        int criteria = 1;
+        int sum = 0;
+        while (sum < N) {
+            sum = (sum+ criteria);
+            criteria = criteria << 1;
+        }
+        return  N ^ sum;
+    }
+
+    public String getBinary(int N, StringBuilder sb, boolean first) {
+        if (N == 0) {
+            return "0";
+        }
+        for (int i = 0; i < Integer.MAX_VALUE; i++) {
+            if (N - (1 << i) > 0) {
+                continue;
+            }
+            if (N - (1 << i) == 0 && first) {
+
+                sb.append(1);
+                for (int j = 0; j < i; j++) {
+                    sb.append(0);
+                }
+                break;
+            }
+            if (N - (1 << i) == 0){
+                continue;
+            }
+            N -= 1 << (i - 1);
+            if (first) {
+                sb.append(1);
+                for (int j = 0; j < i - 1; j++) {
+                    sb.append(0);
+                }
+            } else {
+                sb.replace(sb.length() - i, sb.length() - i + 1, "1");
+            }
+            getBinary(N, sb, false);
+            break;
+        }
+        return sb.toString();
+    }
+
+    public String getReverse(String binary) {
+        char[] chars = binary.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            if (chars[i] == '1') {
+                chars[i] = '0';
+            }else {
+                chars[i] = '1';
+            }
+        }
+        return new String(chars);
+    }
+
+
+    public int binaryToInt(String binary) {
+        int result = 0;
+        char[] chars = binary.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        int index = 0;
+        for (int i = chars.length-1; i >=0 ; i--) {
+            if (chars[index] == '1') {
+                result += (1 << i);
+            }
+            index++;
+
+        }
+        return result;
+    }
 }
