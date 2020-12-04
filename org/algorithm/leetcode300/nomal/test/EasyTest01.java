@@ -25,13 +25,11 @@ public class EasyTest01 {
         n3.next = n4;
         n4.next = n5;
         n5.next = n6;
-        //e.insertionSortList(n1);
 
+        e.sumEvenAfterQueries(new int[]{1, 2, 3, 4}, new int[][]{{1, 0}, {-3, 1}, {-4, 0}, {2, 3}});
 
-        //e.getRow(3);
-        //System.out.println(e.getBinary(5, new StringBuilder(), true));
-        System.out.println(e.bitwiseComplement2(5));
     }
+
 
     /**
      * 1470. 重新排列数组
@@ -188,6 +186,7 @@ public class EasyTest01 {
 
     /**
      * 反码 = 数字 异或 11111.。。
+     *
      * @param N
      * @return
      */
@@ -195,10 +194,10 @@ public class EasyTest01 {
         int criteria = 1;
         int sum = 0;
         while (sum < N) {
-            sum = (sum+ criteria);
+            sum = (sum + criteria);
             criteria = criteria << 1;
         }
-        return  N ^ sum;
+        return N ^ sum;
     }
 
     public String getBinary(int N, StringBuilder sb, boolean first) {
@@ -217,7 +216,7 @@ public class EasyTest01 {
                 }
                 break;
             }
-            if (N - (1 << i) == 0){
+            if (N - (1 << i) == 0) {
                 continue;
             }
             N -= 1 << (i - 1);
@@ -240,7 +239,7 @@ public class EasyTest01 {
         for (int i = 0; i < chars.length; i++) {
             if (chars[i] == '1') {
                 chars[i] = '0';
-            }else {
+            } else {
                 chars[i] = '1';
             }
         }
@@ -253,7 +252,7 @@ public class EasyTest01 {
         char[] chars = binary.toCharArray();
         StringBuilder sb = new StringBuilder();
         int index = 0;
-        for (int i = chars.length-1; i >=0 ; i--) {
+        for (int i = chars.length - 1; i >= 0; i--) {
             if (chars[index] == '1') {
                 result += (1 << i);
             }
@@ -262,4 +261,67 @@ public class EasyTest01 {
         }
         return result;
     }
+
+    /**
+     * 1071. 字符串的最大公因子
+     * m*x  n*x
+     * x为相同部分的数量
+     * 求 n 和 m 的最大公约数
+     */
+    public String gcdOfStrings(String str1, String str2) {
+        if (!(str1 + str2).equals(str2 + str1)) {
+            return "";
+        }
+        int maxYue = getMaxYue(Math.max(str1.length(), str2.length()), Math.min(str1.length(), str2.length()));
+        return str2.substring(0, maxYue);
+    }
+
+    public int getMaxYue(int a, int b) {
+        if (a % b == 0) {
+            return b;
+        }
+        return getMaxYue(b, a % b);
+    }
+
+    /**
+     * 985. 查询后的偶数和
+     *  先求出偶数的和 ，然后先减再加
+     */
+    public int[] sumEvenAfterQueries(int[] A, int[][] queries) {
+        int S = 0;
+        for (int x : A) {
+            if (x % 2 == 0) {
+                S += x;
+            }
+        }
+        int[] ans = new int[queries.length];
+        for (int i = 0; i < queries.length; ++i) {
+            int val = queries[i][0], index = queries[i][1];
+            if (A[index] % 2 == 0) {
+                S -= A[index];
+            }
+            A[index] += val;
+            if (A[index] % 2 == 0) {
+                S += A[index];
+            }
+            ans[i] = S;
+        }
+        return ans;
+    }
+
+    /**
+     *
+     * 268. 丢失的数字
+     * n^n = 0
+     * 0^n = n
+     */
+    public int missingNumber(int[] nums) {
+        int res = nums.length;
+        for (int i = 0; i < nums.length; i++) {
+            res = res ^ i;
+            res = res ^ nums[i];
+        }
+        return res;
+    }
+
 }
