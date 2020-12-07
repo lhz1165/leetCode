@@ -24,7 +24,6 @@ public class TwoStackQueue {
 		System.out.println(s.poll());
 		s.add(6);
 		System.out.println(s.poll());
-
 	}
 
 
