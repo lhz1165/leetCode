@@ -1,10 +1,9 @@
 package org.algorithm.interview_guide.list;
 
 import org.algorithm.leetcode300.basic.ListNode;
+import org.algorithm.leetcode300.basic.TreeNode;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @author lhzlhz
@@ -289,24 +288,41 @@ public class ListTest01 {
         return head;
     }
 
-    public ListNode removeElements(ListNode head, int val) {
-        if (head == null) {
+    /**
+     * 搜索二叉树变成链表
+     * left = last;
+     * right = next;
+     */
+    public TreeNode convert1(TreeNode head) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        inOrderToQueue(head,queue);
+        if (queue.isEmpty()) {
             return head;
         }
-        List<ListNode> nodes = new ArrayList<>();
-        ListNode cur = head;
-        while (cur != null) {
-            if (val != cur.val) {
-                nodes.add(cur);
-            }
-            cur = cur.next;
+        head = queue.poll();
+        TreeNode pre = head;
+        pre.left = null;
+        TreeNode cur = null;
+        while (!queue.isEmpty()) {
+            cur = queue.poll();
+            pre.right =cur;
+            cur.left = pre;
+            pre = cur;
         }
-        ListNode prev =head;
-        for (int i = 1; i < nodes.size(); i++) {
-            prev.next = nodes.get(i);
-            prev = nodes.get(i);
-        }
-        prev.next = null;
+        pre.right = null;
         return head;
+
+
+    }
+
+    public void inOrderToQueue(TreeNode node, Queue<TreeNode> queue) {
+        if (node == null) {
+            return;
+        }
+        inOrderToQueue(node.left, queue);
+        queue.offer(node);
+        inOrderToQueue(node.right, queue);
+
+
     }
 }
