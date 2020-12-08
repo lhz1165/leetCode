@@ -2,10 +2,7 @@ package org.algorithm.leetcode300.nomal.test;
 
 import org.algorithm.leetcode300.basic.ListNode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author: lhz
@@ -27,6 +24,9 @@ public class EasyTest01 {
         n5.next = n6;
 
         e.sumEvenAfterQueries(new int[]{1, 2, 3, 4}, new int[][]{{1, 0}, {-3, 1}, {-4, 0}, {2, 3}});
+        //"1s3 PSt"
+        //["step","steps","stripe","stepple"]
+        e.shortestCompletingWord("1s3 PSt", new String[]{"step","steps","stripe","stepple"});
 
     }
 
@@ -312,8 +312,9 @@ public class EasyTest01 {
     /**
      *
      * 268. 丢失的数字
-     * n^n = 0
-     * 0^n = n
+     * n ^ n = 0
+     * 0 ^ n = n
+     * ()
      */
     public int missingNumber(int[] nums) {
         int res = nums.length;
@@ -322,6 +323,52 @@ public class EasyTest01 {
             res = res ^ nums[i];
         }
         return res;
+    }
+    /**
+     *748. 最短补全词
+     *
+     * 更好的思路：
+     * 遇到char的字母表类型的比较  可以使用26为大小数组，下标为char的值，值为个数
+     * 输入：licensePlate = "1s3 PSt", words = ["step", "steps", "stripe", "stepple"]
+     * 输出："steps"
+     * 1s3 PSt===>   arr[s-'a']= 2;arr[p-'a']= 2;arr[t-'a']= 2;
+     * step   ====>  arr[s-'a']= 1;arr[p-'a']= 2;arr[t-'a']= 2;
+     * 不一样不是齐全的
+     *
+     */
+    public String shortestCompletingWord(String licensePlate, String[] words) {
+        List<String> license = new ArrayList<>();
+        licensePlate = licensePlate.replaceAll(" ","");
+        char[] chars = licensePlate.toCharArray();
+        for (char c : chars) {
+            if (c >= '0' & c <= '9') {
+                continue;
+            }
+            license.add((c+"").toLowerCase());
+        }
+        String result = null;
+        int len = Integer.MAX_VALUE;
+        for (String word : words) {
+            if (word.length() < len && isContains(word.toLowerCase(), license)) {
+                len = word.length();
+                result = word;
+            }
+        }
+        return result;
+    }
+
+    public boolean isContains(String s, List<String> license) {
+        if (s.length() < license.size()) {
+            return false;
+        }
+        for (String c : license) {
+            if (!s.contains(c)) {
+                return false;
+            }
+            s = s.replaceFirst(c, "");
+
+        }
+        return true;
     }
 
 }

@@ -1,6 +1,9 @@
 package org.algorithm.leetcode300.nomal.test;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 /**
  * @author: lhz
@@ -11,7 +14,7 @@ public class EveryDay02 {
 
     public static void main(String[] args) {
         EveryDay02 e = new EveryDay02();
-        e.isPossibleII(new int[]{1, 2, 3,3,4,4,5,5});
+        System.out.println(e.matrixScore(new int[][]{{0, 0, 1, 1}, {1, 0, 1, 0}, {1, 1, 0, 0}}));
     }
 
     /**
@@ -116,19 +119,22 @@ public class EveryDay02 {
                 map.put(num, list);
             }
             //如果前面有序列接着长度+1
-            if (map.containsKey(num - 1)){
+            if (map.containsKey(num - 1)) {
                 //把最短的取出来
-                Integer minLen = map.get(num - 1).pollFirst();
+                Integer minLen = map.get(num - 1)
+                        .pollFirst();
                 LinkedList<Integer> newList = map.get(num);
                 newList.add(minLen + 1);
 
                 //3->{1，3}  来了个 4
-                if (map.get(num - 1).isEmpty()) {
+                if (map.get(num - 1)
+                        .isEmpty()) {
                     map.remove(num - 1);
                 }
-            }else {
+            } else {
                 //如果前面没有序列接着，新开一个序列，长度为1
-                map.get(num).addFirst(1);
+                map.get(num)
+                        .addFirst(1);
             }
         }
 
@@ -139,10 +145,66 @@ public class EveryDay02 {
                 }
             }
         }
-
-
         return true;
     }
 
+    /**
+     * 861. 翻转矩阵后的得分
+     * 有一个二维矩阵 A 其中每个元素的值为 0 或 1 。
+     * 移动是指选择任一行或列，并转换该行或列中的每一个值：将所有 0 都更改为 1，将所有 1 都更改为 0。
+     * 在做出任意次数的移动后，将该矩阵的每一行都按照二进制数来解释，矩阵的得分就是这些数字的总和。
+     */
+    public int matrixScore(int[][] A) {
+        Map<Integer, Integer> map = new HashMap<>();
+        int res = 0;
+        for (int i = 0; i < A.length; i++) {
+            if (A[i][0] == 0) {
+                for (int j = 0; j < A[i].length; j++) {
+                    A[i][j] = A[i][j] ^ 1;
+                }
+            }
+
+        }
+
+
+        for (int i = 0; i < A.length; i++) {
+            for (int j = 0; j < A[i].length; j++) {
+                if (i == 0) {
+                    if (A[i][j] == 1) {
+                        map.put(j, 1);
+                    } else {
+                        map.put(j, 0);
+                    }
+                    continue;
+                }
+                if (A[i][j] == 1) {
+                    map.put(j, map.get(j) + 1);
+                }
+
+            }
+        }
+
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            Integer columnNum = entry.getKey();
+            Integer numOfOne = entry.getValue();
+            if (numOfOne * 2 < (A.length * 2) / 2) {
+                for (int i = 0; i < A.length; i++) {
+                    A[i][columnNum] = A[i][columnNum] ^ 1;
+                }
+            }
+        }
+
+
+        for (int i = 0; i < A.length; i++) {
+            StringBuilder sb = new StringBuilder();
+            for (int j = 0; j < A[i].length; j++) {
+                sb.append(A[i][j]);
+            }
+            res += Integer.parseInt(sb.toString(), 2);
+        }
+        return res;
+
+
+    }
 
 }
