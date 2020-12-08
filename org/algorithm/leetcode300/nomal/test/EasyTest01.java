@@ -2,10 +2,7 @@ package org.algorithm.leetcode300.nomal.test;
 
 import org.algorithm.leetcode300.basic.ListNode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author: lhz
@@ -25,13 +22,14 @@ public class EasyTest01 {
         n3.next = n4;
         n4.next = n5;
         n5.next = n6;
-        //e.insertionSortList(n1);
 
+        e.sumEvenAfterQueries(new int[]{1, 2, 3, 4}, new int[][]{{1, 0}, {-3, 1}, {-4, 0}, {2, 3}});
+        //"1s3 PSt"
+        //["step","steps","stripe","stepple"]
+        e.shortestCompletingWord("1s3 PSt", new String[]{"step","steps","stripe","stepple"});
 
-        //e.getRow(3);
-        //System.out.println(e.getBinary(5, new StringBuilder(), true));
-        System.out.println(e.bitwiseComplement2(5));
     }
+
 
     /**
      * 1470. 重新排列数组
@@ -188,6 +186,7 @@ public class EasyTest01 {
 
     /**
      * 反码 = 数字 异或 11111.。。
+     *
      * @param N
      * @return
      */
@@ -195,10 +194,10 @@ public class EasyTest01 {
         int criteria = 1;
         int sum = 0;
         while (sum < N) {
-            sum = (sum+ criteria);
+            sum = (sum + criteria);
             criteria = criteria << 1;
         }
-        return  N ^ sum;
+        return N ^ sum;
     }
 
     public String getBinary(int N, StringBuilder sb, boolean first) {
@@ -217,7 +216,7 @@ public class EasyTest01 {
                 }
                 break;
             }
-            if (N - (1 << i) == 0){
+            if (N - (1 << i) == 0) {
                 continue;
             }
             N -= 1 << (i - 1);
@@ -240,7 +239,7 @@ public class EasyTest01 {
         for (int i = 0; i < chars.length; i++) {
             if (chars[i] == '1') {
                 chars[i] = '0';
-            }else {
+            } else {
                 chars[i] = '1';
             }
         }
@@ -253,7 +252,7 @@ public class EasyTest01 {
         char[] chars = binary.toCharArray();
         StringBuilder sb = new StringBuilder();
         int index = 0;
-        for (int i = chars.length-1; i >=0 ; i--) {
+        for (int i = chars.length - 1; i >= 0; i--) {
             if (chars[index] == '1') {
                 result += (1 << i);
             }
@@ -262,4 +261,114 @@ public class EasyTest01 {
         }
         return result;
     }
+
+    /**
+     * 1071. 字符串的最大公因子
+     * m*x  n*x
+     * x为相同部分的数量
+     * 求 n 和 m 的最大公约数
+     */
+    public String gcdOfStrings(String str1, String str2) {
+        if (!(str1 + str2).equals(str2 + str1)) {
+            return "";
+        }
+        int maxYue = getMaxYue(Math.max(str1.length(), str2.length()), Math.min(str1.length(), str2.length()));
+        return str2.substring(0, maxYue);
+    }
+
+    public int getMaxYue(int a, int b) {
+        if (a % b == 0) {
+            return b;
+        }
+        return getMaxYue(b, a % b);
+    }
+
+    /**
+     * 985. 查询后的偶数和
+     *  先求出偶数的和 ，然后先减再加
+     */
+    public int[] sumEvenAfterQueries(int[] A, int[][] queries) {
+        int S = 0;
+        for (int x : A) {
+            if (x % 2 == 0) {
+                S += x;
+            }
+        }
+        int[] ans = new int[queries.length];
+        for (int i = 0; i < queries.length; ++i) {
+            int val = queries[i][0], index = queries[i][1];
+            if (A[index] % 2 == 0) {
+                S -= A[index];
+            }
+            A[index] += val;
+            if (A[index] % 2 == 0) {
+                S += A[index];
+            }
+            ans[i] = S;
+        }
+        return ans;
+    }
+
+    /**
+     *
+     * 268. 丢失的数字
+     * n ^ n = 0
+     * 0 ^ n = n
+     * ()
+     */
+    public int missingNumber(int[] nums) {
+        int res = nums.length;
+        for (int i = 0; i < nums.length; i++) {
+            res = res ^ i;
+            res = res ^ nums[i];
+        }
+        return res;
+    }
+    /**
+     *748. 最短补全词
+     *
+     * 更好的思路：
+     * 遇到char的字母表类型的比较  可以使用26为大小数组，下标为char的值，值为个数
+     * 输入：licensePlate = "1s3 PSt", words = ["step", "steps", "stripe", "stepple"]
+     * 输出："steps"
+     * 1s3 PSt===>   arr[s-'a']= 2;arr[p-'a']= 2;arr[t-'a']= 2;
+     * step   ====>  arr[s-'a']= 1;arr[p-'a']= 2;arr[t-'a']= 2;
+     * 不一样不是齐全的
+     *
+     */
+    public String shortestCompletingWord(String licensePlate, String[] words) {
+        List<String> license = new ArrayList<>();
+        licensePlate = licensePlate.replaceAll(" ","");
+        char[] chars = licensePlate.toCharArray();
+        for (char c : chars) {
+            if (c >= '0' & c <= '9') {
+                continue;
+            }
+            license.add((c+"").toLowerCase());
+        }
+        String result = null;
+        int len = Integer.MAX_VALUE;
+        for (String word : words) {
+            if (word.length() < len && isContains(word.toLowerCase(), license)) {
+                len = word.length();
+                result = word;
+            }
+        }
+        return result;
+    }
+
+    public boolean isContains(String s, List<String> license) {
+        if (s.length() < license.size()) {
+            return false;
+        }
+        for (String c : license) {
+            if (!s.contains(c)) {
+                return false;
+            }
+            s = s.replaceFirst(c, "");
+
+        }
+        return true;
+    }
+
 }

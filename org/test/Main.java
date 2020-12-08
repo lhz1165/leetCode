@@ -42,8 +42,8 @@ public class Main {
 
 	}
 	// 输入n 例如3  ；
-	//n= 3有 123 132 213 231 312 321排列方式。返回第k种
-	//n=4 有 1234 1243 1324 1342。。。返回第k种
+	//n= 3有 123 132 213 231 312 321排列方式。返回第k个，k=2 返回132
+	//n=4 有 1234 1243 1324 1342。。。返回第k个   k=3 返回1324
 	public int test2(int n, int k) {
 		List<List<Integer>> results = new ArrayList<>();
 		StringBuilder sb = new StringBuilder();

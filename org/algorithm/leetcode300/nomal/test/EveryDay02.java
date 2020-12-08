@@ -1,6 +1,9 @@
 package org.algorithm.leetcode300.nomal.test;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 /**
  * @author: lhz
@@ -9,7 +12,10 @@ import java.util.Arrays;
 public class EveryDay02 {
 
 
-
+    public static void main(String[] args) {
+        EveryDay02 e = new EveryDay02();
+        System.out.println(e.matrixScore(new int[][]{{0, 0, 1, 1}, {1, 0, 1, 0}, {1, 1, 0, 0}}));
+    }
 
     /**
      * 34. 在排序数组中查找元素的第一个和最后一个位置
@@ -98,58 +104,107 @@ public class EveryDay02 {
         return count - 2;
     }
 
-    public static void main(String[] args) {
-        EveryDay02 e = new EveryDay02();
-        System.out.println(e.gcdOfStrings("ABCDABCDABCD", "ABCD"));
-    }
-
     /**
-     * 1071. 字符串的最大公因子
+     * 659. 分割数组为连续子序列
+     * 哈希表的键为子序列的 key = [最后一个数字]，值为最小堆，用于存储所有的子序列 value = [长度]，
+     * 最小堆满足堆顶的元素是最小的，因此堆顶的元素即为最小的子序列长度。
+     * 12334455
+     * {key = 5,value = {3,5}}
      */
-    public String gcdOfStrings(String str1, String str2) {
-        if (str1.length() < str2.length()) {
-            String tmp = str1;
-            str1 = str2;
-            str2 = tmp;
-        }
-
-        char[] c1 = str1.toCharArray();
-        char[] c2 = str2.toCharArray();
-        int p = 0;
-        int q = 0;
-        while (p < str1.length() && q < str2.length()) {
-            if (c1[p] != c2[q]) {
-                return "";
+    public boolean isPossibleII(int[] nums) {
+        Map<Integer, LinkedList<Integer>> map = new HashMap<>();
+        for (int num : nums) {
+            if (!map.containsKey(num)) {
+                LinkedList<Integer> list = new LinkedList<>();
+                map.put(num, list);
             }
-            p++;
-            q++;
-        }
-        String remain = str1.substring(p);
+            //如果前面有序列接着长度+1
+            if (map.containsKey(num - 1)) {
+                //把最短的取出来
+                Integer minLen = map.get(num - 1)
+                        .pollFirst();
+                LinkedList<Integer> newList = map.get(num);
+                newList.add(minLen + 1);
 
-        for (int i = 0; i < remain.length(); i++) {
-            String sub = remain.substring(0, i + 1);
-            boolean check = check(str2, sub);
-            if (!check) {
-                continue;
+                //3->{1，3}  来了个 4
+                if (map.get(num - 1)
+                        .isEmpty()) {
+                    map.remove(num - 1);
+                }
+            } else {
+                //如果前面没有序列接着，新开一个序列，长度为1
+                map.get(num)
+                        .addFirst(1);
             }
-            return sub;
         }
-        return "";
-    }
 
-    public boolean check(String s, String sub) {
-        int step = sub.length();
-        for (int i = 0; i < s.length(); i += step) {
-            int start = i;
-            int end = Math.min(step + i, s.length());
-            String str2Sub = s.substring(start, end);
-            if (!str2Sub.equals(sub)) {
-                return false;
+        for (Map.Entry<Integer, LinkedList<Integer>> entry : map.entrySet()) {
+            for (Integer len : entry.getValue()) {
+                if (len < 3) {
+                    return false;
+                }
             }
         }
         return true;
-
     }
 
+    /**
+     * 861. 翻转矩阵后的得分
+     * 有一个二维矩阵 A 其中每个元素的值为 0 或 1 。
+     * 移动是指选择任一行或列，并转换该行或列中的每一个值：将所有 0 都更改为 1，将所有 1 都更改为 0。
+     * 在做出任意次数的移动后，将该矩阵的每一行都按照二进制数来解释，矩阵的得分就是这些数字的总和。
+     */
+    public int matrixScore(int[][] A) {
+        Map<Integer, Integer> map = new HashMap<>();
+        int res = 0;
+        for (int i = 0; i < A.length; i++) {
+            if (A[i][0] == 0) {
+                for (int j = 0; j < A[i].length; j++) {
+                    A[i][j] = A[i][j] ^ 1;
+                }
+            }
+
+        }
+
+
+        for (int i = 0; i < A.length; i++) {
+            for (int j = 0; j < A[i].length; j++) {
+                if (i == 0) {
+                    if (A[i][j] == 1) {
+                        map.put(j, 1);
+                    } else {
+                        map.put(j, 0);
+                    }
+                    continue;
+                }
+                if (A[i][j] == 1) {
+                    map.put(j, map.get(j) + 1);
+                }
+
+            }
+        }
+
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            Integer columnNum = entry.getKey();
+            Integer numOfOne = entry.getValue();
+            if (numOfOne * 2 < (A.length * 2) / 2) {
+                for (int i = 0; i < A.length; i++) {
+                    A[i][columnNum] = A[i][columnNum] ^ 1;
+                }
+            }
+        }
+
+
+        for (int i = 0; i < A.length; i++) {
+            StringBuilder sb = new StringBuilder();
+            for (int j = 0; j < A[i].length; j++) {
+                sb.append(A[i][j]);
+            }
+            res += Integer.parseInt(sb.toString(), 2);
+        }
+        return res;
+
+
+    }
 
 }
