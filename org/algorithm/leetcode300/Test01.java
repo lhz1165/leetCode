@@ -1,7 +1,9 @@
 package org.algorithm.leetcode300;
 
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import org.algorithm.leetcode300.specified.OperationLog;
 
+import java.lang.reflect.Method;
 import java.util.*;
 
 /**
@@ -9,11 +11,16 @@ import java.util.*;
  * @date: 2020/8/19
  **/
 public class Test01 {
-    public static void main(String[] args) {
-        Test01 test01 = new Test01();
-        test01.slowestKey(new int[]{12,23,36,46,62}, "spuda");
-        test01.checkArithmeticSubarrays(new int[]{4, 6, 5, 9, 3, 7}, new int[]{0, 0, 2}, new int[]{2, 3, 5});
-        test01.minimumEffortPath(new int[][]{{1,2,2},{3,8,2},{5,3,5}});
+    public static void main(String[] args) throws NoSuchMethodException {
+        Class<Test01> aClass = Test01.class;
+        Method add = aClass.getMethod("add");
+        OperationLog annotation = add.getAnnotation(OperationLog.class);
+
+        System.out.println();
+    }
+    @OperationLog("aaaaa")
+    public void add() {
+        System.out.println(11);
     }
 
 
