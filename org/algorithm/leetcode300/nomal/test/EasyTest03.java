@@ -2,7 +2,9 @@ package org.algorithm.leetcode300.nomal.test;
 
 import org.algorithm.leetcode300.basic.TreeNode;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -10,6 +12,11 @@ import java.util.Set;
  * @date: 2020/12/8
  **/
 public class EasyTest03 {
+    public static void main(String[] args) {
+        EasyTest03 e = new EasyTest03();
+        e.masterMind2("YYRG", "RRRR");
+    }
+
     /**
      * 1184. 公交站间的距离
      */
@@ -55,11 +62,89 @@ public class EasyTest03 {
         int remain = k - root.val;
         if (set.contains(remain)) {
             return true;
-        }else {
+        } else {
             set.add(root.val);
             return findAnother(root.left, k, set) || findAnother(root.right, k, set);
         }
     }
+
+    /**
+     * "BGBG"
+     * "RGBR"
+     */
+    public int[] masterMind(String solution, String guess) {
+        int bingo = 0;
+        int fakeBingo = 0;
+        char[] cs = solution.toCharArray();
+        char[] cg = guess.toCharArray();
+        Map<Character, Integer> ms = new HashMap<>();
+        for (char c : cs) {
+            if (ms.containsKey(c)) {
+                ms.put(c, ms.get(c) + 1);
+            } else {
+                ms.put(c, 1);
+            }
+        }
+
+        Map<Character, Integer> mg = new HashMap<>();
+        for (char c : cg) {
+            if (mg.containsKey(c)) {
+                mg.put(c, mg.get(c) + 1);
+            } else {
+                mg.put(c, 1);
+            }
+        }
+
+        for (int i = 0; i < cs.length; i++) {
+            if (cs[i] == cg[i]) {
+                mg.put(cs[i], mg.get(cs[i]) - 1);
+                ms.put(cs[i], ms.get(cs[i]) - 1);
+                bingo++;
+            }
+        }
+        for (int i = 0; i < cs.length; i++) {
+            if (cs[i] != cg[i] && mg.get(cs[i]) != null && mg.get(cs[i]) != 0) {
+                mg.put(cs[i], mg.get(cs[i]) - 1);
+                ms.put(cs[i], ms.get(cs[i]) - 1);
+                fakeBingo++;
+            }
+        }
+        return new int[]{bingo, fakeBingo};
+
+    }
+
+    public int[] masterMind2(String solution, String guess) {
+
+        int fake = 0, real = 0;
+
+        int[] map = new int[26];
+
+        for (int i = 0; i < 4; i++) {
+            char sol = solution.charAt(i), gue = guess.charAt(i);
+
+            if (sol == gue) {
+                real++;
+            } else {
+                if (map[sol - 'A'] < 0) {
+                    fake++;
+                    map[sol - 'A']++;
+                }
+
+
+                if (map[gue - 'A'] > 0) {
+
+                    fake++;
+                    map[gue - 'A']--;
+                }
+
+            }
+        }
+
+        int[] ans = {real, fake};
+
+        return ans;
+    }
+
 
 
 }
