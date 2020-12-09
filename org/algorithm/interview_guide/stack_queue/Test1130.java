@@ -1,6 +1,9 @@
 package org.algorithm.interview_guide.stack_queue;
 
 import java.time.chrono.MinguoChronology;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -47,8 +50,8 @@ public class Test1130 {
 		stack.push(2);
 		stack.push(5);
 		Test1130 t = new Test1130();
-		int[] max = t.getMax(new int[]{4, 3, 5, 4, 3, 3, 6, 7}, 3);
-		System.out.println(stack);
+		int[] max = t.getMaxWindow(new int[]{4,3,5,4,3,3,6,7}, 3);
+		System.out.println(Arrays.toString(max));
 
 	}
 
@@ -90,7 +93,7 @@ public class Test1130 {
 	public int[] getMax(int[] arr, int w) {
 		int n = arr.length - w + 1;
 		int[] result = new int[n];
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < n-w; i++) {
 			int max = Integer.MIN_VALUE;
 			//4 3 5
 			//0 1 2
@@ -105,6 +108,36 @@ public class Test1130 {
 
 		return result;
 
+	}
+
+	public int[] getMaxWindow(int[] arr, int w) {
+
+		LinkedList<Integer> queue = new LinkedList<>();
+
+		int n = arr.length;
+
+		int[] result =new int[n - w +1];
+		int index = 0;
+		for (int i = 0; i < n; i++) {
+
+			while (!queue.isEmpty() && arr[queue.peekLast()] <= arr[i]) {
+				queue.pollLast();
+			}
+			queue.addLast(i);
+			//检查头元素是否已经走过了
+			if (queue.peekFirst() == i - w) {
+				queue.pollFirst();
+			}
+
+			//给result赋值
+			if (i >= w - 1) {
+				Integer res = queue.peekFirst();
+				result[index] =arr[res];
+				index++;
+			}
+		}
+
+		return result;
 	}
 
 
