@@ -1,9 +1,6 @@
 package org.algorithm.leetcode300.nomal.test;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author: lhz
@@ -14,7 +11,7 @@ public class EveryDay02 {
 
     public static void main(String[] args) {
         EveryDay02 e = new EveryDay02();
-        System.out.println(e.matrixScore(new int[][]{{0, 0, 1, 1}, {1, 0, 1, 0}, {1, 1, 0, 0}}));
+        System.out.println(e.splitIntoFibonacci("123456579"));
     }
 
     /**
@@ -203,8 +200,65 @@ public class EveryDay02 {
             res += Integer.parseInt(sb.toString(), 2);
         }
         return res;
+    }
 
+    /**
+     842. 将数组拆分成斐波那契序列     * @param S
+     * @return
+     */
+    public List<Integer> splitIntoFibonacci(String S) {
+        List<Integer> list = new ArrayList<Integer>();
+        backtrack(list, S, S.length(), 0, 0, 0);
+        return list;
+    }
 
+    public boolean backtrack(List<Integer> list, String S, int length, int index, int sum, int prev) {
+        if (index == length) {
+            return list.size() >= 3;
+        }
+        long currLong = 0;
+        for (int i = index; i < length; i++) {
+            if (i > index && S.charAt(index) == '0') {
+                break;
+            }
+            currLong = currLong * 10 + S.charAt(i) - '0';
+            if (currLong > Integer.MAX_VALUE) {
+                break;
+            }
+            int curr = (int) currLong;
+            if (list.size() >= 2) {
+                if (curr < sum) {
+                    continue;
+                } else if (curr > sum) {
+                    break;
+                }
+            }
+            list.add(curr);
+            if (backtrack(list, S, length, i + 1, prev + curr, curr)) {
+                return true;
+            } else {
+                list.remove(list.size() - 1);
+            }
+        }
+        return false;
+    }
+    /**
+     * 62. 不同路径
+     */
+    public int uniquePaths(int m, int n) {
+        int[][] f = new int[m][n];
+        f[0][0] = 1;
+        for (int i = 1; i < m; i++) {
+            f[i][0] = 1;
+        }
+        for (int i = 1; i < n; i++) f[0][i] = 1;
+
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                f[i][j] = f[i - 1][j] + f[i][j - 1];
+            }
+        }
+        return f[m-1][n-1];
     }
 
 }

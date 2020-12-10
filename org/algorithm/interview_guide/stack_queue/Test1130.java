@@ -11,9 +11,11 @@ import java.util.Stack;
  * @create 2020/11/30
  */
 public class Test1130 {
+
 	/**
 	 * 仅用递归函数和栈  逆序栈
 	 */
+
 	public int getAndRemoveLastEle(Stack<Integer> stack) {
 		int result = stack.pop();
 		if (stack.isEmpty()) {
