@@ -1,11 +1,11 @@
 package org.algorithm.leetcode300.nomal.test;
 
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import org.algorithm.leetcode300.basic.TreeNode;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.*;
 
 /**
  * @author: lhz
@@ -14,38 +14,16 @@ import java.util.Set;
 public class EasyTest03 {
     public static void main(String[] args) {
         EasyTest03 e = new EasyTest03();
-        e.masterMind2("YYRG", "RRRR");
+        TreeNode n1 = new TreeNode(2147483647);
+        TreeNode n2 = new TreeNode(2);
+        TreeNode n3 = new TreeNode(2);
+        TreeNode n4 = new TreeNode(15);
+        TreeNode n5 = new TreeNode(7);
+        //n1.right = n2;
+        //n2.left = n3;
+        System.out.println(e.findLHS(new int[]{1,3,2,2,5,2,3,7}));
     }
 
-    /**
-     * 1184. 公交站间的距离
-     */
-    public int distanceBetweenBusStops(int[] distance, int start, int destination) {
-        if (start > destination) {
-            int tmp = start;
-            start = destination;
-            destination = tmp;
-        }
-
-        int all = 0;
-        for (int i : distance) {
-            all += i;
-        }
-        int result = 0;
-
-        for (int i = 0; i < distance.length; i++) {
-            if (i == destination) {
-                break;
-            }
-            if (start <= i) {
-                result += distance[i];
-            }
-        }
-        result = Math.min(result, all - result);
-
-
-        return result;
-    }
 
     /**
      * 653. 两数之和 IV - 输入 BST
@@ -114,11 +92,8 @@ public class EasyTest03 {
     }
 
     public int[] masterMind2(String solution, String guess) {
-
         int fake = 0, real = 0;
-
         int[] map = new int[26];
-
         for (int i = 0; i < 4; i++) {
             char sol = solution.charAt(i), gue = guess.charAt(i);
 
@@ -130,21 +105,107 @@ public class EasyTest03 {
                     map[sol - 'A']++;
                 }
 
-
                 if (map[gue - 'A'] > 0) {
-
                     fake++;
                     map[gue - 'A']--;
                 }
 
             }
         }
-
         int[] ans = {real, fake};
-
         return ans;
     }
 
 
+    /**
+     * 404. 左叶子之和
+     * ***********
+     */
+    public int sumOfLeftLeaves(TreeNode root) {
+        return root != null ? dfs(root) : 0;
+    }
+
+    public int dfs(TreeNode node) {
+        int ans = 0;
+        //左
+        if (node.left != null) {
+            if (isLeafNode(node.left)) {
+                ans += node.left.val;
+            } else {
+                ans += dfs(node.left);
+            }
+        }
+        //右
+        if (node.right != null && !isLeafNode(node.right)) {
+            ans += dfs(node.right);
+        }
+        return ans;
+    }
+
+    public boolean isLeafNode(TreeNode node) {
+        return node.left == null && node.right == null;
+    }
+
+
+    /**
+     *
+     * @param numbers
+     * @return
+     */
+    public int minArray(int[] numbers) {
+        // write your code here
+        int start = 0;
+        int end = numbers.length - 1;
+        // find the first element <= target
+        while (start + 1 < end) {			//用来控制区间大小
+            int mid = start + (end - start) / 2;
+            if (numbers[mid] < numbers[end]) { 		//如果mid位置上的数字小于等于最右端的数字时，区间向左移动
+                end = mid;
+            } else if(numbers[mid] > numbers[end]) {
+                start = mid;
+            }else {
+                end--;
+            }
+        }
+        return Math.min(numbers[start],numbers[end]);
+    }
+    /**
+     * 594. 最长和谐子序列
+     */
+    public int findLHS(int[] nums) {
+        Map<Integer, Integer> map = new TreeMap<>(Integer::compareTo);
+        for (int num : nums) {
+            Integer count = map.getOrDefault(num, 0);
+            map.put(num, count + 1);
+        }
+        if (map.size() == 1) {
+            return 0;
+        }
+        int index = 0;
+        int prev = -1;
+        int prevVal = 0;
+        int result = 0;
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            if (index != 0) {
+                if (entry.getKey() - 1 == prev) {
+                    result = Math.max(result, entry.getValue()+prevVal);
+                }
+            }
+            index++;
+            prev = entry.getKey();
+            prevVal = entry.getValue();
+
+        }
+        return result;
+
+    }
+
+    public int daysBetweenDates(String date1, String date2) {
+        String[] dateStr1 = date1.split("-");
+        String[] dateStr2 = date2.split("-");
+        LocalDate localDate1 = LocalDate.of(Integer.parseInt(dateStr1[0]), Integer.parseInt(dateStr1[1]), Integer.parseInt(dateStr1[2]));
+        LocalDate localDate2 = LocalDate.of(Integer.parseInt(dateStr2[0]), Integer.parseInt(dateStr2[1]), Integer.parseInt(dateStr2[2]));
+        return localDate1.until(localDate1).getDays();
+    }
 
 }

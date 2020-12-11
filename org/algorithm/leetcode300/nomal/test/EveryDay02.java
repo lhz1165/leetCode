@@ -11,7 +11,7 @@ public class EveryDay02 {
 
     public static void main(String[] args) {
         EveryDay02 e = new EveryDay02();
-        System.out.println(e.splitIntoFibonacci("123456579"));
+        //[5,5,10,20,5,5,5,5,5,5,5,5,5,10,5,5,20,5,20,5]
     }
 
     /**
@@ -242,23 +242,9 @@ public class EveryDay02 {
         }
         return false;
     }
-    /**
-     * 62. 不同路径
-     */
-    public int uniquePaths(int m, int n) {
-        int[][] f = new int[m][n];
-        f[0][0] = 1;
-        for (int i = 1; i < m; i++) {
-            f[i][0] = 1;
-        }
-        for (int i = 1; i < n; i++) f[0][i] = 1;
 
-        for (int i = 1; i < m; i++) {
-            for (int j = 1; j < n; j++) {
-                f[i][j] = f[i - 1][j] + f[i][j - 1];
-            }
-        }
-        return f[m-1][n-1];
-    }
+
+
+
 
 }
