@@ -2,6 +2,8 @@ package org.algorithm.interview_guide.list;
 
 import org.algorithm.leetcode300.basic.ListNode;
 
+import java.util.List;
+
 /**
  * @author lhzlhz
  * @create 2020/12/10
@@ -21,7 +23,8 @@ public class ListTest1210 {
 		n4.next = n5;
 		n5.next = n6;
 		ListTest1210 t = new ListTest1210();
-		t.removeK(n1,3);
+
+		n1.printLn(t.reverseList(n1));
 
 
 	}
@@ -31,7 +34,6 @@ public class ListTest1210 {
 	public ListNode removeK(ListNode head, int k) {
 		ListNode fast = head;
 		ListNode slow =head;
-
 		for (int i = 0; i < k; i++) {
 			fast = fast.next;
 		}
@@ -42,8 +44,45 @@ public class ListTest1210 {
 		}
 		slow.next = slow.next.next;
 		return slow;
+	}
+
+
+	public ListNode removeByRatio(ListNode head, int a, int b) {
+		int len = 0;
+		ListNode cur = head;
+		while (cur != null) {
+			len++;
+			cur = cur.next;
+		}
+		//5 / 3 = 1
+		int i = (int) Math.ceil((double) (a * len) /(double) b);
+		cur = head;
+		for (int j = 0; j < i; j++) {
+			cur = cur.next;
+		}
+		cur.next = cur.next.next;
+		return  head;
+	}
+
+	public ListNode reverseList(ListNode head) {
+		ListNode prev = null;
+		ListNode cur =head;
+		ListNode next ;
+		while (cur != null) {
+			next = cur.next;
+			cur.next = prev;
+			prev = cur;
+			cur =next;
+		}
+		return prev;
 
 	}
+
+
+
+
+
+
 
 
 

@@ -1,5 +1,6 @@
 package org.algorithm.leetcode300.nomal.test;
 
+import java.time.temporal.TemporalUnit;
 import java.util.*;
 
 /**
@@ -241,6 +242,36 @@ public class EveryDay02 {
             }
         }
         return false;
+    }
+    /**
+     * 376. 摆动序列
+     * *****
+     */
+    public int wiggleMaxLength(int[] nums) {
+        int n = nums.length;
+        if(n <2 ){
+            return n;
+        }
+        //以n结尾的最长的上升和下降序列
+        int[] up = new int[n];
+        int[] down = new int[n];
+        up[0] = down[0] = 1;
+        for (int i = 1; i < n; i++) {
+            int curNum = nums[i];
+            int prevNum = nums[i - 1];
+            //如果当前小，那处于下降，可以试着更新下降序列的值
+            if(curNum < prevNum){
+                down[i] = Math.max(up[i - 1] + 1, down[i - 1]);
+                up[i] = up[i - 1];
+            }else if(curNum > prevNum){
+                up[i] = Math.max(up[i - 1], down[i - 1] + 1);
+                down[i] = down[i - 1];
+            }else{
+                up[i] = up[i - 1];
+                down[i] = down[i - 1];
+            }
+        }
+        return Math.max(up[n - 1], down[n - 1]);
     }
 
 
