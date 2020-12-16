@@ -1,4 +1,4 @@
-package org.algorithm.leetcode300.nomal.test;
+package org.algorithm.leetcode300.nomal.test.everyday;
 
 import org.algorithm.leetcode300.basic.TreeNode;
 

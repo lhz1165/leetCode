@@ -1,4 +1,4 @@
-package org.algorithm.leetcode300.nomal.test;
+package org.algorithm.leetcode300.nomal.test.easy;
 
 import org.algorithm.leetcode300.basic.ListNode;
 

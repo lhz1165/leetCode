@@ -1,9 +1,6 @@
 package org.algorithm.test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * @author: lhz
@@ -12,12 +9,32 @@ import java.util.Scanner;
 public class Test4 {
 
     public static void main(String[] args) {
-        List<Integer> a = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
-        Integer[] integers = a.toArray(new Integer[0]);
-        System.out.println(Arrays.toString(integers));
-
-
-
+        A a1 = new A(1);
+        A a2 = new A(1);
+        A a3 = new A(3);
+        HashMap<A, Integer> a = new HashMap<>();
+        a.put(a1, 1);
+        a.put(a3, 3);
+        a.put(a2, 2);
+        System.out.println(a);
     }
 
+
+}
+class  A{
+    int id;
+
+    @Override
+    public boolean equals(Object obj) {
+        return id == ((A) obj).id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    public A(int id) {
+        this.id = id;
+    }
 }

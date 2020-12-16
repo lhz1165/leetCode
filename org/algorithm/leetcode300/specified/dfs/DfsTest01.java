@@ -102,7 +102,6 @@ public class DfsTest01 {
             if (i != 0 && candidates[i] == candidates[i - 1] && index != i) {
                 continue;
             }
-
             subset.add(candidates[i]);
             subSetHelper2(candidates, i + 1, remainTarget - candidates[i], subset, result);
             subset.remove(subset.size() - 1);

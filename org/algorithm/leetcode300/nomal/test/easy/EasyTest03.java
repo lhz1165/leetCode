@@ -1,10 +1,7 @@
-package org.algorithm.leetcode300.nomal.test;
+package org.algorithm.leetcode300.nomal.test.easy;
 
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import org.algorithm.leetcode300.basic.TreeNode;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.*;
 
 /**
@@ -21,7 +18,7 @@ public class EasyTest03 {
         TreeNode n5 = new TreeNode(7);
         //n1.right = n2;
         //n2.left = n3;
-        System.out.println(e.findLHS(new int[]{1,3,2,2,5,2,3,7}));
+        System.out.println(e.findDisappearedNumbers(new int[]{4,3,2,7,8,2,3,1}));
     }
 
 
@@ -194,18 +191,48 @@ public class EasyTest03 {
             index++;
             prev = entry.getKey();
             prevVal = entry.getValue();
-
         }
         return result;
-
+    }
+    /**
+     *
+     * 448. 找到所有数组中消失的数字
+     * ******
+     * 原地修改 不适用额外的空间
+     */
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        List<Integer> res = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[Math.abs(nums[i])-1] > 0) {
+                nums[Math.abs(nums[i])-1] *= -1;
+            }
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > 0) {
+                res.add(i);
+            }
+        }
+        return res;
     }
 
-    public int daysBetweenDates(String date1, String date2) {
-        String[] dateStr1 = date1.split("-");
-        String[] dateStr2 = date2.split("-");
-        LocalDate localDate1 = LocalDate.of(Integer.parseInt(dateStr1[0]), Integer.parseInt(dateStr1[1]), Integer.parseInt(dateStr1[2]));
-        LocalDate localDate2 = LocalDate.of(Integer.parseInt(dateStr2[0]), Integer.parseInt(dateStr2[1]), Integer.parseInt(dateStr2[2]));
-        return localDate1.until(localDate1).getDays();
+    /**
+     * 191. 位1的个数
+     * *******
+     * @param n
+     * @return
+     */
+    public int hammingWeight(int n) {
+        int mask = 1;
+        int result = 0;
+        for(int i = 0; i < 32; i++ ){
+            if((n & mask) != 0){
+                result++;
+            }
+            mask <<= 1;
+        }
+        return result;
     }
+
+
 
 }
