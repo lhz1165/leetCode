@@ -11,7 +11,6 @@ public class EveryDay03 {
     public static void main(String[] args) {
         EveryDay03 e = new EveryDay03();
         //"eat", "tea", "tan", "ate", "nat", "bat"
-        System.out.println(e.wordPattern("abba","cat dog cat dog"));
     }
 
     /**
@@ -69,30 +68,53 @@ public class EveryDay03 {
         return Integer.parseInt(sb.toString());
     }
 
-    public boolean wordPattern(String pattern, String s) {
-        int n = pattern.length();
-        String[] ss = s.split(" ");
-        int m = ss.length;
-        if (n != m) {
-            return false;
+    /**
+     *714. 买卖股票的最佳时机含手续费
+     * f[i][0] 表示第i天卖获得的最大收益
+     * f[i][1] 表示第i天不买获得的最大收益
+     */
+    public int maxProfit(int[] prices, int fee) {
+        int n = prices.length;
+        int[][] f = new int[n][2];
+        f[0][0] = 0;
+        f[0][1] = -prices[0];
+        for (int i = 1; i < n; i++) {
+            //今天不持有=昨天持有，今天卖
+            //今天不持有=昨天卖，今天也不买
+            f[i][0] = Math.max(f[i-1][0],f[i-1][1]+prices[i]-fee);
+            //今天持有=昨天不持有，今天买入
+            //今天持有=昨天持有，今天不买
+            f[i][1] = Math.max(f[i-1][0]-prices[i] ,f[i-1][1]);
         }
-        Map<Character, String> map = new HashMap<>();
-        int index = 0;
-        while (index < n) {
-            if (!map.containsKey(pattern.charAt(index))) {
-                if (map.containsValue(ss[index])) {
-                    return false;
-                }
-                map.put(pattern.charAt(index), ss[index]);
-            }else {
-                if (!map.get(pattern.charAt(index)).equals(ss[index])) {
-                    return false;
-                }
-            }
-            index++;
+        return Math.max(f[n-1][0],f[n-1][1]);
+    }
+    public int maxProfitII(int[] prices) {
+        int n = prices.length;
+        int[][] f = new int[n][2];
+        f[0][0] = 0;
+        f[0][1] = -prices[0];
+        for (int i = 1; i < n; i++) {
+            //今天不持有=昨天持有，今天卖
+            //今天不持有=昨天卖，今天也不买
+            f[i][0] = Math.max(f[i-1][0],f[i-1][1]+prices[i]);
+            //今天持有=昨天不持有，今天买入
+            //今天持有=昨天持有，今天不买
+            f[i][1] = Math.max(f[i-1][0]-prices[i] ,f[i-1][1]);
         }
-        return true;
+        return Math.max(f[n-1][0],f[n-1][1]);
+    }
 
+    public int maxProfit(int[] prices) {
+        int min = prices[0];
+        int res = Integer.MIN_VALUE;
+        for (int i = 1; i < prices.length; i++) {
+            res = Math.max(res, prices[i] - min);
+            min = Math.min(min, prices[i]);
+        }
+        if (res < 0) {
+            return 0;
+        }
+        return res;
     }
 
 }

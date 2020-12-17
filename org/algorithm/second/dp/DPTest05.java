@@ -77,7 +77,7 @@ public class DPTest05 {
 	 *给出 n 个物品, 以及一个数组, nums[i] 代表第i个物品的大小,
 	 * 保证大小均为正数, 正整数 target 表示背包的大小, 找到能填满背包的方案数。
 	 * 每一个物品只能使用一次
-	 *f[i][j]=f[i-1][j]+f[i-1][j - nums[j - i - 1]]
+	 *f[i][j]=f[i-1][j]+f[i-1][j - nums[i - 1]]
 	 * 加上他等于目标值 或者 不加他等于目标是
 	 */
 	public int backPackV(int[] nums, int target) {
@@ -108,6 +108,7 @@ public class DPTest05 {
 	/**
 	 * 给出一个都是正整数的数组 nums，每个可以使用多次
      * 从中找出所有的和为 target 的组合个数。
+     * 想象硬币那道题，假设最后一步是nums[i] ，那么必须要知道f[target-nums[i]]的值，遍历相加
 	 *
 	 */
 	public int backPackVI(int[] nums, int target) {

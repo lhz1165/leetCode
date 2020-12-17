@@ -37,6 +37,7 @@ public class NormalTest {
         n3.left = n6;
         n3.right = n7;
         n.flatten(n1);
+        System.out.println(n.combinationSum(new int[]{2,3,6,7}, 7));
     }
 
     public List<String> generateParenthesis(int n) {
@@ -109,14 +110,15 @@ public class NormalTest {
         }
 
     }
+
     /**
      * 338. 比特位计数
      * 输入: 5
      * 输出: [0,1,1,2,1,2]
      * 动态规划
-     *                 0    1
-     *                10   11  b=2
-     *      100  101 110  111  b=4
+     * 0    1
+     * 10   11  b=2
+     * 100  101 110  111  b=4
      * P(x+b) = P(x)+1  b = 1 << m; (2的m次方)
      */
     public int[] countBits(int num) {
@@ -124,7 +126,7 @@ public class NormalTest {
             return new int[]{0};
         }
         if (num == 1) {
-            return new int[]{0,1};
+            return new int[]{0, 1};
         }
         int[] f = new int[num + 1];
         f[0] = 0;
@@ -137,13 +139,14 @@ public class NormalTest {
                 f[index] = f[index - b] + 1;
                 index++;
             }
-            m ++;
-            b = 1<<m;
+            m++;
+            b = 1 << m;
         }
         return f;
     }
+
     /**
-     *给定一个二叉树，原地将它展开为一个单链表。
+     * 给定一个二叉树，原地将它展开为一个单链表。
      */
     public void flatten(TreeNode root) {
         if (root == null) {
@@ -165,26 +168,40 @@ public class NormalTest {
 
     }
 
-    public  void dfsFlatten(TreeNode root,List<TreeNode> treeNodes) {
+    public void dfsFlatten(TreeNode root, List<TreeNode> treeNodes) {
         if (root == null) {
             return;
         }
         treeNodes.add(root);
         dfsFlatten(root.left, treeNodes);
-        dfsFlatten(root.right,treeNodes);
+        dfsFlatten(root.right, treeNodes);
 
 
     }
+
     /**
      * 39. 组合总和
      */
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> result = new ArrayList<>();
-        dfscombinationSum(candidates,result,new ArrayList<>(),0);
+        Arrays.sort(candidates);
+        dfsCombinationSum(candidates, result, new ArrayList<>(), 0, target, 0);
         return result;
     }
 
-    private void dfscombinationSum(int[] candidates, List<List<Integer>> result, ArrayList<Object> objects,int sum) {
+    private void dfsCombinationSum(int[] candidates, List<List<Integer>> results, ArrayList<Integer> result, int sum, int target, int index) {
+
+        if (sum == target) {
+            results.add(new ArrayList<>(result));
+        }
+        for (int i = index; i < candidates.length; i++) {
+            if (sum + candidates[i] > target) {
+                break;
+            }
+            result.add(candidates[i]);
+            dfsCombinationSum(candidates, results, result, sum + candidates[i], target, i);
+            result.remove(result.size() - 1);
+        }
 
     }
 
