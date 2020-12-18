@@ -9,13 +9,15 @@ import java.util.List;
  * @date: 2020/7/27
  **/
 public class Test {
-    public static void main(String[] args) {
-        HashMap<Object, Object> map = new HashMap<>();
-        for (int i = 0; i < 100; i++) {
-            map.put(i, 1);
-        }
+    public  static  int a = 2;
+
+    static {
+          a = 1;
     }
 
+    public static void main(String[] args) {
+        System.out.println(Test.a);
+    }
 
 
 }
