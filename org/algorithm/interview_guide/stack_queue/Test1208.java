@@ -49,14 +49,16 @@ public class Test1208 {
 			}
 			stack.push(i);
 		}
-
 		while (!stack.isEmpty()) {
 			Integer popIndex = stack.pop();
 			result[popIndex][0] = stack.isEmpty() ? -1 : stack.peek();
 			result[popIndex][1] = -1;
 		}
-
 		return result;
 	}
+	/**
+	 *
+	 */
+
 
 }

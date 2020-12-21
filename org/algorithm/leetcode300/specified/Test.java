@@ -3,6 +3,7 @@ package org.algorithm.leetcode300.specified;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * @author: lhz
@@ -10,12 +11,8 @@ import java.util.List;
  **/
 public class Test {
     public static void main(String[] args) {
-        HashMap<Object, Object> map = new HashMap<>();
-        for (int i = 0; i < 100; i++) {
-            map.put(i, 1);
-        }
-    }
 
+    }
 
 
 }

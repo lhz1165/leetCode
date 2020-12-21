@@ -11,6 +11,7 @@ public class StringTest02 {
 
 
 
+
     public boolean isIsomorphic(String s, String t) {
         // write your code here
         return compare(s, t) && compare(t, s);
@@ -78,37 +79,27 @@ public class StringTest02 {
         char[] source = word.toCharArray();
         char[] target = abbr.toCharArray();
         int count = 0;
-        int i, j;
-        for (i = 0, j = 0; i < source.length && j < target.length; ) {
-            if (target[j] < '0' || target[j] > '9' && count != 0) {
-                i += count;
-            }
-            if (source[i] != target[j]) {
-                if (target[j] > '0' && target[j] <= '9') {
-                    int val = target[j] - '0';
-                    count = count * 10 + val;
-                    j++;
-                } else {
-                    if (source[i] != target[j]) {
-                        return false;
-                    } else {
-                        i++;
-                        j++;
-                        count = 0;
-                    }
+        int i=0, j=0;
+        while (i < word.length() && j < abbr.length()) {
+            char cs = source[i];
+            char ct = target[j];
+            if (!Character.isDigit(ct)) {
+                if (cs != ct) {
+                    return false;
                 }
-            } else {
-                count = 0;
                 i++;
                 j++;
+            }else {
+                int start = j;
+                while (j < abbr.length()&&Character.isDigit(target[j])) {
+                    j++;
+                }
+                count = Integer.parseInt(abbr.substring(start, j));
+                i += count;
             }
         }
-        if (j - target.length != i - source.length) {
-            if (source.length - i != target[target.length - 1] - '0') {
-                return false;
-            }
-        }
-        return true;
+
+        return (i == word.length()) && (j == abbr.length());
     }
 
     /**
@@ -163,10 +154,16 @@ public class StringTest02 {
         // write your code here
         StringBuilder sb = new StringBuilder();
         for (String str : strs) {
-            sb.append(str.length());
-            sb.append("&");
-            sb.append(str);
+            char[] chars = str.toCharArray();
+            for (char c : chars) {
+                if (!Character.isLetter(c) && !Character.isDigit(c)) {
+                    sb.append(":");
+                }
+                sb.append(c);
+            }
+            sb.append(":;");
         }
+
         return sb.toString();
     }
 
@@ -175,35 +172,28 @@ public class StringTest02 {
      * @return: dcodes a single string to a list of strings
      */
     public List<String> decode(String str) {
+
         List<String> results = new ArrayList<>();
         char[] chars = str.toCharArray();
-        int num = 0;
-        boolean isAnd = false;
-        boolean isStr = false;
-        for (int i = 0; i < chars.length; ) {
-            while (chars[i] >= '0' && chars[i] <= '9') {
-                num = num * 10 + (chars[i] - '0');
-                i++;
-                isAnd = true;
+        boolean visitedS = false;
+        StringBuilder sb = new StringBuilder();
+        for (char c : chars) {
+            if (c == ':' && !visitedS) {
+                visitedS = true;
+                continue;
             }
-            if (isAnd) {
-                i++;
-                isStr = true;
-            }
-
-            if (isStr) {
-                StringBuilder sb = new StringBuilder();
-                for (int j = 0; j < num; j++) {
-                    sb.append(chars[i]);
-                    i++;
-                }
+            if (c == ';' && visitedS) {
                 results.add(sb.toString());
-                isAnd = false;
-                isStr = false;
-                num = 0;
-
+                sb = new StringBuilder();
+                visitedS = false;
+                continue;
+            }
+            sb.append(c);
+            if (visitedS) {
+                visitedS = false;
             }
         }
+
         return results;
     }
 
@@ -363,8 +353,10 @@ public class StringTest02 {
 
     public static void main(String[] args) {
         StringTest02 s = new StringTest02();
-        // System.out.println(s.encode(new ArrayList<>(Arrays.asList("123", "4567","890101010"))));
-        System.out.println(s.intToRoman(6));
+         System.out.println(s.encode(new ArrayList<>(Arrays.asList("123:", "456","789"))));
+         System.out.println(s.decode("123:::;456:;789:;"));
+       // System.out.println(s.intToRoman(6));
+        //System.out.println(s.validWordAbbreviation("a", "01"));
     }
 
 
