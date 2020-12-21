@@ -70,8 +70,8 @@ public class EveryDay03 {
 
     /**
      *714. 买卖股票的最佳时机含手续费
-     * f[i][0] 表示第i天卖获得的最大收益
-     * f[i][1] 表示第i天不买获得的最大收益
+     //f[i][0]表示第i天，今天手上[没有]股票  这时的最大利润 = 【前一天卖掉，今天也不买】 max？ 【前一天持有一张今天卖了】
+     //f[i][1]表示第i天，今天手上[有]一股票 这时的最大利润  = 【前一天卖掉的利润-今天的买的价格】max?【昨天都有股票今天也不用买就用昨天的】
      */
     public int maxProfit(int[] prices, int fee) {
         int n = prices.length;
@@ -88,9 +88,14 @@ public class EveryDay03 {
         }
         return Math.max(f[n-1][0],f[n-1][1]);
     }
+
+
+    // 买卖股票的最佳时
     public int maxProfitII(int[] prices) {
         int n = prices.length;
         int[][] f = new int[n][2];
+        //f[i][0]表示第i天，今天手上[没有]股票最大利润 = 【前一天卖掉，今天也不买】？ 【前一天持有一张今天卖了】
+        //f[i][1]表示第i天，今天手上[有]股票最大利润  = 【前一天卖掉的利润-今天的买的价格】?【昨天都有股票今天也不用买就用昨天的】
         f[0][0] = 0;
         f[0][1] = -prices[0];
         for (int i = 1; i < n; i++) {
@@ -103,18 +108,27 @@ public class EveryDay03 {
         }
         return Math.max(f[n-1][0],f[n-1][1]);
     }
+    /**
+     * 316. 去除重复字母
+     * 给你一个字符串 s ，请你去除字符串中重复的字母，使得每个字母只出现一次。需保证
+     * 返回结果的字典序最小（要求不能打乱其他字符的相对位置）。
+     */
+    public String removeDuplicateLetters(String s) {
+        StringBuilder sb = new StringBuilder();
+        Stack<Character> stack = new Stack<>();
+        int[] count = new int[26];
+        char[] chars = s.toCharArray();
+        for (char c : chars) {
+            count[c - 'a']++;
+        }
+        for (int i = 0; i < chars.length; i++) {
+            count[chars[i] - 'a']--;
 
-    public int maxProfit(int[] prices) {
-        int min = prices[0];
-        int res = Integer.MIN_VALUE;
-        for (int i = 1; i < prices.length; i++) {
-            res = Math.max(res, prices[i] - min);
-            min = Math.min(min, prices[i]);
         }
-        if (res < 0) {
-            return 0;
-        }
-        return res;
+        return sb.toString();
+
+
     }
+
 
 }

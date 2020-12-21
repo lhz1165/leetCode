@@ -19,7 +19,6 @@ public class DPTest06 {
 			f[i][i] = 1;
 		}
 		for (int i = 0; i < n - 1; i++) {
-
 			f[i][i+1]=(s.charAt(i)==s.charAt(i+1)?2:1);
 		}
 		for (int len = 3; len <= n; len++) {

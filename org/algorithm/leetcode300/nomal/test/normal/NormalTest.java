@@ -37,7 +37,8 @@ public class NormalTest {
         n3.left = n6;
         n3.right = n7;
         n.flatten(n1);
-        System.out.println(n.combinationSum(new int[]{2,3,6,7}, 7));
+        System.out.println(n.combinationSum(new int[]{2, 3, 6, 7}, 7));
+        System.out.println(n.countSubstrings("aaab"));
     }
 
     public List<String> generateParenthesis(int n) {
@@ -115,6 +116,7 @@ public class NormalTest {
      * 338. 比特位计数
      * 输入: 5
      * 输出: [0,1,1,2,1,2]
+     * <p>
      * 动态规划
      * 0    1
      * 10   11  b=2
@@ -204,6 +206,23 @@ public class NormalTest {
         }
 
     }
+
+    /**
+     * 647. 回文子串
+     */
+    public int countSubstrings(String s) {
+        if(s == null || s.equals("")){
+            return 0;
+        }
+        int n = s.length();
+        boolean[][] dp = new boolean[n][n];
+        int result = s.length();
+
+
+        return result;
+
+    }
+
 
 
 }
