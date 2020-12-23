@@ -21,6 +21,7 @@ public class Main {
         }
         System.out.println(m.subSet(arr));
     }
+
     public int subSet(int[] arr){
         Arrays.sort(arr);
         List<List<Integer>> results = new ArrayList<>();
@@ -36,14 +37,12 @@ public class Main {
         if (sum > 24) {
             return;
         }
-
         for (int i = index; i < arr.length; i++) {
             if (sum + arr[i] > 24) {
                 break;
             }
             if (i != 0 && arr[i - 1] == arr[i] && i != index) {
                 continue;
-
             }
             result.add(arr[i]);
             helpSubSet(results, result, i + 1, sum + arr[i], arr);
