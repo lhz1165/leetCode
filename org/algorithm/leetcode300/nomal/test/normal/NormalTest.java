@@ -1,5 +1,6 @@
 package org.algorithm.leetcode300.nomal.test.normal;
 
+import com.sun.corba.se.spi.orbutil.fsm.FSM;
 import org.algorithm.leetcode300.basic.TreeNode;
 
 import java.util.ArrayList;
@@ -214,14 +215,44 @@ public class NormalTest {
         if(s == null || s.equals("")){
             return 0;
         }
+        if (s.length() == 1) {
+            return 1;
+        }
         int n = s.length();
-        boolean[][] dp = new boolean[n][n];
-        int result = s.length();
-
-
+        boolean[][] f = new boolean[n][n];
+        for (int i = 0; i < n; i++) {
+            f[i][i] = true;
+        }
+        for (int i = 1; i < n; i++) {
+            f[i - 1][i] = s.charAt(i - 1) == s.charAt(i);
+        }
+        for (int len = 3; len <= n; len++) {
+            for (int j = 0; j < n - len + 1; j++) {
+                int start = j;
+                int end = j + len - 1;
+                if (s.charAt(start) == s.charAt(end) && f[start + 1][end - 1]) {
+                    f[start][end] = true;
+                }
+            }
+        }
+        int result = 0;
+        for (boolean[] booleans : f) {
+            for (boolean aBoolean : booleans) {
+                if (aBoolean) {
+                    result++;
+                }
+            }
+        }
         return result;
+    }
+    /**
+     *238. 除自身以外数组的乘积
+     */
+    public int[] productExceptSelf(int[] nums) {
+
 
     }
+
 
 
 
