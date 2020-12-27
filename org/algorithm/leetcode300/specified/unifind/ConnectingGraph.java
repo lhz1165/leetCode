@@ -56,7 +56,8 @@ public class ConnectingGraph {
 	 * @return: nothing
 	 */
 	public void connect(int a, int b) {//合并
-		int roota = find(a),rootb = find(b);
+		int roota = find(a);
+		int rootb = find(b);
 		if (roota != rootb) {
 			father[roota] = rootb;
 		}
