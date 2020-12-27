@@ -20,7 +20,7 @@ public class DFSTest {
     public static void main(String[] args) {
         DFSTest d = new DFSTest();
          //System.out.println(d.combinationSum(new int[]{1, 1, 2}, 4));
-        System.out.println(d.permute2(new int[]{0,3,3}));
+        System.out.println(d.combinationSum(new int[]{2,3,6,7},7));
     }
 
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
@@ -49,7 +49,7 @@ public class DFSTest {
             }
             //******  预防[2,2,3]   结果出现[2,3][2,3]-->跳过相同的数
             //******    index!=i(也可以index < i) 也特别重要 代表了如果第一遍循环可以无视重复 [2,2,3]求7 这样才会有[2,2,3]作为结果
-            if (i != 0 && candidates[i] == candidates[i - 1]&&index != i) {
+            if (i != 0 && candidates[i] == candidates[i - 1]&& index != i) {
                 continue;
             }
             result.add(candidates[i]);
