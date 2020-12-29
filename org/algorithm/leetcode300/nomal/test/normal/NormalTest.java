@@ -1,6 +1,5 @@
 package org.algorithm.leetcode300.nomal.test.normal;
 
-import com.sun.corba.se.spi.orbutil.fsm.FSM;
 import org.algorithm.leetcode300.basic.TreeNode;
 
 import java.util.ArrayList;
@@ -40,6 +39,9 @@ public class NormalTest {
         n.flatten(n1);
         System.out.println(n.combinationSum(new int[]{2, 3, 6, 7}, 7));
         System.out.println(n.countSubstrings("aaab"));
+
+        int[] ints = n.productExceptSelf(new int[]{1, 2, 3, 4});
+        System.out.println();
     }
 
     public List<String> generateParenthesis(int n) {
@@ -212,7 +214,7 @@ public class NormalTest {
      * 647. 回文子串
      */
     public int countSubstrings(String s) {
-        if(s == null || s.equals("")){
+        if (s == null || s.equals("")) {
             return 0;
         }
         if (s.length() == 1) {
@@ -245,15 +247,31 @@ public class NormalTest {
         }
         return result;
     }
+
     /**
-     *238. 除自身以外数组的乘积
+     * 238. 除自身以外数组的乘积
+     * 输入: [1,2,3,4]
+     * 输出: [24,12,8,6]
      */
     public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int[] L = new int[n];
 
+        for (int i = 0; i < n; i++) {
+            if (i == 0) {
+                L[i] = 1;
+            } else {
+                L[i] = L[i - 1] * nums[i - 1];
+            }
+        }
+        int R = 1;
+        for (int i = n - 1; i >= 0; i--) {
+            L[i] = L[i] * R;
+            R = R * nums[i];
 
+        }
+        return L;
     }
-
-
 
 
 }
