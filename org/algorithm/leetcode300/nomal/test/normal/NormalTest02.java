@@ -1,8 +1,12 @@
 package org.algorithm.leetcode300.nomal.test.normal;
 
-import org.algorithm.leetcode300.basic.ListNode;
 
-import javax.swing.*;
+import org.algorithm.leetcode300.basic.ListNode;
+import org.algorithm.leetcode300.basic.TreeNode;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author: lhz
@@ -10,23 +14,27 @@ import javax.swing.*;
  **/
 public class NormalTest02 {
     public static void main(String[] args) {
-        int[][] a = new int[][]{{1, 2, 3}, {4, 5, 6}};
+
         NormalTest02 n = new NormalTest02();
-        System.out.println(n.minPathSum(a));
+
+        List<Integer> preOrder = new ArrayList<>(Arrays.asList(3,2,1,4));
+        List<Integer> inOrder = new ArrayList<>(Arrays.asList(1,2,3,4));
+        TreeNode treeNode = n.helperBuildTree(preOrder, inOrder);
+        System.out.println();
+
 
     }
+
     /**
-     *96. 不同的二叉搜索树
+     * 96. 不同的二叉搜索树
      * dp 【离谱】
-     *   G[i] 为根的二叉搜索树的个数
+     * G[i] 为根的二叉搜索树的个数
      * f[n] = G[1]+G[2]+...G[N]
-     *
+     * <p>
      * G[j]从j又分为两段，
      * 0 - （i-1）表示左子树个数
      * （j+1） - n 表示右子树个数
      * 所以 G[j] = f[j-1] * f[n - j];   ==> 笛卡尔积
-     *
-     *
      */
     public int numTrees(int n) {
         int[] f = new int[n + 1];
@@ -39,6 +47,7 @@ public class NormalTest02 {
         }
         return f[n];
     }
+
     /**
      * 64. 最小路径和
      * dp
@@ -115,13 +124,12 @@ public class NormalTest02 {
     }
 
     /**
-     *
      * 287. 寻找重复数
      * 不能更改原数组（假设数组是只读的）。
      * 只能使用额外的 O(1) 的空间。
      * 时间复杂度小于 O(n2) 。
      * 数组中只有一个重复的数字，但它可能不止重复出现一次。
-     *
+     * <p>
      * 快慢指针法
      */
     public int findDuplicate(int[] nums) {
@@ -132,16 +140,83 @@ public class NormalTest02 {
             fast = nums[nums[fast]];
         } while (slow != fast);
         slow = 0;
-        while (slow != fast){
+        while (slow != fast) {
             slow = nums[slow];
             fast = nums[fast];
         }
-
         return slow;
-
-
     }
 
+    /**
+     * 105. 从前序与中序遍历序列构造二叉树
+     * 前序遍历 preorder = [3,9,20,15,7]
+     * 中序遍历 inorder = [9,3,15,20,7]
+     * 3
+     * / \
+     * 9  20
+     * /  \
+     * 15   7
+     */
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        if (preorder.length == 0 || inorder.length == 0) {
+            return null;
+        }
+        List<Integer> preorder2 = new ArrayList<>();
+        List<Integer> inorder2 = new ArrayList<>();
+        for (int i : preorder) {
+            preorder2.add(i);
+        }
+        for (int i : inorder) {
+            inorder2.add(i);
+        }
+        return helperBuildTree(preorder2, inorder2);
+    }
+
+    public TreeNode helperBuildTree(List<Integer> preorder, List<Integer> inorder) {
+        if (preorder.size() == 0) {
+            return null;
+        }
+
+        TreeNode root = new TreeNode(preorder.get(0));
+        if (preorder.size() == 1) {
+            return root;
+        }
+        List<Integer> leftInorder = new ArrayList<>();
+        List<Integer> leftPrerder = new ArrayList<>();
+        List<Integer> rightInorder = new ArrayList<>();
+        List<Integer> rightPrerder = new ArrayList<>();
+        boolean isleft = true;
+        for (Integer p : inorder) {
+            if (p.equals(preorder.get(0))) {
+                isleft = false;
+                continue;
+            }
+            if (isleft) {
+                leftInorder.add(p);
+            } else {
+                rightInorder.add(p);
+            }
+        }
+        for (Integer p : preorder) {
+            if (p.equals(preorder.get(0))) {
+                continue;
+            }
+            if (leftInorder.size() == 0) {
+                rightPrerder.add(p);
+            }else if (rightInorder.size() == 0) {
+                leftPrerder.add(p);
+            } else {
+                if (leftInorder.contains(p)) {
+                    leftPrerder.add(p);
+                }else {
+                    rightPrerder.add(p);
+                }
+            }
+        }
+        root.left = helperBuildTree(leftPrerder, leftInorder);
+        root.right = helperBuildTree(rightPrerder, rightInorder);
+        return root;
+    }
 
 
 }
