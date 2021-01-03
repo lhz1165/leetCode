@@ -13,12 +13,12 @@ public class ListTest01 {
     public static void main(String[] args) {
         ListTest01 t = new ListTest01();
         ListNode n1 = new ListNode(1);
-        ListNode n2 = new ListNode(2);
-        ListNode n3 = new ListNode(6);
-        ListNode n4 = new ListNode(3);
-        ListNode n5 = new ListNode(4);
-        ListNode n6 = new ListNode(5);
-        ListNode n7 = new ListNode(6);
+        ListNode n2 = new ListNode(4);
+        ListNode n3 = new ListNode(3);
+        ListNode n4 = new ListNode(2);
+        ListNode n5 = new ListNode(5);
+        ListNode n6 = new ListNode(2);
+        //ListNode n7 = new ListNode(6);
 //        ListNode n8 = new ListNode(8);
 ////
         n1.next = n2;
@@ -26,10 +26,10 @@ public class ListTest01 {
         n3.next = n4;
         n4.next = n5;
         n5.next = n6;
-        n6.next = n7;
-        n7.next = n1;
+//        n6.next = n7;
+//        n7.next = n1;
 //		//n8.next = n1;
-//		t.listPartition(n1, 6);
+		t.listPartition(n1, 3);
         System.out.println();
         t.josephusKill1(n1,2);
         System.out.println();
@@ -87,10 +87,11 @@ public class ListTest01 {
             cur2 = cur2.next;
         }
         //快速排序
-        quickSort(nodes, pivot);
+        quickSort2(nodes, pivot);
         for (int j = 0; j < nodes.length - 1; j++) {
             nodes[j].next = nodes[j + 1];
         }
+        nodes[nodes.length - 1].next = null;
         return nodes[0];
     }
 
@@ -130,8 +131,8 @@ public class ListTest01 {
      * @param pivot
      */
     private void quickSort2(ListNode[] nodes, int pivot) {
-        int start = 0;
-        int end = nodes.length - 1;
+        int start = -1;
+        int end = nodes.length ;
         int index = 0;
         while (index != end) {
             if (nodes[index].val < pivot) {
