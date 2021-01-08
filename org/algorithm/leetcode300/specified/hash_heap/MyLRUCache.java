@@ -72,8 +72,6 @@ public class MyLRUCache {
 
 		tail = cur;
 		tail.next = null;
-
-
 	}
 
 	/*

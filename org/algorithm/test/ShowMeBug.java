@@ -1,5 +1,8 @@
 package org.algorithm.test;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -9,28 +12,21 @@ import java.util.*;
  **/
 public class ShowMeBug {
 
-    public static void main(String[] args) {
-        ShowMeBug s = new ShowMeBug();
-        Integer[] result = s.getRes(100,10);
-        System.out.println(Arrays.toString(result));
-    }
-
-    public Integer[] getRes(Integer totalReward,Integer num){
-        Integer[] avgs = new Integer[num];
-        Integer avg = totalReward / num;
-        Arrays.fill(avgs,avg);
-        Random r = new Random();
-        for(int i = 0; i < avgs.length; i++){
-            Integer transferMoney = r.nextInt(avg);
-            int j  = r.nextInt(num);
-            System.out.println(j);
-            avgs[i] -= transferMoney;
-            while (avgs[j] + transferMoney  > totalReward * 0.9) {
-                 j  = r.nextInt(num);
+    public static void main(String[] args) throws IOException {
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            System.out.println("请输入选项");
+            String option = sc.next();
+            if (option .equals("1") ) {
+                System.out.println("请输入姓名");
+                String name = sc.next();
+                System.out.println(name);
             }
-            avgs[j] += transferMoney;
+
+
+
         }
-        return avgs;
+
     }
 
 

@@ -1,8 +1,5 @@
 package org.algorithm.leetcode300.specified.unifind;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * @author lhzlhz
  * @create 2020/11/5
@@ -14,9 +11,10 @@ import java.util.Set;
  * query(), 返回图中联通区域个数
  */
 public class ConnectingGraphIII {
+    int count = 0;
     private int[] father = null;
     private int[] size = null;
-    int count = 0;
+
     public ConnectingGraphIII(int n) {//初始化
         father = new int[n];
         size = new int[n];
@@ -50,7 +48,8 @@ public class ConnectingGraphIII {
      * @return: nothing
      */
     public void connect(int a, int b) {//合并
-        int roota = find(a), rootb = find(b);
+        int roota = find(a);
+        int rootb = find(b);
         if (roota != rootb) {
             father[roota] = rootb;
             size[rootb] += 1;
