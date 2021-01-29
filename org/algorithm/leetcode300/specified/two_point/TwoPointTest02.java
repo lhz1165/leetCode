@@ -12,11 +12,11 @@ public class TwoPointTest02 {
 
     public static void main(String[] args) {
         TwoPointTest02 t = new TwoPointTest02();
-        int[] nums ={0,2,2,2,2,1,0,1,0,0,0,1,0,2,0};
-        t.sortColors(nums);
+        int[] nums ={0,2,2,2,2,1,0,1,0,0,0,1,0,2,0,1};
         System.out.println(Arrays.toString(nums));
-        int[] arr = {3,5,4,6,1,2,4};
-        t.quickSort2(arr, 4);
+        t.sortColors2(nums);
+//        int[] arr = {3,5,4,6,1,2,4};
+//        t.quickSort2(arr, 4);
     }
 
     /**
@@ -160,6 +160,7 @@ public class TwoPointTest02 {
         }
     }
 
+
     /**
      *思路2：两个指针 l左边包括全是0 ，r右边全是2，中间就全是1
      * 三指针维护
@@ -181,6 +182,7 @@ public class TwoPointTest02 {
                 r--;
             }
         }
+        System.out.println();
     }
 
     private void swap(int[] nums, int l, int i) {

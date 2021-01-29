@@ -12,6 +12,7 @@ public class StackTest01 {
 
     public static void main(String[] args) {
         StackTest01 s = new StackTest01();
+        System.out.println(s.removeKdigits("1234",1));
         System.out.println(s.removeDuplicateLetters("cbacdcbc"));
     }
 
@@ -20,6 +21,7 @@ public class StackTest01 {
      * 输入: num = "1432219", k = 3
      * 输出: "1219"
      * 解释: 移除掉三个数字 4, 3, 和 2 形成一个新的最小的数字 1219。
+     *
      */
     public String removeKdigits(String num, int k) {
         if (num == null || num.length() == 0) {

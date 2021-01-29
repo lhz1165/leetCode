@@ -10,8 +10,6 @@ public class ArrayTest01 {
     /**
      * 给定一个整数数组和一个整数k，你需要找到连续子数列的和为k子数列的和为k的总个数。
      * subarraySum2,1,-1,1,2 k=3
-     * <p>
-     * 我自己做的 内存超过限制
      *
      * @param nums
      * @param k
@@ -41,6 +39,7 @@ public class ArrayTest01 {
             if (map.containsKey(key)) {
                 res += map.get(key);
             }
+
             if (map.containsKey(sum)) {
                 map.put(sum, map.get(sum) + 1);
             } else {
@@ -57,6 +56,7 @@ public class ArrayTest01 {
      *
      * @param nums
      * @param k
+     *
      * @return
      */
     public static int subarraySumEqualsKII(int[] nums, int k) {
@@ -83,17 +83,17 @@ public class ArrayTest01 {
      *
      * @return
      */
-    public static List<List<Integer>> subarraySumEqualsKIII(int[] nums, int k) {
+    public  List<List<Integer>> subarraySumEqualsKIII(int[] nums, int k) {
         List<List<Integer>> results = new ArrayList<>();
         List<Integer> result = new ArrayList<>();
         Arrays.sort(nums);
         //是否访问过
-        boolean[] valid = new boolean[nums.length];
-        subHelper(nums, k, result, results, 0, valid);
+        subHelper(nums, k, result, results, 0,0);
         return results;
     }
 
-    private static void subHelper(int[] nums, int k, List<Integer> result, List<List<Integer>> results, int sum, boolean[] valid) {
+
+    private  void subHelper(int[] nums, int k, List<Integer> result, List<List<Integer>> results, int sum,int index) {
         if (sum == k) {
             results.add(new ArrayList<>(result));
             return;
@@ -101,19 +101,16 @@ public class ArrayTest01 {
         if (sum > k) {
             return;
         }
-        for (int i = 0; i < nums.length; i++) {
-            if (valid[i]) {
+        for (int i = index; i < nums.length; i++) {
+            //1 2 2 3 求k = 5
+            //结果1 2 2 / 23 / 23（不要了）
+            //index != i 表示 2 和2在同列不影响
+            if (i != 0 && nums[i] == nums[i - 1] && index != i ) {
                 continue;
             }
-            if (i != 0 && nums[i] != nums[i - 1] && valid[i - 1]) {
-                continue;
-            }
-
             sum += nums[i];
             result.add(nums[i]);
-            valid[i] = true;
-            subHelper(nums, k, result, results, sum, valid);
-            valid[i] = false;
+            subHelper(nums, k, result, results, sum,i+1);
             result.remove(result.size() - 1);
             sum -= nums[i];
         }
@@ -121,7 +118,7 @@ public class ArrayTest01 {
 
     public static void main(String[] args) {
         ArrayTest01 a = new ArrayTest01();
-        a.subarraySum(new int[]{2,1,-1,1,2}, 3);
+        System.out.println(a.subarraySum(new int[]{2,1,-1,1,2}));
 
     }
 
@@ -155,7 +152,7 @@ public class ArrayTest01 {
     }
 
     /**
-     * 子数组和为0
+     *
      *
      * @param nums
      * @return
@@ -224,6 +221,8 @@ public class ArrayTest01 {
         res[0] = res[0] + 1;
         return res;
     }
+
+
 
 
 }

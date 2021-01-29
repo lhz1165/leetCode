@@ -11,6 +11,7 @@ public class EveryDay03 {
     public static void main(String[] args) {
         EveryDay03 e = new EveryDay03();
         //"eat", "tea", "tan", "ate", "nat", "bat"
+        e.monotoneIncreasingDigits(232);
     }
 
     /**
@@ -49,7 +50,7 @@ public class EveryDay03 {
         Stack<Character> helper = new Stack<>();
         stack.push(chars[chars.length-1]);
         for (int i = chars.length-2 ; i >= 0 ; i--) {
-            if (chars[i] > stack.peek()) {
+            if (chars[i] >= stack.peek()) {
                 chars[i] = (char) (chars[i] - 1);
                 while (!stack.isEmpty()) {
                     stack.pop();

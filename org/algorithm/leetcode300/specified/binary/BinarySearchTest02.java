@@ -72,8 +72,8 @@ public class BinarySearchTest02 {
 
 	public static void main(String[] args) {
 		BinarySearchTest02 b = new BinarySearchTest02();
-		b.findDuplicate(new int[]{5,5,4,3,2,1});
-	}
+        System.out.println(b.findDuplicate(new int[]{5, 3, 4, 5, 2, 1}));
+    }
 	/**
 	 * 木材加工
 	 * 有一些原木，现在想把这些木头切割成一些长度相同的小段木头，
@@ -139,7 +139,7 @@ public class BinarySearchTest02 {
 	 */
 	public int findDuplicate(int[] nums) {
 		// write your code here
-		int l = 1;
+		int l = 0;
 		int r = nums.length - 1;  // n
 
 		while (l + 1 < r) {
@@ -167,6 +167,7 @@ public class BinarySearchTest02 {
 		}
 		return count;
 	}
+
 
 
 

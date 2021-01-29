@@ -17,6 +17,8 @@ public class LRUCache {
 		cache.set(4,1);
 		cache.get(1);
 		cache.get(2);
+		cache.set(3,2);
+		cache.set(6,7);
 
 	}
 
@@ -31,20 +33,20 @@ public class LRUCache {
 		}
 	}
 	//容量
-	private int capacity;
-	//当前大小
-	private int size;
-	private ListNode dummy;
-	private ListNode tail;
-	//用它来保存某个节点的前一个节点
-	private Map<Integer,ListNode> keyToPrev;
+    private int capacity;
+    //当前大小
+    private int size;
+    private ListNode dummy;
+    private ListNode tail;
+    //用它来保存某个节点的前一个节点
+    private Map<Integer,ListNode> keyToPrev;
 
-	/*
+    /*
 	 * @param capacity: An integer
 	 */public LRUCache(int capacity) {
 		// do intialization if necessary
 		this.capacity = capacity;
-		this.keyToPrev = new HashMap<Integer, ListNode>();
+		this.keyToPrev = new HashMap<>();
 		this.dummy = new ListNode(0, 0);
 		this.tail = this.dummy;
 	}
@@ -83,9 +85,9 @@ public class LRUCache {
 		tail.next = curt;
 		//因为当前节点跑到最后面去了
 		//下一个节点的前一个节点
-		if (prev.next != null) {
-			keyToPrev.put(prev.next.key, prev);
-		}
+		//if (prev.next != null) {
+        keyToPrev.put(prev.next.key, prev);
+		//}
 		keyToPrev.put(curt.key, tail);
 		tail=curt;
 		System.out.println();
@@ -103,8 +105,6 @@ public class LRUCache {
 			prev.next.val = value;
 			return;
 		}
-
-
 		if (size < capacity) {
 			size++;
 			ListNode curt = new ListNode(key, value);
@@ -115,7 +115,7 @@ public class LRUCache {
 			return;
 		}
 		//淘汰最后一个
-		//先把最旧的点换成新来的节点
+		//先把最旧的点换成新来的节点w
 		//然后再把这个新来的节点移动到最后面去
 		ListNode first = dummy.next;
 		keyToPrev.remove(first.key);

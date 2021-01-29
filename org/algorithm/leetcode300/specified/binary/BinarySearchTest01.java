@@ -8,7 +8,7 @@ import java.util.Arrays;
  */
 public class BinarySearchTest01 {
 	public static void main(String[] args) {
-		int[] a = {1,3,3,3,3,3,3};
+		int[] a = {8,9,1,2,3,4,5};
 		System.out.println(findMin(a));
 	}
 
@@ -80,7 +80,7 @@ public class BinarySearchTest01 {
 	 * @return: the minimum number in the array
 	 */
 	public static int findMin(int[] numbers) {
-        Arrays.sort(numbers);
+        //Arrays.sort(numbers);
 		// write your code here
 		int start = 0;
 		int end = numbers.length - 1;
@@ -145,7 +145,6 @@ public class BinarySearchTest01 {
 			}
 
 		}
-
 		if (nums[start] == target) {
 			return start;
 		}

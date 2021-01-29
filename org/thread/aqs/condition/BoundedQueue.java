@@ -10,6 +10,27 @@ import java.util.concurrent.locks.ReentrantLock;
  * 有界等待队列实例
  */
 public class BoundedQueue<T> {
+    public static void main(String[] args) throws InterruptedException {
+        BoundedQueue<Integer> b = new BoundedQueue<>(2);
+        new Thread(()->{
+            try {
+                b.remove();
+                System.out.println("bbbb");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }).start();
+        new Thread(()->{
+            try {
+                b.add(11);
+                System.out.println("aaa");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }).start();
+    }
 	private Object[] items;
 	private int addIndex,removeIndex,count;
 	private Lock lock = new ReentrantLock();

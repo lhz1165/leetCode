@@ -1,9 +1,6 @@
 package org.algorithm.leetcode300.specified.array;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Deque;
+import java.util.*;
 
 /**
  * @author lhzlhz
@@ -12,62 +9,57 @@ import java.util.Deque;
 public class ArrayTest04 {
     public static void main(String[] args) {
         ArrayTest04 a = new ArrayTest04();
-        int[] aa = {5,4,7,5,3,2};
-        a.nextPermutation(aa);
-        System.out.println(Arrays.toString(aa));
+//        int[] aa = {5,4,7,5,3,2};
+//        a.nextPermutation(aa);
+//        System.out.println(Arrays.toString(aa));
+        //[1,3,1,2,0,5]
+        //3
+        a.maxSlidingWindow(new int[]{1,3,1,2,0,5},3);
+        System.out.println();
     }
 
     /**
      * 给出一个可能包含重复的整数数组，和一个大小为 k 的滑动窗口, 从左到右在数组中滑动这个窗口，找到数组中每个窗口内的最大值。
      * 输入:
-     * [1,2,7,7,8]
+     * [1,3,-1,-3,5,3,6,7]
      * 3
      * 输出:
-     * [7,7,8]
+     * [3,3,5,5,6,7]
      * 方法一：两个for 遍历k个数组
-     * 方法二：map 每次加一个 删一个
+     * 方法二：双向队列
      */
-    void inQueue(Deque<Integer> deque, int num) {
-        while (!deque.isEmpty() && deque.peekLast() < num) {
-            deque.pollLast();
-        }
-        deque.offer(num);
-    }
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        LinkedList<Integer> deque = new LinkedList<>();
+        int[] results = new int[nums.length-k+1];
+        int index = 0;
+        for (int i = 0; i < nums.length; i++) {
 
-    void outQueue(Deque<Integer> deque, int num) {
-        if (deque.peekFirst() == num) {
-            deque.pollFirst();
-        }
-    }
+            while (!deque.isEmpty() &&nums[deque.peekLast()] < nums[i]) {
+                deque.pollLast();
+            }
+            deque.addLast(i);
 
-    public ArrayList<Integer> maxSlidingWindow(int[] nums, int k) {
-        // write your code here
-        ArrayList<Integer> ans = new ArrayList<Integer>();
-        Deque<Integer> deque = new ArrayDeque<Integer>();
-        if (nums.length == 0) {
-            return ans;
-        }
-        for (int i = 0; i < k; i++) {
-            inQueue(deque, nums[i]);
-        }
+            if (i - deque.peekFirst() >= k) {
+                deque.pollFirst();
+            }
 
-        for (int i = k - 1; i < nums.length; i++) {
-            //如果这个最大的那么移除
-            inQueue(deque, nums[i]);
-            //第一位永远存最大的
-            ans.add(deque.peekFirst());
+            if (i >= k-1 ) {
+                results[index++] = nums[deque.peekFirst()];
+            }
 
-            //第一个是否不在窗口里面了
-            outQueue(deque, nums[i - k + 1]);
+
         }
-        return ans;
+        return results;
+
+
+
     }
 
     /**
      * 出这个数组排序出的所有数中，刚好比当前数大的那个数
      * 比如当前 nums = [1,2,3]。这个数是123，找出1，2，3这3个数字排序可能的所有数，排序后，比123大的那个数 也就是132
      *
-     * 158476531
+     * 1 5 8 4 7 6 5 3 1
      *先从后往前找一个不不上升序列的 1 3 5 6 7【4】
      * 在从后往前 找一个比4大的最小数 1 3 【5】 6 7
      * 交换 1 5 8 【5】 7 6 4 3 1
