@@ -1,6 +1,6 @@
 package org.algorithm.interview_guide.tree;
 
-import org.algorithm.leetcode300.basic.TreeNode;
+import org.algorithm.leetcode.basic.TreeNode;
 
 /**
  * @author lhzlhz
@@ -55,6 +55,8 @@ public class TreeTest01 {
 		//每层的最左和最有两个点
 		TreeNode[][] edgeMap = new TreeNode[height][2];
 		setEdgeMap(head, 0, edgeMap);
+        System.out.println();
+
 	}
 
 

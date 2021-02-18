@@ -1,8 +1,7 @@
 package org.algorithm.interview_guide.list;
 
-import org.algorithm.leetcode300.basic.ListNode;
+import org.algorithm.leetcode.basic.ListNode;
 
-import java.util.List;
 import java.util.Stack;
 
 /**

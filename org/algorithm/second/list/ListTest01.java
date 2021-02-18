@@ -1,6 +1,6 @@
 package org.algorithm.second.list;
 
-import org.algorithm.leetcode300.basic.ListNode;
+import org.algorithm.leetcode.basic.ListNode;
 
 /**
  * @author: lhz
