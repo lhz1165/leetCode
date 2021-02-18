@@ -1,9 +1,5 @@
 package org.algorithm.second.dp;
 
-import java.util.ArrayList;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 /**
  * @author: lhz
  * @date: 2020/9/18
@@ -29,7 +25,7 @@ public class DPTest07 {
                 if (text1.charAt(i - 1) == text2.charAt(j - 1)) {
                     f[i][j] = Math.max(f[i][j], f[i - 1][j - 1] + 1);
                 }
-                f[i][j] =Math.max(f[i][j],Math.max(f[i - 1][j], f[i][j - 1]));
+                f[i][j] = Math.max(f[i][j], Math.max(f[i - 1][j], f[i][j - 1]));
             }
         }
         return f[n][m];
@@ -70,6 +66,7 @@ public class DPTest07 {
 
     /**
      * 给出两个单词word1和word2，计算出将word1 转换为word2的最少操作次数。
+     * 编辑距离
      * <p>
      * 你总共三种操作方法：
      * <p>
@@ -98,6 +95,7 @@ public class DPTest07 {
         for (int i = 0; i < m + 1; i++) {
             f[0][i] = i;
         }
+
         for (int i = 1; i < n + 1; i++) {
             for (int j = 1; j < m + 1; j++) {
                 f[i][j] = Integer.MAX_VALUE;
@@ -105,32 +103,32 @@ public class DPTest07 {
                 if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
                     f[i][j] = Math.min(f[i][j], f[i - 1][j - 1]);
                 }
-                //插入一个字符串
-                    f[i][j] = Math.min(f[i][j], f[i][j - 1] + 1);
+                //在单词 A 中插入一个字符
+                f[i][j] = Math.min(f[i][j], f[i][j - 1] + 1);
+                //在单词 B 中插入一个字符
+                f[i][j] = Math.min(f[i][j], f[i - 1][j] + 1);
                 //替换
-                    f[i][j] = Math.min(f[i][j], f[i - 1][j] + 1);
-                    //
-                    f[i][j] = Math.min(f[i][j], f[i - 1][j-1] + 1);
-
+                f[i][j] = Math.min(f[i][j], f[i - 1][j - 1] + 1);
             }
         }
         return f[n][m];
 
     }
+
     public int findMaxForm(String[] strs, int m, int n) {
         //设f[i][j][k]为前i个01串最多能有多少个被j个0和k个1组成
-        int t =strs.length;
-        int[][][] f =new int[t+1][m+1][n+1];
-        for(int i = 0; i <= t; i++){
+        int t = strs.length;
+        int[][][] f = new int[t + 1][m + 1][n + 1];
+        for (int i = 0; i <= t; i++) {
             int count0 = getZero(strs[i]);
             int count1 = getOne(strs[i]);
-            for(int j = 0; j <= m; j++){
-                for(int k = 0; k <= n; k++){
-                    if(i == 0){
+            for (int j = 0; j <= m; j++) {
+                for (int k = 0; k <= n; k++) {
+                    if (i == 0) {
                         f[i][j][k] = 0;
                         continue;
                     }
-                    if(j == 0 && k == 0){
+                    if (j == 0 && k == 0) {
                         f[i][j][k] = 0;
                         continue;
                     }
@@ -146,16 +144,17 @@ public class DPTest07 {
         return f[strs.length][m][n];
     }
 
-    public int getZero(String str){
+    public int getZero(String str) {
         int count = 0;
         for (char c : str.toCharArray()) {
-            if (c=='0'){
+            if (c == '0') {
                 count++;
             }
         }
         return count;
     }
-    public int getOne(String str){
+
+    public int getOne(String str) {
         return str.length() - getZero(str);
     }
 
