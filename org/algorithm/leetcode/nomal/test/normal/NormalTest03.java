@@ -13,7 +13,8 @@ public class NormalTest03 {
     public static void main(String[] args) {
         NormalTest03 n = new NormalTest03();
         n.topKFrequent(new int[]{3, 3, 2, 1}, 1);
-        int kthLargest = n.findKthLargest(new int[]{-1, 2, 0}, 1, 0, 2);
+
+        n.findTargetSumWays(new int[]{1, 1, 1, 1, 1}, 3);
         System.out.println();
     }
 
@@ -82,29 +83,28 @@ public class NormalTest03 {
     /**
      * 494. 目标和
      */
-    public int findTargetSumWays(int[] nums, int S) {
+    public int findTargetSumWays(int[] nums, int S){
         int n = nums.length;
         //前i个数 和为 j的个数
         int[][] f = new int[n + 1][2001];
-        for (int i = 0; i <= S; i++) {
+        for (int i = 0; i <= 2000; i++) {
             f[0][i] = 0;
         }
-        f[0][0] = 1;
-
+        f[0][1000] = 1;
         for (int i = 1; i <= n; i++) {
-            for (int j = 0; j <= 2001; j++) {
-                if (j + nums[i - 1] < 2000 &&f[i-1][j+ nums[i - 1]] >0 ) {
-                    f[i][j] = f[i - 1][j + nums[i - 1]] + 1;
+            for (int j = 0; j <= 2000; j++) {
+                if (j + nums[i - 1] <= 2000 &&f[i-1][j+ nums[i - 1]] >0 ) {
+                    f[i][j] += f[i - 1][j+ nums[i - 1]];
                 }
-                if (j - nums[i - 1] > 0 && f[i-1][j - nums[i - 1]] >0) {
-                    f[i][j] = f[i - 1][j - nums[i - 1]] + 1;
+                if (j - nums[i - 1] >= 0 && f[i-1][j - nums[i - 1]] >0) {
+                    f[i][j] += f[i - 1][j - nums[i - 1]];
                 }
             }
         }
-
-        return f[n][S + 1001];
-
+        return f[n][S + 1000];
     }
+
+
 
     static class Pair {
         int num;
