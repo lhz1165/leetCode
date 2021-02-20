@@ -1,9 +1,6 @@
 package org.algorithm.leetcode.nomal.test.normal;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author: lhz
@@ -16,6 +13,7 @@ public class NormalTest03 {
 
         n.findTargetSumWays(new int[]{1, 1, 1, 1, 1}, 3);
         System.out.println();
+        n.decodeString("3[a2[c]]");
     }
 
 
@@ -83,7 +81,7 @@ public class NormalTest03 {
     /**
      * 494. 目标和
      */
-    public int findTargetSumWays(int[] nums, int S){
+    public int findTargetSumWays(int[] nums, int S) {
         int n = nums.length;
         //前i个数 和为 j的个数
         int[][] f = new int[n + 1][2001];
@@ -93,10 +91,10 @@ public class NormalTest03 {
         f[0][1000] = 1;
         for (int i = 1; i <= n; i++) {
             for (int j = 0; j <= 2000; j++) {
-                if (j + nums[i - 1] <= 2000 &&f[i-1][j+ nums[i - 1]] >0 ) {
-                    f[i][j] += f[i - 1][j+ nums[i - 1]];
+                if (j + nums[i - 1] <= 2000 && f[i - 1][j + nums[i - 1]] > 0) {
+                    f[i][j] += f[i - 1][j + nums[i - 1]];
                 }
-                if (j - nums[i - 1] >= 0 && f[i-1][j - nums[i - 1]] >0) {
+                if (j - nums[i - 1] >= 0 && f[i - 1][j - nums[i - 1]] > 0) {
                     f[i][j] += f[i - 1][j - nums[i - 1]];
                 }
             }
@@ -104,6 +102,47 @@ public class NormalTest03 {
         return f[n][S + 1000];
     }
 
+    /**
+     * 394. 字符串解码
+     ******
+     * @param s
+     * @return
+     */
+    public String decodeString(String s) {
+        char[] chars = s.toCharArray();
+        char l = '[';
+        char r = ']';
+        Integer times = 0;
+        Stack<String> sStack = new Stack<>();
+        Stack<Integer> numStack = new Stack<>();
+        StringBuilder  res = new StringBuilder();
+        for (char c : chars) {
+            //【
+            if (c == l) {
+                sStack.push(res.toString());
+                numStack.push(times);
+                times = 0;
+                res = new StringBuilder();
+                // 】
+            } else if (c == r) {
+                StringBuilder  sub = new StringBuilder();
+                Integer curTimes = numStack.pop();
+                String subStr = sStack.pop();
+                for (int i = 0; i < curTimes; i++) {
+                    sub.append(res);
+                }
+                res = new StringBuilder(subStr+sub);
+                //数字
+            } else if (Character.isDigit(c)) {
+                times = times * 10 + Integer.parseInt(c + "");
+                //字母
+            } else {
+                res.append(c);
+            }
+        }
+
+        return res.toString();
+    }
 
 
     static class Pair {
@@ -115,6 +154,7 @@ public class NormalTest03 {
             this.count = count;
         }
     }
+
 
 }
 
