@@ -112,7 +112,7 @@ public class NormalTest03 {
         char[] chars = s.toCharArray();
         char l = '[';
         char r = ']';
-        Integer times = 0;
+        int times = 0;
         Stack<String> sStack = new Stack<>();
         Stack<Integer> numStack = new Stack<>();
         StringBuilder  res = new StringBuilder();
@@ -142,6 +142,41 @@ public class NormalTest03 {
         }
 
         return res.toString();
+    }
+
+
+    /**
+     * 找数字
+     * @param nums
+     * @return
+     */
+    public int singleNumber(int[] nums) {
+        Arrays.sort(nums);
+        int left = 0;
+        int right = nums.length - 1;
+        while (left <= right) {
+            int mid = (right + left) / 2;
+            int l = mid;
+            int r = mid;
+            //向左拓展判断数字是否相同
+            while (l - 1 >= left && nums[l] == nums[l - 1]) {
+                l -= 1;
+            }
+            //向右拓展数字是否相同
+            while (r + 1 <= right && nums[r] == nums[r + 1]) {
+                r += 1;
+            }
+            //判断前面的数字个数能否被3整除，如果能被整除则说明要找的数字再右半部分
+            if (l % 3 == 0) {
+                left = r + 1;
+            }else {
+                //不能被3整除则说明要找的数字再左半部分
+                right = l - 1;
+            }
+        }
+        return nums[right];
+
+
     }
 
 

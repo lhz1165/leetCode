@@ -1,5 +1,6 @@
 package org.algorithm.leetcode.nomal.test.everyday;
 
+import javafx.util.Pair;
 import org.algorithm.leetcode.specified.unifind.ConnectingGraphIII;
 
 import java.util.*;
@@ -29,6 +30,7 @@ public class EveryDay06 {
         //[1,0,0],[0,1,0],[0,0,1]
 //        int[][] ar = {{1, 1, 0}, {1, 1, 0}, {0, 0, 1}};
 //        System.out.println(e.findCircleNum(ar));
+        e.findUnsortedSubarray(new int[]{2,6,4,8,10,9,15});
 
 
     }
@@ -179,6 +181,36 @@ public class EveryDay06 {
         return c.query();
 
     }
+
+
+    public int findUnsortedSubarray(int[] nums) {
+        Stack < Integer > stack = new Stack < Integer > ();
+        int l = nums.length, r = 0;
+        for (int i = 0; i < nums.length; i++) {
+            while (!stack.isEmpty() && nums[stack.peek()] > nums[i])
+                l = Math.min(l, stack.pop());
+            stack.push(i);
+        }
+        stack.clear();
+        for (int i = nums.length - 1; i >= 0; i--) {
+            while (!stack.isEmpty() && nums[stack.peek()] < nums[i])
+                r = Math.max(r, stack.pop());
+            stack.push(i);
+        }
+        return r - l > 0 ? r - l + 1 : 0;
+    }
+
+
+    public  Pair<Integer, Integer> findMin(int[] nums, int start, int end) {
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for (int i = start; i < end + 1; i++) {
+            min = Math.min(min, nums[i]);
+            max = Math.max(max, nums[i]);
+        }
+        return new Pair<>(min,max);
+    }
+
 
 
 
