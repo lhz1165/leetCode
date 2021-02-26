@@ -1,5 +1,9 @@
 package org.algorithm.leetcode.nomal.test.normal;
 
+import jdk.nashorn.internal.ir.IfNode;
+import org.algorithm.leetcode.basic.ListNode;
+import org.algorithm.leetcode.basic.TreeNode;
+
 import java.util.*;
 
 /**
@@ -9,41 +13,18 @@ import java.util.*;
 public class NormalTest03 {
     public static void main(String[] args) {
         NormalTest03 n = new NormalTest03();
-        n.topKFrequent(new int[]{3, 3, 2, 1}, 1);
+//        n.topKFrequent(new int[]{3, 3, 2, 1}, 1);
+//
+//        n.findTargetSumWays(new int[]{1, 1, 1, 1, 1}, 3);
+//        System.out.println();
+//        n.decodeString("3[a2[c]]");
+        n.nthUglyNumber(364);
 
-        n.findTargetSumWays(new int[]{1, 1, 1, 1, 1}, 3);
-        System.out.println();
-        n.decodeString("3[a2[c]]");
-    }
-
-
-    public int[] topKFrequent(int[] nums, int k) {
-
-        Map<Integer, Integer> numToCount = new HashMap<>();
-
-        for (int num : nums) {
-            numToCount.put(num, numToCount.getOrDefault(num, 0) + 1);
-        }
-
-        List<Pair> pairs = new ArrayList<>();
-
-        for (Map.Entry<Integer, Integer> entry : numToCount.entrySet()) {
-            pairs.add(new Pair(entry.getKey(), entry.getValue()));
-        }
-
-        pairs.sort((a, b) -> b.count - a.count);
-
-        int[] res = new int[k];
-
-        for (int i = 0; i < k; i++) {
-            res[i] = pairs.get(i).num;
-        }
-        return res;
 
     }
-
     /**
      * 215. 数组中的第K个最大元素
+     *
      */
     public int findKthLargest(int[] nums, int k, int start, int end) {
         if (start == end) {
@@ -59,7 +40,6 @@ public class NormalTest03 {
             while (i <= j && nums[j] < pivot) {
                 j--;
             }
-
             if (i <= j) {
                 int tmp = nums[i];
                 nums[i] = nums[j];
@@ -189,6 +169,80 @@ public class NormalTest03 {
             this.count = count;
         }
     }
+
+    /**
+     * 剑指 Offer 35. 复杂链表的复制
+     * @param head
+     * @return
+     */
+    public Node copyRandomList(Node head) {
+        Node cur = head;
+        Node dummy = new Node(0);
+        Node prev = dummy;
+        Map<Node, Node> oldTonew = new HashMap<>();
+        while (cur != null) {
+            Node newCur = new Node(cur.val);
+            oldTonew.put(cur, newCur);
+            prev.next = newCur;
+            prev = newCur;
+            cur = cur.next;
+        }
+        cur = head;
+        while (cur != null) {
+            Node newRandom = oldTonew.get(cur.random);
+            Node newCur = oldTonew.get(cur);
+            newCur.random = newRandom;
+            cur = cur.next;
+        }
+        return dummy.next;
+    }
+    static class Node {
+        int val;
+        Node next;
+        Node random;
+
+        public Node(int val) {
+            this.val = val;
+            this.next = null;
+            this.random = null;
+        }
+    }
+
+    /**
+     * 剑指 Offer 49. 丑数
+     * ********
+     * @param n
+     * @return
+     */
+    public int nthUglyNumber(int n) {
+        if (n <= 6) {
+            return n;
+        }
+        int a = 1;
+        int b = 1;
+        int c = 1;
+        int[] f = new int[n + 1];
+        f[1] = 1;
+        for(int i = 2; i <= n; i++){
+            int rA = f[a] * 2;
+            int rB = f[b] * 3;
+            int rC = f[c] * 5;
+            f[i] = Math.min(rA,Math.min(rB, rC));
+            if(f[i] == rA){
+                a++;
+            }
+            if(f[i] == rB){
+                b++;
+            }
+            if(f[i] == rC){
+                c++;
+            }
+        }
+        return f[n];
+    }
+
+
+
 
 
 }
