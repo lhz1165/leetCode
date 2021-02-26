@@ -44,6 +44,7 @@ public class NormalTest {
 //        int[] ints = n.productExceptSelf(new int[]{1, 2, 3, 4});
         n.longestPalindrome("babad");
         System.out.println();
+        n.productExceptSelf(new int[]{2, 3, 4, 5});
     }
 
     public List<String> generateParenthesis(int n) {
@@ -313,7 +314,6 @@ public class NormalTest {
         for (int i = n - 1; i >= 0; i--) {
             L[i] = L[i] * R;
             R = R * nums[i];
-
         }
         return L;
     }

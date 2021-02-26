@@ -1,10 +1,9 @@
 package org.algorithm.leetcode.nomal.test.normal;
 
-import jdk.nashorn.internal.ir.IfNode;
-import org.algorithm.leetcode.basic.ListNode;
-import org.algorithm.leetcode.basic.TreeNode;
-
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
 
 /**
  * @author: lhz
@@ -22,9 +21,9 @@ public class NormalTest03 {
 
 
     }
+
     /**
      * 215. 数组中的第K个最大元素
-     *
      */
     public int findKthLargest(int[] nums, int k, int start, int end) {
         if (start == end) {
@@ -84,7 +83,8 @@ public class NormalTest03 {
 
     /**
      * 394. 字符串解码
-     ******
+     * *****
+     *
      * @param s
      * @return
      */
@@ -95,7 +95,7 @@ public class NormalTest03 {
         int times = 0;
         Stack<String> sStack = new Stack<>();
         Stack<Integer> numStack = new Stack<>();
-        StringBuilder  res = new StringBuilder();
+        StringBuilder res = new StringBuilder();
         for (char c : chars) {
             //【
             if (c == l) {
@@ -105,13 +105,13 @@ public class NormalTest03 {
                 res = new StringBuilder();
                 // 】
             } else if (c == r) {
-                StringBuilder  sub = new StringBuilder();
+                StringBuilder sub = new StringBuilder();
                 Integer curTimes = numStack.pop();
                 String subStr = sStack.pop();
                 for (int i = 0; i < curTimes; i++) {
                     sub.append(res);
                 }
-                res = new StringBuilder(subStr+sub);
+                res = new StringBuilder(subStr + sub);
                 //数字
             } else if (Character.isDigit(c)) {
                 times = times * 10 + Integer.parseInt(c + "");
@@ -127,6 +127,7 @@ public class NormalTest03 {
 
     /**
      * 找数字
+     *
      * @param nums
      * @return
      */
@@ -149,7 +150,7 @@ public class NormalTest03 {
             //判断前面的数字个数能否被3整除，如果能被整除则说明要找的数字再右半部分
             if (l % 3 == 0) {
                 left = r + 1;
-            }else {
+            } else {
                 //不能被3整除则说明要找的数字再左半部分
                 right = l - 1;
             }
@@ -159,19 +160,9 @@ public class NormalTest03 {
 
     }
 
-
-    static class Pair {
-        int num;
-        int count;
-
-        public Pair(int num, int count) {
-            this.num = num;
-            this.count = count;
-        }
-    }
-
     /**
      * 剑指 Offer 35. 复杂链表的复制
+     *
      * @param head
      * @return
      */
@@ -196,21 +187,11 @@ public class NormalTest03 {
         }
         return dummy.next;
     }
-    static class Node {
-        int val;
-        Node next;
-        Node random;
-
-        public Node(int val) {
-            this.val = val;
-            this.next = null;
-            this.random = null;
-        }
-    }
 
     /**
      * 剑指 Offer 49. 丑数
      * ********
+     *
      * @param n
      * @return
      */
@@ -223,18 +204,18 @@ public class NormalTest03 {
         int c = 1;
         int[] f = new int[n + 1];
         f[1] = 1;
-        for(int i = 2; i <= n; i++){
+        for (int i = 2; i <= n; i++) {
             int rA = f[a] * 2;
             int rB = f[b] * 3;
             int rC = f[c] * 5;
-            f[i] = Math.min(rA,Math.min(rB, rC));
-            if(f[i] == rA){
+            f[i] = Math.min(rA, Math.min(rB, rC));
+            if (f[i] == rA) {
                 a++;
             }
-            if(f[i] == rB){
+            if (f[i] == rB) {
                 b++;
             }
-            if(f[i] == rC){
+            if (f[i] == rC) {
                 c++;
             }
         }
@@ -242,7 +223,29 @@ public class NormalTest03 {
     }
 
 
+    
 
+    static class Pair {
+        int num;
+        int count;
+
+        public Pair(int num, int count) {
+            this.num = num;
+            this.count = count;
+        }
+    }
+
+    static class Node {
+        int val;
+        Node next;
+        Node random;
+
+        public Node(int val) {
+            this.val = val;
+            this.next = null;
+            this.random = null;
+        }
+    }
 
 
 }
