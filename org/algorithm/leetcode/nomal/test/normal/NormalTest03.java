@@ -1,9 +1,10 @@
 package org.algorithm.leetcode.nomal.test.normal;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import org.algorithm.leetcode.basic.TreeNode;
+
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author: lhz
@@ -17,7 +18,8 @@ public class NormalTest03 {
 //        n.findTargetSumWays(new int[]{1, 1, 1, 1, 1}, 3);
 //        System.out.println();
 //        n.decodeString("3[a2[c]]");
-        n.nthUglyNumber(364);
+
+        n.minNumber(new int[]{3, 30, 34});
 
 
     }
@@ -222,8 +224,126 @@ public class NormalTest03 {
         return f[n];
     }
 
+    /**
+     * 剑指 Offer 66. 构建乘积数组
+     *
+     * @param a
+     * @return
+     */
+    public int[] constructArr(int[] a) {
+        int n = a.length;
+        int[] res = new int[n];
+        int[] tmp = new int[n];
+        tmp[0] = 1;
+        for (int i = 1; i < tmp.length; i++) {
+            tmp[i] = tmp[i - 1] * a[i - 1];
+        }
+        int[] tmp2 = new int[n];
+        tmp2[n - 1] = 1;
+        for (int i = n - 2; i >= 0; i--) {
+            tmp2[i] = tmp2[i + 1] * a[i + 1];
+        }
+        for (int i = 0; i < a.length; i++) {
+            res[i] = tmp[i] * tmp2[i];
+        }
+        return res;
+    }
 
-    
+    /**
+     * 剑指 Offer 32 - III. 从上到下打印二叉树 III
+     *
+     * @param root
+     * @return
+     */
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        boolean leftToRight = false;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            List<Integer> subResult = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                TreeNode cur = queue.poll();
+                subResult.add(cur.val);
+                if (cur.left != null) {
+                    queue.offer(cur.left);
+                }
+                if (cur.right != null) {
+                    queue.offer(cur.right);
+                }
+            }
+            if (!leftToRight) {
+                int start = 0;
+                int end = subResult.size() - 1;
+                while (start < end) {
+                    int tmp = subResult.get(start);
+                    subResult.set(start, subResult.get(end));
+                    subResult.set(end, tmp);
+                    start++;
+                    end--;
+                }
+            }
+            result.add(subResult);
+            leftToRight = !leftToRight;
+        }
+        return result;
+    }
+
+    /**
+     * @param root
+     * @param sum
+     * @return
+     */
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        helperPathSum(root, sum, result, 0, new ArrayList<>());
+        return result;
+    }
+
+    private void helperPathSum(TreeNode root, int sum, List<List<Integer>> result, int cur, List<Integer> subRes) {
+        if (root == null) {
+            return;
+        }
+        subRes.add(root.val);
+        cur += root.val;
+        if (cur == sum && root.left == null && root.right == null) {
+            result.add(new ArrayList<>(subRes));
+        }
+        helperPathSum(root.left, sum, result, cur, subRes);
+        helperPathSum(root.right, sum, result, cur, subRes);
+        subRes.remove(subRes.size() - 1);
+    }
+
+    /**
+     * 剑指 Offer 45. 把数组排成最小的数
+     *
+     * @param nums
+     * @return
+     */
+    public String minNumber(int[] nums) {
+        List<String> numStr = new ArrayList<>();
+        for (int num : nums) {
+            numStr.add(String.valueOf(num));
+        }
+        numStr.sort((a, b) -> (a + b).compareTo(b + a));
+        return String.join("", numStr);
+
+    }
+    public int[] singleNumbers(int[] nums) {
+
+        return null;
+    }
+
+
+
+
 
     static class Pair {
         int num;

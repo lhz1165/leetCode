@@ -11,13 +11,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		Main m = new Main();
-		Scanner sc = new Scanner(System.in);
-		List<Integer> l = new ArrayList<>();
-		while (sc.hasNext()) {
-			l.add(sc.nextInt());
-		}
-		System.out.println(m.test03(l));
-	}
+    }
 
 	//给你一个数组，选三个数字，组成最小整数
 	//输入5，10，20，30
@@ -79,54 +73,6 @@ public class Main {
 		}
 	}
 
-	//输入数组10,9,23,3
-	//数组所有数字组成一个最大的整数 932310
-	public String test03(List<Integer> num){
-		StringBuilder sb = new StringBuilder();
-		Stack<Integer> stack = new Stack<>();
-		Stack<Integer> helper = new Stack<>();
-		for (Integer n : num) {
-			stack.push(n);
-		}
-		while (!stack.isEmpty()) {
-			int cur = stack.pop();
-			while (!helper.isEmpty() && isCurBigger(cur+"",helper.peek()+"")) {
-				Integer pop = helper.pop();
-				stack.push(pop);
-			}
-			helper.push(cur);
-		}
-
-		Stack<Integer> result = new Stack<>();
-		while (!helper.isEmpty()) {
-			result.push(helper.pop());
-		}
-		while (!result.isEmpty()) {
-			sb.append(result.pop());
-		}
-
-		return sb.toString();
-
-	}
-
-	public boolean isCurBigger(String cur,String help) {
-		int x = 0;
-		int y = 0;
-
-		char[] curs = cur.toCharArray();
-		char[] hs = help.toCharArray();
-		while (x <= curs.length && y <= hs.length) {
-			if (curs[x] > hs[y]) {
-				return true;
-			} else if (curs[x] < hs[y]) {
-				return false;
-			}else {
-				x++;
-				y++;
-			}
-		}
-		return false;
-	}
 
 
 }
