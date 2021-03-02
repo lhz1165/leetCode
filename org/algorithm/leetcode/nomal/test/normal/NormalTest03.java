@@ -18,8 +18,9 @@ public class NormalTest03 {
 //        n.findTargetSumWays(new int[]{1, 1, 1, 1, 1}, 3);
 //        System.out.println();
 //        n.decodeString("3[a2[c]]");
-
+        n.singleNumber(new int[]{3,4,3,3});
         n.minNumber(new int[]{3, 30, 34});
+        n.singleNumbers(new int[]{1, 2, 2, 3, 3, 4});
 
 
     }
@@ -137,17 +138,16 @@ public class NormalTest03 {
         Arrays.sort(nums);
         int left = 0;
         int right = nums.length - 1;
-        while (left <= right) {
+        while (left < right) {
             int mid = (right + left) / 2;
             int l = mid;
             int r = mid;
             //向左拓展判断数字是否相同
-            while (l - 1 >= left && nums[l] == nums[l - 1]) {
-                l -= 1;
+            while(l > 0 && nums[l-1] == nums[l]){
+                l--;
             }
-            //向右拓展数字是否相同
-            while (r + 1 <= right && nums[r] == nums[r + 1]) {
-                r += 1;
+            while(r < nums.length - 1 && nums[r+1] == nums[r]){
+                r++;
             }
             //判断前面的数字个数能否被3整除，如果能被整除则说明要找的数字再右半部分
             if (l % 3 == 0) {
@@ -161,6 +161,9 @@ public class NormalTest03 {
 
 
     }
+
+
+
 
     /**
      * 剑指 Offer 35. 复杂链表的复制
@@ -336,10 +339,23 @@ public class NormalTest03 {
         return String.join("", numStr);
 
     }
-    public int[] singleNumbers(int[] nums) {
 
-        return null;
+
+    public int[] singleNumbers(int[] nums) {
+        int x = 0, y = 0, n = 0, m = 1;
+        //n = x异或y
+        for(int num : nums)               // 1. 遍历异或
+            n ^= num;
+        System.out.println(1^4);
+        while((n & m) == 0)               // 2. 循环左移，计算x异或y 第几位是1,目的就是计算第几位不一样
+            m <<= 1;
+        for(int num: nums) {              // 3. 遍历 nums 分组
+            if((num & m) != 0) x ^= num;  // 4. 当 num & m != 0
+            else y ^= num;                // 4. 当 num & m == 0
+        }
+        return new int[] {x, y};          // 5. 返回出现一次的数字
     }
+
 
 
 
