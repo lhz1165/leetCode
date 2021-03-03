@@ -356,6 +356,29 @@ public class NormalTest03 {
         return new int[] {x, y};          // 5. 返回出现一次的数字
     }
 
+    /**
+     * 剑指 Offer 33. 二叉搜索树的后序遍历序列
+     * @param postorder
+     * @return
+     */
+    public boolean verifyPostorder(int[] postorder) {
+        Stack<Integer> stack = new Stack<>();
+        int root = Integer.MAX_VALUE;
+        //按照 中 ↗ 右 ↘ 左的顺序 先递增再递减
+        //所以如果在递减的那里有元素大于root的值 那么马上返回false
+        for(int i = postorder.length - 1; i >= 0; i--) {
+            if(postorder[i] > root){
+                return false;
+            }
+            //找到子树的root
+            while(!stack.isEmpty() && stack.peek() > postorder[i]){
+                root = stack.pop();
+            }
+            stack.push(postorder[i]);
+        }
+        return true;
+    }
+
 
 
 
