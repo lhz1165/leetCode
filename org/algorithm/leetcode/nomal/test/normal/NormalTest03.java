@@ -21,6 +21,9 @@ public class NormalTest03 {
         n.singleNumber(new int[]{3,4,3,3});
         n.minNumber(new int[]{3, 30, 34});
         n.singleNumbers(new int[]{1, 2, 2, 3, 3, 4});
+        System.out.println((double) 1/216);
+        n.dicesProbability(2);
+        System.out.println(n.myPow(3, 5));
 
 
     }
@@ -138,16 +141,17 @@ public class NormalTest03 {
         Arrays.sort(nums);
         int left = 0;
         int right = nums.length - 1;
-        while (left < right) {
+        while (left <= right) {
             int mid = (right + left) / 2;
             int l = mid;
             int r = mid;
             //向左拓展判断数字是否相同
-            while(l > 0 && nums[l-1] == nums[l]){
-                l--;
+            while (l - 1 >= left && nums[l] == nums[l - 1]) {
+                l -= 1;
             }
-            while(r < nums.length - 1 && nums[r+1] == nums[r]){
-                r++;
+            //向右拓展数字是否相同
+            while (r + 1 <= right && nums[r] == nums[r + 1]) {
+                r += 1;
             }
             //判断前面的数字个数能否被3整除，如果能被整除则说明要找的数字再右半部分
             if (l % 3 == 0) {
@@ -161,9 +165,6 @@ public class NormalTest03 {
 
 
     }
-
-
-
 
     /**
      * 剑指 Offer 35. 复杂链表的复制
@@ -339,21 +340,68 @@ public class NormalTest03 {
         return String.join("", numStr);
 
     }
-
-
     public int[] singleNumbers(int[] nums) {
-        int x = 0, y = 0, n = 0, m = 1;
-        //n = x异或y
-        for(int num : nums)               // 1. 遍历异或
-            n ^= num;
-        System.out.println(1^4);
-        while((n & m) == 0)               // 2. 循环左移，计算x异或y 第几位是1,目的就是计算第几位不一样
-            m <<= 1;
-        for(int num: nums) {              // 3. 遍历 nums 分组
-            if((num & m) != 0) x ^= num;  // 4. 当 num & m != 0
-            else y ^= num;                // 4. 当 num & m == 0
+
+        return null;
+    }
+
+    //338. 比特位计数
+    public int[] countBits(int num) {
+        if (num == 0) {
+            return new int[]{0};
         }
-        return new int[] {x, y};          // 5. 返回出现一次的数字
+        int[] f = new int[num + 1];
+        f[0] = 0;
+        int heightBit = 0;
+        for (int i = 1; i <= num; i++) {
+            //代表2的n次方,它的位数永远为1
+            if((i & (i-1)) == 0){
+                f[i] = 1;
+                heightBit = i;
+                continue;
+            }
+            f[i] = f[i - heightBit] + 1;
+        }
+
+        return f;
+    }
+
+    /**
+     * 剑指 Offer 60. n个骰子的点数
+     * @param n
+     * @return
+     */
+    public double[] dicesProbability(int n) {
+        if (n == 0) {
+            return new double[0];
+        }
+        int m = 6 * n;
+        //表示n个筛子赛中j数字的方式
+        //例如3个骰子 摇到 4 的方式可以有3种(2,1,1)(1,2,1)(1,1,2)
+        int[][] f = new int[n+1][m+1];
+        for (int i = 1; i <= 6; i++) {
+            f[1][i] = 1;
+        }
+        f[0][0] = 0;
+        for (int i = 2; i <= n; i++) {
+            for (int j = 2; j <= m; j++) {
+                for (int k = 1; k < j; k++) {
+                    if ((j - k) <= 6*(i-1) && k <= 6) {
+                        f[i][j] += f[i - 1][j - k];
+                    }
+                }
+            }
+        }
+        double[] res = new double[n * 6 - (n - 1)];
+        int base = 0;
+        for (int i = 0; i < f[n].length; i++) {
+            base += f[n][i];
+        }
+        int index = 0;
+        for (int i = n; i < f[n].length; i++) {
+            res[index++] =(double)f[n][i] / (double)base;
+        }
+        return res;
     }
 
     /**
@@ -380,6 +428,36 @@ public class NormalTest03 {
     }
 
 
+    /**
+     * 剑指 Offer 16. 数值的整数次方
+     * x的n次方
+     * 先把n转化为二进制b1b2b3b4
+     * 二进制转化十进制 b4*2^0+b3*2^1+b2*2^2+b1*2^3
+     * x^b4*2^0+b3*2^1+b2*2^2+b1*2^3 = x^(b4*2^0) * x^(b3*2^1) * x^(b2*2^2) * x^(b1*2^3)
+     * 只要bi是0 那么 x^(bi*2^j) = 1这样方便计算减少时间复杂度
+     * @param x
+     * @param n
+     * @return
+     */
+    public double myPow(double x, int n) {
+        if(x == 0) {
+            return 0;
+        }
+        long b = n;
+        double res = 1.0;
+        if(b < 0) {
+            x = 1 / x;
+            b = -b;
+        }
+        while(b > 0) {
+            if((b & 1) == 1){
+                res *= x;
+            }
+            x *= x;
+            b >>= 1;
+        }
+        return res;
+    }
 
 
 
