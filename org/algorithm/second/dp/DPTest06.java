@@ -7,6 +7,12 @@ package org.algorithm.second.dp;
  *区间性动态规划
  */
 public class DPTest06 {
+	public static void main(String[] args) {
+		System.out.println("我是信息管理1901班的张怡帆\n" +
+				"\n" +
+				"我的学号是1904010511");
+
+	}
 	/**
 	 *
 	 *

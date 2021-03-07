@@ -7,6 +7,34 @@ import java.util.*;
  * @date: 2020/7/10
  **/
 public class ArrayTest01 {
+    public int[] singleNumbers(int[] nums) {
+        int[] res = new int[2];
+
+        //找出 x异或y的值
+        int xy = nums[0];
+        for(int i = 1; i < nums.length; i++){
+            xy ^= nums[i];
+        }
+        //找出x y 第一位不相同的位置
+        int tmp = 1;
+        while((tmp & xy) == 0){
+            tmp <<= 1;
+        }
+        int x = xy;
+        int y = xy;
+        //根据第一位的不同判断是x还是y
+        for(int i = 0; i < nums.length; i++){
+            if((nums[i] & tmp)!=0 ){
+                x ^= nums[i];
+            }else{
+                y ^= nums[i];
+            }
+        }
+        res[0] = x;
+        res[1] = y;
+        return res;
+
+    }
     /**
      * 给定一个整数数组和一个整数k，你需要找到连续子数列的和为k子数列的和为k的总个数。
      * subarraySum2,1,-1,1,2 k=3
@@ -118,7 +146,8 @@ public class ArrayTest01 {
 
     public static void main(String[] args) {
         ArrayTest01 a = new ArrayTest01();
-        System.out.println(a.subarraySum(new int[]{2,1,-1,1,2}));
+        //System.out.println(a.subarraySum(new int[]{2,1,-1,1,2}));
+        a.singleNumbers(new int[]{1,2,5,2});
 
     }
 
