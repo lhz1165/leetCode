@@ -3,8 +3,6 @@ package org.algorithm.leetcode.nomal.test.normal;
 import org.algorithm.leetcode.basic.TreeNode;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author: lhz
@@ -18,12 +16,13 @@ public class NormalTest03 {
 //        n.findTargetSumWays(new int[]{1, 1, 1, 1, 1}, 3);
 //        System.out.println();
 //        n.decodeString("3[a2[c]]");
-        n.singleNumber(new int[]{3,4,3,3});
+        n.singleNumber(new int[]{3, 4, 3, 3});
         n.minNumber(new int[]{3, 30, 34});
         n.singleNumbers(new int[]{1, 2, 2, 3, 3, 4});
-        System.out.println((double) 1/216);
+        System.out.println((double) 1 / 216);
         n.dicesProbability(2);
         System.out.println(n.myPow(3, 5));
+        n.nthUglyNumber(11);
 
 
     }
@@ -340,6 +339,7 @@ public class NormalTest03 {
         return String.join("", numStr);
 
     }
+
     public int[] singleNumbers(int[] nums) {
 
         return null;
@@ -355,7 +355,7 @@ public class NormalTest03 {
         int heightBit = 0;
         for (int i = 1; i <= num; i++) {
             //代表2的n次方,它的位数永远为1
-            if((i & (i-1)) == 0){
+            if ((i & (i - 1)) == 0) {
                 f[i] = 1;
                 heightBit = i;
                 continue;
@@ -368,6 +368,7 @@ public class NormalTest03 {
 
     /**
      * 剑指 Offer 60. n个骰子的点数
+     *
      * @param n
      * @return
      */
@@ -378,7 +379,7 @@ public class NormalTest03 {
         int m = 6 * n;
         //表示n个筛子赛中j数字的方式
         //例如3个骰子 摇到 4 的方式可以有3种(2,1,1)(1,2,1)(1,1,2)
-        int[][] f = new int[n+1][m+1];
+        int[][] f = new int[n + 1][m + 1];
         for (int i = 1; i <= 6; i++) {
             f[1][i] = 1;
         }
@@ -386,7 +387,7 @@ public class NormalTest03 {
         for (int i = 2; i <= n; i++) {
             for (int j = 2; j <= m; j++) {
                 for (int k = 1; k < j; k++) {
-                    if ((j - k) <= 6*(i-1) && k <= 6) {
+                    if ((j - k) <= 6 * (i - 1) && k <= 6) {
                         f[i][j] += f[i - 1][j - k];
                     }
                 }
@@ -399,13 +400,14 @@ public class NormalTest03 {
         }
         int index = 0;
         for (int i = n; i < f[n].length; i++) {
-            res[index++] =(double)f[n][i] / (double)base;
+            res[index++] = (double) f[n][i] / (double) base;
         }
         return res;
     }
 
     /**
      * 剑指 Offer 33. 二叉搜索树的后序遍历序列
+     *
      * @param postorder
      * @return
      */
@@ -414,12 +416,12 @@ public class NormalTest03 {
         int root = Integer.MAX_VALUE;
         //按照 中 ↗ 右 ↘ 左的顺序 先递增再递减
         //所以如果在递减的那里有元素大于root的值 那么马上返回false
-        for(int i = postorder.length - 1; i >= 0; i--) {
-            if(postorder[i] > root){
+        for (int i = postorder.length - 1; i >= 0; i--) {
+            if (postorder[i] > root) {
                 return false;
             }
             //找到子树的root
-            while(!stack.isEmpty() && stack.peek() > postorder[i]){
+            while (!stack.isEmpty() && stack.peek() > postorder[i]) {
                 root = stack.pop();
             }
             stack.push(postorder[i]);
@@ -435,22 +437,23 @@ public class NormalTest03 {
      * 二进制转化十进制 b4*2^0+b3*2^1+b2*2^2+b1*2^3
      * x^b4*2^0+b3*2^1+b2*2^2+b1*2^3 = x^(b4*2^0) * x^(b3*2^1) * x^(b2*2^2) * x^(b1*2^3)
      * 只要bi是0 那么 x^(bi*2^j) = 1这样方便计算减少时间复杂度
+     *
      * @param x
      * @param n
      * @return
      */
     public double myPow(double x, int n) {
-        if(x == 0) {
+        if (x == 0) {
             return 0;
         }
         long b = n;
         double res = 1.0;
-        if(b < 0) {
+        if (b < 0) {
             x = 1 / x;
             b = -b;
         }
-        while(b > 0) {
-            if((b & 1) == 1){
+        while (b > 0) {
+            if ((b & 1) == 1) {
                 res *= x;
             }
             x *= x;
@@ -460,6 +463,49 @@ public class NormalTest03 {
     }
 
 
+    /**
+     * 剑指 Offer 26. 树的子结构
+     * @param A
+     * @param B
+     * @return
+     */
+    public boolean isSubStructure(TreeNode A, TreeNode B) {
+        if (A == null) {
+            return false;
+        }
+        return isSubStructure(A.left, B) || isSubStructure(A.right, B) ||treeEquals(A,B);
+
+
+    }
+    public boolean treeEquals(TreeNode a, TreeNode b) {
+        if (a == null && b == null) {
+            return true;
+        }
+        if (a != null && b == null) {
+            return true;
+        }
+        if (a == null) {
+            return false;
+        }
+
+        if (a.val != b.val) {
+            return false;
+        }
+        return treeEquals(a.left, b.left) && treeEquals(a.right, b.right);
+
+    }
+
+    public int lengthOfLongestSubstring(String s) {
+        char[] cs = s.toCharArray();
+        int n = s.length();
+        int[][] f = new int[n][];
+        for (int i = 0; i < n; i++) {
+            f[i][i] = 1;
+        }
+
+
+
+    }
 
 
     static class Pair {

@@ -2,6 +2,7 @@ package org.algorithm.leetcode.specified.tree.divided.lintcode;
 
 import org.algorithm.leetcode.basic.TreeNode;
 
+import javax.swing.text.html.InlineView;
 import java.util.*;
 
 /**
@@ -41,16 +42,16 @@ public class TreeTest02 {
         return isValidBSTHelper(root, leftMax, rightMin);
     }
 
-    public boolean isValidBSTHelper(TreeNode cur, Long min, Long max) {
+    public boolean isValidBSTHelper(TreeNode cur, Long lower, Long upper) {
         if (cur == null) {
             return true;
         }
-        if (cur.val <= min || cur.val >= max) {
+        if (cur.val <= lower || cur.val >= upper) {
             return false;
         }
         //左边的所有数都 必须比根节点的最小值小
-        boolean isLeftValid=isValidBSTHelper(cur.left,min,Math.min(cur.val,max));
-        boolean isRightValid=isValidBSTHelper(cur.right,Math.max(cur.val,min),max);
+        boolean isLeftValid=isValidBSTHelper(cur.left,lower,Math.min(cur.val,upper));
+        boolean isRightValid=isValidBSTHelper(cur.right,Math.max(cur.val,lower),upper);
         return isLeftValid && isRightValid;
 
     }
@@ -193,6 +194,28 @@ public class TreeTest02 {
             return 0;
         }
         return getSubNumber(root.left) + getSubNumber(root.right) + root.val;
+    }
+
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        if (preorder.length == 0 || inorder.length == 0) {
+            return null;
+        }
+        Map<Integer,Integer> map = new HashMap<>();
+        for(int i = 0; i < inorder.length; i++){
+            map.put(inorder[i], i);
+        }
+        return buildTreeHelper(preorder, 0, preorder.length - 1, 0, inorder.length - 1, map);
+    }
+
+    private TreeNode buildTreeHelper(int[] preorder, int pl, int pr, int il, int ir, Map<Integer, Integer> map) {
+        if (pl > pr || il > ir) {
+            return null;
+        }
+        TreeNode root = new TreeNode(preorder[pl]);
+        Integer rindex = map.get(preorder[pl]);
+        root.left = buildTreeHelper(preorder,pl+1,rindex - il + pl,il,rindex-1,map);
+        root.right = buildTreeHelper(preorder, rindex - il + pl + 1, pr, rindex + 1, ir, map);
+        return root;
     }
 
 

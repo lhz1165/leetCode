@@ -70,6 +70,7 @@ public class DPTest04 {
 				if (isPalin[j][i-1]) {
 					f[i] = Integer.min(f[i], f[j] + 1);
 				}
+
 			}
 
 		}
