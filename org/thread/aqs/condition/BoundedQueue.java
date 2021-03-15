@@ -12,18 +12,20 @@ import java.util.concurrent.locks.ReentrantLock;
 public class BoundedQueue<T> {
     public static void main(String[] args) throws InterruptedException {
         BoundedQueue<Integer> b = new BoundedQueue<>(2);
-        new Thread(()->{
-            try {
-                b.remove();
-                System.out.println("bbbb");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-        }).start();
+//        new Thread(()->{
+//            try {
+//                b.remove();
+//                System.out.println("bbbb");
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//
+//        }).start();
         new Thread(()->{
             try {
                 b.add(11);
+                b.add(11);b.add(11);
+
                 System.out.println("aaa");
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -35,6 +37,7 @@ public class BoundedQueue<T> {
 	private int addIndex,removeIndex,count;
 	private Lock lock = new ReentrantLock();
 	private Condition notEmpty = lock.newCondition();
+
 	private Condition notFull = lock.newCondition();
 
 	public BoundedQueue(int size) {

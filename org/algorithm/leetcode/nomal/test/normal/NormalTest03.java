@@ -495,17 +495,23 @@ public class NormalTest03 {
 
     }
 
-    public int lengthOfLongestSubstring(String s) {
-        char[] cs = s.toCharArray();
-        int n = s.length();
-        int[][] f = new int[n][];
-        for (int i = 0; i < n; i++) {
-            f[i][i] = 1;
+    public boolean findNumberIn2DArray(int[][] matrix, int target) {
+        int m = matrix.length;//行
+        int n = matrix[0].length;//列
+        int startRow = 0;
+        int endRow = m;
+
+        int startColumn = 0;
+        int endColumn = m;
+
+        while (matrix[m][n] > target) {
+
+
         }
 
-
-
+        return false;
     }
+
 
 
     static class Pair {
