@@ -14,8 +14,8 @@ public class TwoPointTest02 {
         System.out.println(Arrays.toString(nums));
         t.sortColors2(nums);
 
-        int i = t.findKthLargest(new int[]{-1, 2,0}, 0, 2, 1);
-        System.out.println();
+        int i = t.findKthLargest(new int[]{3,2,1}, 0, 2, 2);
+        System.out.println(i);
 //        int[] arr = {3,5,4,6,1,2,4};
 //        t.quickSort2(arr, 4);
     }

@@ -39,13 +39,13 @@ public class ListTest01 {
 	public static ListNode reverse(ListNode head) {
 		ListNode cur = head;
 		ListNode pre = null;
+        ListNode next;
 		while (cur != null) {
-			ListNode next = cur.next;
+            next = cur.next;
 			cur.next = pre;
 			pre = cur;
 			cur = next;
 		}
-        String a = "abcde";
 		return pre;
 
 	}
