@@ -9,7 +9,7 @@ public class NormalTest04 {
         NormalTest04 n = new NormalTest04();
         n.findNumberIn2DArray(new int[][]{{18, 21, 23, 26, 30}}, 27);
 
-       n.sortedSquares(new int[]{-7,-3,2,3,11});
+       n.sortColors(new int[]{2,0,0,1,1,2,0,1});
     }
 
     public boolean findNumberIn2DArray(int[][] matrix, int target) {
@@ -29,9 +29,6 @@ public class NormalTest04 {
     }
 
     public boolean exist(char[][] board, String word) {
-        int[] w1 = new int[]{1, -1, 0, 0};
-        int[] w2 = new int[]{0, 0, -1, 1};
-
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 if (dfs(board, word.toCharArray(), 0, i, j)) {
@@ -69,6 +66,66 @@ public class NormalTest04 {
         }
         return res;
     }
+
+    /**
+     * dp
+     *
+     *279. 完全平方数
+     * @param n
+     * @return
+     */
+
+    public int numSquares(int n) {
+        if (n == 0) {
+            return 1;
+        }
+        int[] f = new int[n+1];
+        f[0] = 0;
+        f[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            f[i] = Integer.MAX_VALUE;
+            for (int j = 1; j < i; j++) {
+                if (j * j == i) {
+                    f[i] = 1;
+                    break;
+                }
+                if (j * j > i) {
+                    break;
+                }
+                f[i] = Math.min(f[i], f[i - j * j] + 1);
+            }
+        }
+        return f[n];
+    }
+
+
+        /**
+         * 75. 颜色分类
+         * @param nums
+         */
+    public void sortColors(int[] nums) {
+        int start = 0;
+        int end = nums.length - 1;
+        int index = 0;
+        int target = 1;
+        while (index <= end) {
+            if (nums[index] == target) {
+                index++;
+            } else if (nums[index] > target) {
+                int tmp = nums[index];
+                nums[index] = nums[end];
+                nums[end] = tmp;
+                end--;
+            }else {
+                int tmp = nums[index];
+                nums[index] = nums[start];
+                nums[start] = tmp;
+                start++;
+                index++;
+            }
+        }
+    }
+
 
 
 }

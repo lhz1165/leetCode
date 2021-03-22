@@ -23,6 +23,7 @@ public class Test01 {
         t.findRepeatNumber(new int[]{2, 3, 1, 0, 2, 5, 3});
     }
 
+
     /**
      * 旋转矩阵
      * 1 水平反转
