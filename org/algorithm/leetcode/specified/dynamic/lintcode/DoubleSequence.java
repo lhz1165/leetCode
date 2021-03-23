@@ -7,7 +7,7 @@ package org.algorithm.leetcode.specified.dynamic.lintcode;
  */
 public class DoubleSequence {
 	public static void main(String[] args) {
-		longestCommonSubsequence("jiuzhangsuanfa", "lijiang");
+		//longestCommonSubsequence("jiuzhangsuanfa", "lijiang");
 		System.out.println(longestCommonSubstring("ABCDE", "CBCE"));
 
 	}

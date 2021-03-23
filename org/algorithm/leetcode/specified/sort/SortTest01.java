@@ -8,7 +8,7 @@ import java.util.Arrays;
  **/
 public class SortTest01 {
     public static void main(String[] args) {
-        int[] arr = {2,5,2,3,4};
+        int[] arr = {1,1};
         quickSort(arr, 0, arr.length - 1);
 
         SortTest01 s = new SortTest01();
@@ -39,10 +39,10 @@ public class SortTest01 {
         int pivot = nums[(left + end) / 2];
         //2 left <= right 而不是 lef t< right
         while (left <= right) {
-            while (left <= right && nums[left] < pivot) {
+            while (left <= right && nums[left] <= pivot) {
                 left++;
             }
-            while (left <= right && nums[right] > pivot) {
+            while (left <= right && nums[right] >= pivot) {
                 right--;
             }
             if (left <= right) {
