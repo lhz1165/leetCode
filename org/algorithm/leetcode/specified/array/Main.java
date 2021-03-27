@@ -13,14 +13,13 @@ public class Main {
 		Main m =new Main();
 		m.printABC();
 	}
-
 	Lock lock = new ReentrantLock();
 	Condition ca = lock.newCondition();
 	Condition cb = lock.newCondition();
 	Condition cc = lock.newCondition();
 	boolean fa = false;
-	boolean fb = false;
-	boolean fc = false;
+	boolean fb = true;
+	boolean fc = true;
 
 	public void printA() throws InterruptedException {
 		lock.lock();
@@ -31,6 +30,7 @@ public class Main {
 		fa = true;
 		fb = false;
 		cb.signal();
+		lock.unlock();
 	}
 	public void printB() throws InterruptedException {
 		lock.lock();
@@ -41,6 +41,7 @@ public class Main {
 		fb = true;
 		fc = false;
 		cc.signal();
+		lock.unlock();
 	}
 	public void printC() throws InterruptedException {
 		lock.lock();
@@ -51,34 +52,39 @@ public class Main {
 		fc = true;
 		fa = false;
 		ca.signal();
+		lock.unlock();
 	}
 
 	private void printABC() throws InterruptedException {
 		Thread t1 = new Thread(() -> {
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < 5; i++) {
 				try {
 					printA();
+					System.out.println(i);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
 		});
 		Thread t2 = new Thread(() -> {
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < 5; i++) {
 				try {
 					printB();
+					System.out.println(i);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
 		});
 		Thread t3 = new Thread(() -> {
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < 5; i++) {
 				try {
 					printC();
+					System.out.println(i);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+
 			}
 		});
 		t1.start();
