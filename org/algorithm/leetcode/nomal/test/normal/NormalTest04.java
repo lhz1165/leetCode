@@ -1,5 +1,12 @@
 package org.algorithm.leetcode.nomal.test.normal;
 
+import org.algorithm.leetcode.basic.ListNode;
+
+import javax.swing.text.StyledEditorKit;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author: lhz
  * @date: 2021/3/17
@@ -7,9 +14,7 @@ package org.algorithm.leetcode.nomal.test.normal;
 public class NormalTest04 {
     public static void main(String[] args) {
         NormalTest04 n = new NormalTest04();
-        n.findNumberIn2DArray(new int[][]{{18, 21, 23, 26, 30}}, 27);
-
-       n.sortColors(new int[]{2,0,0,1,1,2,0,1});
+        n.wordBreak("apleap", new ArrayList<>(Arrays.asList("ap", "le")));
     }
 
     public boolean findNumberIn2DArray(int[][] matrix, int target) {
@@ -125,6 +130,65 @@ public class NormalTest04 {
             }
         }
     }
+
+    /**
+     *82. 删除排序链表中的重复元素 II
+     * @param head
+     * @return
+     */
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode prev = dummy;
+        ListNode cur = head;
+        boolean needDel = false;
+        while (cur!=null && cur.next != null) {
+            while (cur.next != null && cur.val == cur.next.val) {
+                cur = cur.next;
+                needDel = true;
+            }
+            if (needDel) {
+                prev.next = cur.next;
+                cur = cur.next;
+            }else {
+                prev = prev.next;
+                cur = cur.next;
+            }
+            needDel = false;
+
+        }
+        return dummy.next;
+    }
+
+    /**
+     * 139. 单词拆分
+     * @param s
+     * @param wordDict
+     * @return
+     */
+    public boolean wordBreak(String s, List<String> wordDict) {
+        char[] cs = s.toCharArray();
+        int n = cs.length;
+        //前i个字符能否拆分
+        boolean[] f = new boolean[n + 1];
+        f[0] = true;
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (f[j] && wordDict.contains(s.substring(j,i))){
+                    f[i] = true;
+                    break;
+                }
+            }
+        }
+        return f[n];
+    }
+
+
+
+
+
+
+
 
 
 
