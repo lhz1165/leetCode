@@ -1,6 +1,7 @@
 package org.algorithm.leetcode.specified.array;
 
 import java.util.*;
+import java.util.concurrent.locks.Lock;
 
 /**
  * @author lhzlhz
@@ -14,7 +15,8 @@ public class ArrayTest04 {
 //        System.out.println(Arrays.toString(aa));
         //[1,3,1,2,0,5]
         //3
-        a.maxSlidingWindow(new int[]{1,3,1,2,0,5},3);
+        //a.maxSlidingWindow(new int[]{1,3,1,2,0,5},3);
+        a.findMedianSortedArrays2(new int[]{1,4,5,6,7}, new int[]{2, 3,8,9});
         System.out.println();
     }
 
@@ -104,6 +106,25 @@ public class ArrayTest04 {
         nums[i] = nums[j];
         nums[j] = tmp;
     }
+
+    public double findMedianSortedArrays2(int[] nums1, int[] nums2) {
+        int prevVal = -1;
+        int curVal = -1;
+        int p1 = -1;
+        int p2 = -1;
+        int step = (nums1.length + nums2.length + 1)/2;
+        for(int i = 0; i < step; i++){
+            if(p1 + 1 >= nums1.length  &&   p1 < nums1.length && p2 < nums2.length){
+                if(nums2[p2] > nums1[p1]){
+                    curVal = nums1[p1++];
+                }else{
+                    curVal = nums2[p2++];
+                }
+            }
+        }
+        return (step - 1) / 2 == 0 ? (double) (prevVal + curVal) / 2 : curVal;
+    }
+
 
     public double findMedianSortedArrays(int A[], int B[]) {
         int n = A.length + B.length;
