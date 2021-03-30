@@ -2,7 +2,6 @@ package org.algorithm.leetcode.nomal.test.normal;
 
 import org.algorithm.leetcode.basic.ListNode;
 
-import javax.swing.text.StyledEditorKit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,7 +51,7 @@ public class NormalTest04 {
         if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || board[i][j] != words[k]) {
             return false;
         }
-        return dfs(board,words,k+1,i,j-1)||dfs(board,words,k+1,i-1,j)||dfs(board,words,k+1,i,j+1)||dfs(board,words,k+1,i+1,j);
+        return dfs(board, words, k + 1, i, j - 1) || dfs(board, words, k + 1, i - 1, j) || dfs(board, words, k + 1, i, j + 1) || dfs(board, words, k + 1, i + 1, j);
     }
 
     public int[] sortedSquares(int[] nums) {
@@ -64,7 +63,7 @@ public class NormalTest04 {
             if (nums[i] * nums[i] < nums[j] * nums[j]) {
                 res[index--] = nums[j] * nums[j];
                 j--;
-            }else {
+            } else {
                 res[index--] = nums[i] * nums[i];
                 i++;
             }
@@ -74,8 +73,9 @@ public class NormalTest04 {
 
     /**
      * dp
+     * <p>
+     * 279. 完全平方数
      *
-     *279. 完全平方数
      * @param n
      * @return
      */
@@ -84,7 +84,7 @@ public class NormalTest04 {
         if (n == 0) {
             return 1;
         }
-        int[] f = new int[n+1];
+        int[] f = new int[n + 1];
         f[0] = 0;
         f[1] = 1;
         for (int i = 2; i <= n; i++) {
@@ -104,10 +104,11 @@ public class NormalTest04 {
     }
 
 
-        /**
-         * 75. 颜色分类
-         * @param nums
-         */
+    /**
+     * 75. 颜色分类
+     *
+     * @param nums
+     */
     public void sortColors(int[] nums) {
         int start = 0;
         int end = nums.length - 1;
@@ -121,7 +122,7 @@ public class NormalTest04 {
                 nums[index] = nums[end];
                 nums[end] = tmp;
                 end--;
-            }else {
+            } else {
                 int tmp = nums[index];
                 nums[index] = nums[start];
                 nums[start] = tmp;
@@ -132,7 +133,8 @@ public class NormalTest04 {
     }
 
     /**
-     *82. 删除排序链表中的重复元素 II
+     * 82. 删除排序链表中的重复元素 II
+     *
      * @param head
      * @return
      */
@@ -142,7 +144,7 @@ public class NormalTest04 {
         ListNode prev = dummy;
         ListNode cur = head;
         boolean needDel = false;
-        while (cur!=null && cur.next != null) {
+        while (cur != null && cur.next != null) {
             while (cur.next != null && cur.val == cur.next.val) {
                 cur = cur.next;
                 needDel = true;
@@ -150,7 +152,7 @@ public class NormalTest04 {
             if (needDel) {
                 prev.next = cur.next;
                 cur = cur.next;
-            }else {
+            } else {
                 prev = prev.next;
                 cur = cur.next;
             }
@@ -162,6 +164,7 @@ public class NormalTest04 {
 
     /**
      * 139. 单词拆分
+     *
      * @param s
      * @param wordDict
      * @return
@@ -174,7 +177,7 @@ public class NormalTest04 {
         f[0] = true;
         for (int i = 1; i <= n; i++) {
             for (int j = 0; j < i; j++) {
-                if (f[j] && wordDict.contains(s.substring(j,i))){
+                if (f[j] && wordDict.contains(s.substring(j, i))) {
                     f[i] = true;
                     break;
                 }
@@ -183,13 +186,50 @@ public class NormalTest04 {
         return f[n];
     }
 
+    /**
+     * 79. 单词搜索
+     *
+     * @param board
+     * @param word
+     * @return
+     */
+    public boolean exist2(char[][] board, String word) {
+        int m = board.length;
+        int n = board[0].length;
+        boolean[][] isVisit = new boolean[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j]==word.charAt(0)&&bfsHelper(word, board, isVisit, i, j, 0)) {
+                    return true;
+                }
+            }
+        }
+        return false;
 
+    }
 
+    public boolean bfsHelper(String word, char[][] board, boolean[][] isVisit, int i, int j, int k) {
+        if (k == word.length()) {
+            return true;
+        }
+        if (i < 0 || j < 0 || i >= board.length || j >= board[i].length) {
+            return false;
+        }
 
+        if (word.charAt(k) != board[i][j]) {
+            return false;
+        }
 
+            isVisit[i][j] = true;
+            boolean top = bfsHelper(word, board, isVisit, i + 1, j, k + 1);
+            boolean bottom = bfsHelper(word, board, isVisit, i, j + 1, k + 1);
+            boolean left = bfsHelper(word, board, isVisit, i - 1, j, k + 1);
+            boolean right = bfsHelper(word, board, isVisit, i, j - 1, k + 1);
+            boolean res = top || bottom || left || right;
+            isVisit[i][j] = false;
+            return res;
 
-
-
+    }
 
 
 }

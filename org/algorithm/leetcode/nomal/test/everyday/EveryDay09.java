@@ -7,7 +7,11 @@ package org.algorithm.leetcode.nomal.test.everyday;
 public class EveryDay09 {
     public static void main(String[] args) {
         EveryDay09 e = new EveryDay09();
+
         System.out.println(e.reverseBits(1));
+        //[[1,3,5,7],[10,11,16,20],[23,30,34,60]]
+        //13
+        System.out.println(e.searchMatrix(new int[][]{{1, 3, 5, 7}, {10, 11, 16, 20}, {23, 30, 34, 60}}, 5));
     }
 
     public int reverseBits(int n) {
@@ -21,5 +25,31 @@ public class EveryDay09 {
             }
         }
         return res;
+    }
+
+    public boolean searchMatrix(int[][] matrix, int target) {
+        if (matrix.length == 0 || matrix[0].length == 0) {
+            return false;
+        }
+        int n = matrix.length;
+        int m = matrix[0].length;
+        int num = n * m - 1;
+        int start = 0;
+        int end = num;
+        while (start <= end) {
+            int mid = (start + end) / 2;
+            int i = mid/m;
+            int j = mid % m;
+            if (matrix[i][j] == target) {
+                return true;
+            } else if (matrix[i][j] > target) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+
+        }
+        return false;
+
     }
 }
