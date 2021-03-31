@@ -199,7 +199,7 @@ public class NormalTest04 {
         boolean[][] isVisit = new boolean[m][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (board[i][j]==word.charAt(0)&&bfsHelper(word, board, isVisit, i, j, 0)) {
+                if (board[i][j] == word.charAt(0) && bfsHelper(word, board, isVisit, i, j, 0)) {
                     return true;
                 }
             }
@@ -219,17 +219,16 @@ public class NormalTest04 {
         if (word.charAt(k) != board[i][j]) {
             return false;
         }
-
-            isVisit[i][j] = true;
-            boolean top = bfsHelper(word, board, isVisit, i + 1, j, k + 1);
-            boolean bottom = bfsHelper(word, board, isVisit, i, j + 1, k + 1);
-            boolean left = bfsHelper(word, board, isVisit, i - 1, j, k + 1);
-            boolean right = bfsHelper(word, board, isVisit, i, j - 1, k + 1);
-            boolean res = top || bottom || left || right;
-            isVisit[i][j] = false;
-            return res;
-
+        if (isVisit[i][j]) {
+            return false;
+        }
+        isVisit[i][j] = true;
+        boolean top = bfsHelper(word, board, isVisit, i + 1, j, k + 1);
+        boolean bottom = bfsHelper(word, board, isVisit, i, j + 1, k + 1);
+        boolean left = bfsHelper(word, board, isVisit, i - 1, j, k + 1);
+        boolean right = bfsHelper(word, board, isVisit, i, j - 1, k + 1);
+        boolean res = top || bottom || left || right;
+        isVisit[i][j] = false;
+        return res;
     }
-
-
 }
