@@ -8,6 +8,7 @@ import java.util.List;
  * @date: 2020/11/16
  **/
 public class Test {
+
     public static void main(String[] args) {
         S1 s1 = new S1(1);
         S1 s2 = new S1(2);
