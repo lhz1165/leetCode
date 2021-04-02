@@ -1,5 +1,7 @@
 package org.algorithm.leetcode.nomal.test.everyday;
 
+import java.util.Stack;
+
 /**
  * @author: lhz
  * @date: 2021/3/29
@@ -11,7 +13,8 @@ public class EveryDay09 {
         System.out.println(e.reverseBits(1));
         //[[1,3,5,7],[10,11,16,20],[23,30,34,60]]
         //13
-        System.out.println(e.searchMatrix(new int[][]{{1, 3, 5, 7}, {10, 11, 16, 20}, {23, 30, 34, 60}}, 5));
+        //System.out.println(e.searchMatrix(new int[][]{{1, 3, 5, 7}, {10, 11, 16, 20}, {23, 30, 34, 60}}, 5));
+        System.out.println(e.clumsy(10));
     }
 
     public int reverseBits(int n) {
@@ -50,6 +53,32 @@ public class EveryDay09 {
 
         }
         return false;
+
+    }
+
+    //1006. 笨阶乘
+    public int clumsy(int N) {
+        Stack<Integer> stack = new Stack<>();
+        int flag = 0;
+        stack.push(N);
+        for (int i = N-1; i >= 1; i--) {
+            if (flag == 0 ) {
+                stack.push(stack.pop()*i);
+            }else if ( flag == 1){
+                stack.push(stack.pop()/i);
+            } else if (flag == 2) {
+                stack.push(i);
+            }else {
+                stack.push(-i);
+            }
+            flag++;
+            flag %= 4;
+        }
+        int res = 0;
+        while (!stack.isEmpty()) {
+            res += stack.pop();
+        }
+        return res;
 
     }
 }
