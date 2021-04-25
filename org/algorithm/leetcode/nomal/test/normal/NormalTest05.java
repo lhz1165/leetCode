@@ -41,15 +41,13 @@ public class NormalTest05 {
         int prevLen = maxLen;
         int prev = nums[maxIndex];
         for (int i = maxIndex - 1; i >=0; i--) {
-            if (f[i]==prevLen-1&&prev%nums[i]==0) {
+            if (f[i] == prevLen - 1 && prev % nums[i] == 0) {
                 prevLen--;
                 prev = nums[i];
                 results.add(nums[i]);
             }
-
         }
         System.out.println(results);
         return results;
-
     }
 }

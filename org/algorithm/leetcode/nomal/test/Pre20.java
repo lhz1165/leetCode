@@ -48,8 +48,6 @@ public class Pre20 {
                     HI--;
                 }
             }
-
-
         }
         return nums[minI] + nums[minL] + nums[minR];
 
