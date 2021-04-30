@@ -3,6 +3,7 @@ package org.algorithm.leetcode.nomal.test.everyday;
 import org.algorithm.leetcode.basic.TreeNode;
 
 import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class EveryDay10 {
     private TreeNode resNode;
@@ -57,11 +58,11 @@ public class EveryDay10 {
      * 403. 青蛙过河
      * 输入：stones = [0,1,3,5,6,8,12,17]
      * 输出：true
-     *
+     * <p>
      * 开始时， 青蛙默认已站在第一块石子上，并可以假定它第一步只能跳跃一个单位（即只能从单元格 1 跳至单元格 2 ）。
-     *
+     * <p>
      * 如果青蛙上一步跳跃了k个单位，那么它接下来的跳跃距离只能选择为k - 1、k 或 k + 1 个单位。 另请注意，青蛙只能向前方（终点的方向）跳跃。
-     *
+     * <p>
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/frog-jump
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
@@ -70,9 +71,10 @@ public class EveryDay10 {
      */
     public static void main(String[] args) {
         EveryDay10 e = new EveryDay10();
-        boolean b = e.canCross(new int[]{0,1,2,3,4,8,9,11});
+        boolean b = e.canCross2(new int[]{0,1,3,5,6,8,12,17});
         System.out.println(b);
     }
+
     public boolean canCross(int[] stones) {
         if (stones.length == 0) {
             return true;
@@ -84,12 +86,12 @@ public class EveryDay10 {
         f[0] = true;
         if (stones[1] - stones[0] == 1) {
             f[1] = true;
-            index2Way.put(1,new ArrayList<>(Collections.singletonList(1)));
-        }else {
+            index2Way.put(1, new ArrayList<>(Collections.singletonList(1)));
+        } else {
             return false;
         }
         for (int i = 2; i < n; i++) {
-            f[i]  = false;
+            f[i] = false;
             List<Integer> mem = new ArrayList<>();
             for (int j = 1; j < i; j++) {
                 if (f[j]) {
@@ -99,9 +101,9 @@ public class EveryDay10 {
                             if (stones[i] - stones[j] == jWay) {
                                 f[i] = true;
                                 mem.add(jWay);
-                            } else if (stones[i] - stones[j] == jWay+1) {
+                            } else if (stones[i] - stones[j] == jWay + 1) {
                                 f[i] = true;
-                                mem.add(jWay+1);
+                                mem.add(jWay + 1);
                             } else if (stones[i] - stones[j] == jWay - 1) {
                                 f[i] = true;
                                 mem.add(jWay - 1);
@@ -115,6 +117,7 @@ public class EveryDay10 {
         return f[n - 1];
 
     }
+
     public boolean canCross2(int[] stones) {
         int n = stones.length;
         //我们也可以使用动态规划的方法，令f[i][k]
@@ -125,13 +128,24 @@ public class EveryDay10 {
             f[i][0] = false;
         }
         for (int i = 1; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                int step = stones[i] - stones[j];
+            for (int j = 0; j < i; j++) {
+                int k = stones[i] - stones[j];
 
-
+                if (k == 0 ) {
+                    f[i][k] = f[j][k] || f[j][k + 1];
+                } else if (k == n - 1) {
+                    f[i][k] = f[j][k - 1] || f[j][k];
+                } else if (k > 0 && k < n - 1) {
+                    f[i][k] = f[j][k - 1] || f[j][k] || f[j][k + 1];
+                }
             }
         }
-
+        for (int i = 0; i < n; i++) {
+            if (f[n - 1][i]) {
+                return true;
+            }
+        }
+        return false;
 
 
     }

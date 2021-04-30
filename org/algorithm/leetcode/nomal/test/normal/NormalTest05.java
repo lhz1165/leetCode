@@ -8,7 +8,7 @@ import java.util.List;
 public class NormalTest05 {
     public static void main(String[] args) {
         NormalTest05 n =new NormalTest05();
-        n.largestDivisibleSubset(new int[]{2,3,4,8,9});
+        System.out.println("n.canJump(new int[]{3,2,1,0,4}) = " + n.canJump(new int[]{2,3,1,1,4}));
     }
 
     public List<Integer> largestDivisibleSubset(int[] nums) {
@@ -49,5 +49,26 @@ public class NormalTest05 {
         }
         System.out.println(results);
         return results;
+    }
+
+    /**
+     * 55. 跳跃游戏
+     */
+    public boolean canJump(int[] nums) {
+        int n = nums.length;
+        if (n == 0) {
+            return true;
+        }
+        boolean[] f = new boolean[n];
+        f[0] = true;
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (f[j] && i - j <= nums[j]) {
+                    f[i] = true;
+                    break;
+                }
+            }
+        }
+        return f[n - 1];
     }
 }
