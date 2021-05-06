@@ -63,9 +63,6 @@ public class EveryDay10 {
      * <p>
      * 如果青蛙上一步跳跃了k个单位，那么它接下来的跳跃距离只能选择为k - 1、k 或 k + 1 个单位。 另请注意，青蛙只能向前方（终点的方向）跳跃。
      * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/frog-jump
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
      * 解释：青蛙可以成功过河，按照如下方案跳跃：
      * 跳 1 个单位到第 2 块石子, 然后跳 2 个单位到第 3 块石子, 接着 跳 2 个单位到第 4 块石子, 然后跳 3 个单位到第 6 块石子, 跳 4 个单位到第 7 块石子, 最后，跳 5 个单位到第 8 个石子（即最后一块石子）。
      */
@@ -75,48 +72,6 @@ public class EveryDay10 {
         System.out.println(b);
     }
 
-    public boolean canCross(int[] stones) {
-        if (stones.length == 0) {
-            return true;
-        }
-        int n = stones.length;
-        boolean[] f = new boolean[n];
-        Map<Integer, List<Integer>> index2Way = new HashMap<>();
-        int step = 1;
-        f[0] = true;
-        if (stones[1] - stones[0] == 1) {
-            f[1] = true;
-            index2Way.put(1, new ArrayList<>(Collections.singletonList(1)));
-        } else {
-            return false;
-        }
-        for (int i = 2; i < n; i++) {
-            f[i] = false;
-            List<Integer> mem = new ArrayList<>();
-            for (int j = 1; j < i; j++) {
-                if (f[j]) {
-                    List<Integer> jWays = index2Way.get(j);
-                    if (jWays != null) {
-                        for (Integer jWay : jWays) {
-                            if (stones[i] - stones[j] == jWay) {
-                                f[i] = true;
-                                mem.add(jWay);
-                            } else if (stones[i] - stones[j] == jWay + 1) {
-                                f[i] = true;
-                                mem.add(jWay + 1);
-                            } else if (stones[i] - stones[j] == jWay - 1) {
-                                f[i] = true;
-                                mem.add(jWay - 1);
-                            }
-                        }
-                    }
-                }
-            }
-            index2Way.put(i, mem);
-        }
-        return f[n - 1];
-
-    }
 
     public boolean canCross2(int[] stones) {
         int n = stones.length;
