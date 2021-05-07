@@ -1,3 +1,5 @@
+package org.algorithm.leetcode.nomal.test.everyday;
+
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
