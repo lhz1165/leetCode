@@ -19,6 +19,7 @@ public class PrintABCBySemphore {
         PrintABCBySemphore p = new PrintABCBySemphore();
         CyclicBarrier c = new CyclicBarrier(3);
         CountDownLatch cd = new CountDownLatch(3);
+
         IntStream.range(1,4).forEach(i ->{
             new Thread(()->{
                     try {
@@ -43,6 +44,7 @@ public class PrintABCBySemphore {
         cd.await();
     }
 
+
     public void printA() throws InterruptedException {
         for (int i = 0; i < 10; i++) {
             sa.acquire(1);
@@ -52,7 +54,6 @@ public class PrintABCBySemphore {
     }
 
     public void printB() throws InterruptedException {
-
         for (int i = 0; i < 10; i++) {
             sb.acquire(1);
             System.out.println("B");
