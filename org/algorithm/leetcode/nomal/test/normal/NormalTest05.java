@@ -1,6 +1,5 @@
 package org.algorithm.leetcode.nomal.test.normal;
 
-import org.algorithm.leetcode.basic.DirectedGraphNode;
 
 import java.util.*;
 
@@ -8,10 +7,20 @@ public class NormalTest05 {
     public static void main(String[] args) {
         NormalTest05 n = new NormalTest05();
         //[[1,4],[2,4],[3,1],[3,2]]
-        System.out.println(n.canFinish(5, new int[][]{{1, 4}, {2, 4}, {3, 1}, {3, 2}}));
+       // System.out.println(n.canFinish(5, new int[][]{{1, 4}, {2, 4}, {3, 1}, {3, 2}}));
+//        System.out.println(n.canPartition(new int[]{1,2,5}));
+        //   * [13,37,58]
+        //     * [4,90,96]
+        //     * [34,73,45]
+        System.out.println(n.maxProfitAssignment(new int[]{13,37,58}, new int[]{4,90,96}, new int[]{34,73,45}));
 
     }
 
+    /**
+     * 289
+     * @param nums
+     * @return
+     */
     public List<Integer> largestDivisibleSubset(int[] nums) {
         List<Integer> results = new ArrayList<>();
         int n = nums.length;
@@ -80,8 +89,73 @@ public class NormalTest05 {
      */
     public boolean canPartition(int[] nums) {
         Arrays.sort(nums);
+        int half = 0;
+        for (int num : nums) {
+            half += num;
+        }
+        if (half % 2 != 0) {
+            return false;
+        }
+        half /= 2;
         int n = nums.length;
-        boolean[] f = new boolean[n];
+        boolean[][] f = new boolean[n + 1][half + 1];
+        f[0][0] = true;
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j <= half; j++) {
+                if (f[i - 1][j]) {
+                    f[i][j] = true;
+                    continue;
+                }
+                if (j - nums[i - 1] >= 0 && f[i-1][j - nums[i - 1]]) {
+                    f[i][j] = true;
+                }
+            }
+        }
+        return f[n][half];
+    }
+
+    /**
+     * 826
+     * [13,37,58]
+     * [4,90,96]
+     * [34,73,45]
+     *
+     * [64,88,97]
+     * [53,86,89]
+     * [98,11,6]
+     * @param difficulty
+     * @param profit
+     * @param worker
+     * @return
+     */
+    public int maxProfitAssignment(int[] difficulty, int[] profit, int[] worker) {
+        int n = worker.length;
+        int m = difficulty.length;
+        int[][] f = new int[n ][m];
+        int res = 0;
+        int prevLayerMax = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (i == 0) {
+                    if (worker[i] >= difficulty[j]) {
+                        f[i][j] = profit[j];
+                        res = Math.max(f[i][j], res);
+                        prevLayerMax = res;
+                    }
+                    continue;
+                }
+
+                f[i][j] = prevLayerMax;
+                if (worker[i ] >= difficulty[j]) {
+                    f[i][j] = profit[j] + f[i][j];
+                    res = Math.max(f[i][j], res);
+                }
+            }
+            prevLayerMax = res;
+        }
+        return res;
+
 
     }
 
