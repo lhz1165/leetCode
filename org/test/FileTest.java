@@ -11,7 +11,7 @@ public class FileTest {
         //12
         f.fileReadByByte("org/test/hello.txt");
         f.fileReadByChar("org/test/hello.txt");
-        f.writeReadByByte("org/test/hello2.txt","word hello111!");
+        f.writeReadByByte("abc.txt","word hello111!");
         f.writeReadByChar("org/test/hello3.txt","word hello111!");
         //3
         f.twoThreadWork();
