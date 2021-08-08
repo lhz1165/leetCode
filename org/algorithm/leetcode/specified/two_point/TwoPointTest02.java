@@ -17,7 +17,7 @@ public class TwoPointTest02 {
         int i = t.findKthLargest(new int[]{3,2,1}, 0, 2, 2);
         System.out.println(i);
 //        int[] arr = {3,5,4,6,1,2,4};
-//        t.quickSort2(arr, 4);
+        //t.quickSort2(arr, 4);
     }
 
     /**

@@ -41,7 +41,7 @@ public class Week01 {
 
     public static void main(String[] args) {
         Week01 w = new Week01();
-        System.out.println(w.eventualSafeNodes(new int[][]{{1,3,4,5},{},{},{},{}}));
+        System.out.println(w.eventualSafeNodes(new int[][]{{1,3,4,5},{},{},{},{},{2,4}}));
     }
     //[[1,2],[2,3],[5],[0],[5],[],[]]
     //[1,2,3,4],[1,2],[3,4],[0,4],[]
@@ -56,85 +56,50 @@ public class Week01 {
      * @return
      */
     public List<Integer> eventualSafeNodes(int[][] graph) {
-        //各个点的出度
-        Map<Integer, List<Integer>> indexTo = getTO(graph);
-        Map<Integer, List<Integer>> indexToIn = goIn(graph);
-        //找到初度为0的点
-        List<Integer> noway = noway(graph);
-        if (noway.isEmpty()) {
-            return new ArrayList<>();
+        int n = graph.length;
+        List<List<Integer>> rg = new ArrayList<List<Integer>>();
+        for (int i = 0; i < n; ++i) {
+            rg.add(new ArrayList<Integer>());
         }
-        List<Integer> list = bfs(noway, indexTo, indexToIn);
-        Collections.sort(list);
-        return list;
-
-    }
-
-    public Map<Integer, List<Integer>> getTO(int[][] graph) {
-        Map<Integer, List<Integer>> map = new HashMap<>();
-        for (int i = 0; i < graph.length; i++) {
-            List<Integer> outList = new ArrayList<>();
-            for (int g : graph[i]) {
-                outList.add(g);
+        //统计所有点的度
+        int[] inDeg = new int[n];
+        for (int x = 0; x < n; ++x) {
+            for (int y : graph[x]) {
+                //入度
+                rg.get(y).add(x);
             }
-            map.put(i, outList);
+            //出度
+            inDeg[x] = graph[x].length;
         }
-        return map;
-    }
 
-    public Map<Integer, List<Integer>> goIn(int[][] graph) {
-        Map<Integer, List<Integer>> map = new HashMap<>();
-        for (int i = 0; i < graph.length; i++) {
-            //入度的 key
-            int[] inNodes = graph[i];
-            for (int inNode : inNodes) {
-                List<Integer> inList = map.get(inNode);
-                if (inList != null) {
-                    inList.add(i);
-                }else {
-                    map.put(inNode, new ArrayList<>(Arrays.asList(i)));
-                }
+        Queue<Integer> queue = new LinkedList<Integer>();
+        for (int i = 0; i < n; ++i) {
+            if (inDeg[i] == 0) {
+                queue.offer(i);
             }
-        }
-        return map;
-    }
-
-    public List<Integer> noway(int[][] graph) {
-        List<Integer> noway = new ArrayList<>();
-        for (int i = 0; i < graph.length; i++) {
-            if (graph[i].length == 0) {
-                noway.add(i);
-            }
-        }
-        return noway;
-    }
-
-    public List<Integer> bfs( List<Integer> noway, Map<Integer, List<Integer>> indexTo,Map<Integer, List<Integer>> indexToIn) {
-        List<Integer> result = new ArrayList<>();
-        Queue<Integer> queue = new LinkedList<>();
-        for (Integer node : noway) {
-            result.add(node);
-            queue.offer(node);
         }
         while (!queue.isEmpty()) {
-            //取一个结果
-            Integer curNode = queue.poll();
-            //找出所有的入度点
-            List<Integer> InNodes = indexToIn.get(curNode);
-            if (InNodes == null) {
-                continue;
-            }
-            //判断 结果集 是否全部包含 入度点的所有出度
-            for (Integer inNode : InNodes) {
-                if (result.containsAll(indexTo.get(inNode))) {
-                    result.add(inNode);
-                    queue.offer(inNode);
+            int y = queue.poll();
+            //
+            List<Integer> indrgee = rg.get(y);
+            for (int x : indrgee) {
+                if (--inDeg[x] == 0) {
+                    queue.offer(x);
                 }
             }
         }
-        return result;
+
+        List<Integer> ans = new ArrayList<Integer>();
+        for (int i = 0; i < n; ++i) {
+            if (inDeg[i] == 0) {
+                ans.add(i);
+            }
+        }
+        return ans;
 
     }
+
+
 
 
 

@@ -14,11 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
-/**
- * @author guo
- * 656530548@qq.com
- *
- */
+
 public class MyCalculator extends JFrame{
     //用于判断是否重新开始
     private boolean start = true;

@@ -8,7 +8,7 @@ import java.util.Arrays;
  **/
 public class SortTest01 {
     public static void main(String[] args) {
-        int[] arr = {1,1};
+        int[] arr = {1, 50, 6, 8, 7, 10};
         quickSort(arr, 0, arr.length - 1);
 
         SortTest01 s = new SortTest01();
@@ -25,38 +25,39 @@ public class SortTest01 {
      * 快速排序
      * 理想情况下
      *
-     * @param nums
+     * @param arr
      * @param start
      * @param end
      */
-    public static void quickSort(int[] nums, int start, int end) {
+    public static void quickSort(int[] arr, int start, int end) {
         if (start >= end) {
             return;
         }
         int left = start;
         int right = end;
         //1 注意pivot选取最好中间
-        int pivot = nums[(left + end) / 2];
+        int pivot = arr[(left + end) / 2];
         //2 left <= right 而不是 lef t< right
         while (left <= right) {
-            while (left <= right && nums[left] <= pivot) {
+            //3  arr[left] < pivot 而不是 arr[left] <= pivot
+            while (left <= right && arr[left] < pivot) {
                 left++;
             }
-            while (left <= right && nums[right] >= pivot) {
+            while (left <= right && arr[right] > pivot) {
                 right--;
             }
             if (left <= right) {
-                int tmp = nums[left];
-                nums[left] = nums[right];
-                nums[right] = tmp;
+                int tmp = arr[left];
+                arr[left] = arr[right];
+                arr[right] = tmp;
                 left++;
                 right--;
             }
         }
-        System.out.println(pivot);
+
         //left 交错了了
-        quickSort(nums, start, right);
-         quickSort(nums, left, end);
+        quickSort(arr, start, right);
+         quickSort(arr, left, end);
     }
 
     public void mergeSort(int[] arr, int start, int end, int[] tmp) {
