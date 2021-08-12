@@ -7,18 +7,13 @@ import java.util.*;
  * @create 2021/8/8
  */
 public class Week02 {
-	public static void main(String[] args) {
-		Week02 w = new Week02();
-		System.out.println(w.eventualSafeNodes(new int[][]{{1, 2}, {2,3}, {5}, {0}, {5}, {},{}}));
-	}
+
 
 	public List<Integer> eventualSafeNodes(int[][] graph) {
 		//出度数量
 		List<Integer>  indexToNum = getTO(graph);
 		//入度有哪些点
 		Map<Integer, List<Integer>> indexToIn = goIn(graph);
-
-
 		//找到初度为0的点
 		List<Integer> noway = noway(graph);
 		if (noway.isEmpty()) {
@@ -87,9 +82,37 @@ public class Week02 {
 				ans.add(i);
 			}
 		}
-
 		return ans;
 
+	}
+	public static void main(String[] args) {
+		Week02 w = new Week02();
+		System.out.println(w.numberOfArithmeticSlices(new int[]{1, 2, 3, 4, 5, 7, 8,9}));
+
+	}
+
+	public int numberOfArithmeticSlices(int[] nums) {
+		int length = nums.length;
+		//如果构不成等差数列，返回0
+		if (length < 3)
+			return 0;
+		int[] dp = new int[length];
+		//等差数列的个数
+		int count = 0;
+		//等差数列的差值
+		int diff = nums[1] - nums[0];
+		for (int i = 2; i < length; i++) {
+			if (nums[i] - nums[i - 1] == diff) {
+				//如果当前数字和前面的可以构成等差数列，
+				//就更新dp和count的值
+				dp[i] = dp[i - 1] + 1;
+				count += dp[i];
+			} else {
+				//如果不能和前面的构成等差数列，要重新计算diff
+				diff = nums[i] - nums[i - 1];
+			}
+		}
+		return count;
 	}
 
 }
