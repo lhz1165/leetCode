@@ -20,7 +20,7 @@ public class SubArray {
 	/**
 	 * 406 · 和大于S的最小子数组
 	 * 【前缀和数组  前i个数只和】
-	 * 同向双指针
+	 * 同向双指针 一个数组中 i j都往前并且不回头
 	 * 两个技巧
 	 *
 	 * @param nums
@@ -141,5 +141,16 @@ public class SubArray {
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * 1219 · 加热器
+	 * 两个数组双指针
+	 * @param houses
+	 * @param heaters
+	 * @return
+	 */
+	public int findRadius(int[] houses, int[] heaters) {
+		// Write your code here
 	}
 }
