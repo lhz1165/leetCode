@@ -43,60 +43,86 @@ public class Week01 {
         Week01 w = new Week01();
         System.out.println(w.eventualSafeNodes(new int[][]{{1,3,4,5},{},{},{},{},{2,4}}));
     }
-    //[[1,2],[2,3],[5],[0],[5],[],[]]
-    //[1,2,3,4],[1,2],[3,4],[0,4],[]
 
     /**
-     * [[1,3,4,5],[],[],[],[],[2,4]]
-     * 输出：
-     * [0,0,0,0,1,2,3,4,5,5]
-     * 预期结果：
-     * [0,1,2,3,4,5]
+     *802. 找到最终的安全状态
      * @param graph
      * @return
      */
     public List<Integer> eventualSafeNodes(int[][] graph) {
-        int n = graph.length;
-        List<List<Integer>> rg = new ArrayList<List<Integer>>();
-        for (int i = 0; i < n; ++i) {
-            rg.add(new ArrayList<Integer>());
+        //出度数量
+        List<Integer>  indexToNum = getTO(graph);
+        //入度有哪些点
+        Map<Integer, List<Integer>> indexToIn = goIn(graph);
+
+
+        //找到初度为0的点
+        List<Integer> noway = noway(graph);
+        if (noway.isEmpty()) {
+            return new ArrayList<>();
         }
-        //统计所有点的度
-        int[] inDeg = new int[n];
-        for (int x = 0; x < n; ++x) {
-            for (int y : graph[x]) {
-                //入度
-                rg.get(y).add(x);
-            }
-            //出度
-            inDeg[x] = graph[x].length;
+        List<Integer> list = bfs(noway, indexToNum, indexToIn);
+        Collections.sort(list);
+        return list;
+
+    }
+
+    public List<Integer> getTO(int[][] graph) {
+        List<Integer> toNum = new ArrayList<>();
+        for (int i = 0; i < graph.length; i++) {
+            toNum.add(graph[i].length);
+        }
+        return toNum;
+    }
+
+    public Map<Integer, List<Integer>> goIn(int[][] graph) {
+        Map<Integer, List<Integer>> map = new HashMap<>();
+        for (int i = 0; i < graph.length; i++) {
+            map.put(i, new ArrayList<>());
         }
 
-        Queue<Integer> queue = new LinkedList<Integer>();
-        for (int i = 0; i < n; ++i) {
-            if (inDeg[i] == 0) {
-                queue.offer(i);
+        for (int i = 0; i < graph.length; i++) {
+            //入度的 key
+            int[] inNodes = graph[i];
+            for (int inNode : inNodes) {
+                List<Integer> inList = map.get(inNode);
+                inList.add(i);
             }
         }
+        return map;
+    }
+
+    public List<Integer> noway(int[][] graph) {
+        List<Integer> noway = new ArrayList<>();
+        for (int i = 0; i < graph.length; i++) {
+            if (graph[i].length == 0) {
+                noway.add(i);
+            }
+        }
+        return noway;
+    }
+
+    public List<Integer> bfs(List<Integer> noway, List<Integer> indexTo, Map<Integer, List<Integer>> indexToIn) {
+        Queue<Integer> queue = new LinkedList<>(noway);
         while (!queue.isEmpty()) {
-            int y = queue.poll();
-            //
-            List<Integer> indrgee = rg.get(y);
-            for (int x : indrgee) {
-                if (--inDeg[x] == 0) {
-                    queue.offer(x);
+            //取一个结果
+            Integer curNode = queue.poll();
+            //找出该点的所有的入度点
+            List<Integer> InNodes = indexToIn.get(curNode);
+            for (Integer inNode : InNodes) {
+                indexTo.set(inNode, indexTo.get(inNode) - 1);
+                if (indexTo.get(inNode) == 0) {
+                    queue.offer(inNode);
                 }
             }
         }
-
         List<Integer> ans = new ArrayList<Integer>();
-        for (int i = 0; i < n; ++i) {
-            if (inDeg[i] == 0) {
+        for (int i = 0; i < indexTo.size(); i++) {
+            if (indexTo.get(i) == 0) {
                 ans.add(i);
             }
         }
         return ans;
-
     }
 
 

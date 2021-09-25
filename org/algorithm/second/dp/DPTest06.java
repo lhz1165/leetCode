@@ -8,9 +8,9 @@ package org.algorithm.second.dp;
  */
 public class DPTest06 {
 	public static void main(String[] args) {
-		System.out.println("我是信息管理1901班的张怡帆\n" +
-				"\n" +
-				"我的学号是1904010511");
+		//
+		DPTest06 d = new DPTest06();
+		System.out.println(d.longestPalindromeSubseq("bbbab"));
 
 	}
 	/**
@@ -29,10 +29,10 @@ public class DPTest06 {
 		}
 		for (int len = 3; len <= n; len++) {
 			for (int j = 0; j < n - len + 1; j++) {
-				f[j][j + len-1] = Math.max(f[j][j + len-1], f[j + 1][j + len-1]);
+				f[j][j + len - 1] = Math.max(f[j][j + len-1], f[j + 1][j + len-1]);
 				f[j][j + len-1] = Math.max(f[j][j + len-1], f[j][j + len - 2]);
-				if (s.charAt(j) == s.charAt(j + len)) {
-					f[j][j + len] = Math.max(f[j][j + len-1], f[j+1][j + len - 2]+2);
+				if (s.charAt(j) == s.charAt(j + len-1)) {
+					f[j][j + len-1] = Math.max(f[j][j + len-1], f[j+1][j + len - 2]+2);
 				}
 			}
 		}
