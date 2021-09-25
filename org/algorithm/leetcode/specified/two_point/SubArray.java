@@ -95,7 +95,7 @@ public class SubArray {
 	}
 
 	/**
-	 * 同向双指针 o（n）
+	 * 同向双指针 o（n）【模板】
 	 * @param nums
 	 * @param target
 	 * @return
