@@ -7,7 +7,7 @@ package org.algorithm.leetcode.specified.two_point;
 public class TwoPointTest03 {
     public static void main(String[] args) {
         TwoPointTest03 t = new TwoPointTest03();
-        System.out.println(t.minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3}));
+        System.out.println(t.minSubArrayLen(4, new int[]{1,4,4}));
     }
 
     /**
@@ -30,10 +30,9 @@ public class TwoPointTest03 {
                 preSum += nums[end];
                 end++;
             }
-            if (end >= n) {
-                end = n;
+            if (preSum >= target) {
+                result = Integer.min(result, end - start);
             }
-            result = Integer.min(result, end - start);
             preSum -= nums[start];
         }
         return result == Integer.MAX_VALUE ? 0 : result;
