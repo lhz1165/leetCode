@@ -33,7 +33,7 @@ public class DfsTest {
 		if (root == null) {
 			return 0;
 		}
-
+		return 0;
 	}
 	public int dfs (TreeNode root) {
 		if (root == null) {

@@ -13,7 +13,7 @@ public class TwoPointTest02 {
         int[] nums ={0,2,2,2,2,1,0,1,0,0,0,1,0,2,0,1};
         System.out.println(Arrays.toString(nums));
         t.sortColors2(nums);
-
+        System.out.println(Arrays.toString(nums));
         int i = t.findKthLargest(new int[]{3,2,1}, 0, 2, 2);
         System.out.println(i);
 //        int[] arr = {3,5,4,6,1,2,4};
@@ -168,22 +168,21 @@ public class TwoPointTest02 {
      * @param nums
      */
     public void sortColors2(int[] nums) {
+        int index = 0;
         int l = 0;
         int r = nums.length - 1;
-        int i = 0;
-        while (i <= r) {
-            if (nums[i] == 0) {
-                swap(nums, l, i);
+        while (index <= r) {
+            if (nums[index] == 0) {
+                swap(nums, index, l);
                 l++;
-                i++;
-            } else if (nums[i] == 1) {
-                i++;
-            }else {
-                swap(nums, i, r);
+                index++;
+            } else if (nums[index] == 1) {
+                index++;
+            } else {
+                swap(nums, index, r);
                 r--;
             }
         }
-        System.out.println();
     }
 
     private void swap(int[] nums, int l, int i) {

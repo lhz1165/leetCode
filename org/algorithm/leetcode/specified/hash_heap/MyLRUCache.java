@@ -2,6 +2,7 @@ package org.algorithm.leetcode.specified.hash_heap;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 /**
  * @author lhzlhz
@@ -10,14 +11,21 @@ import java.util.Map;
  */
 public class MyLRUCache {
 	public static void main(String[] args) {
-		MyLRUCache cache = new MyLRUCache(2);
-		cache.set(2, 1);
-		cache.set(1, 1);
-		cache.get(2);
-		cache.set(4,1);
-		cache.get(1);
-		cache.get(2);
-		System.out.println();
+//		MyLRUCache cache = new MyLRUCache(2);
+//		cache.set(2, 1);
+//		cache.set(1, 1);
+//		cache.get(2);
+//		cache.set(4,1);
+//		cache.get(1);
+//		cache.get(2);
+//		System.out.println();
+
+		Scanner sc = new Scanner(System.in);
+		int len = sc.nextInt();
+		MyLRUCache cache = new MyLRUCache(len);
+		for (int i = 0; i < len; i++) {
+			cache.set(i, i);
+		}
 
 	}
 
@@ -26,7 +34,7 @@ public class MyLRUCache {
 	private ListNode tail;
 	private int size;
 
-	private Map<Integer,ListNode> keyToPrev;
+	private Map<Integer, ListNode> keyToPrev;
 
 	/*
 	 * @param capacity: An integer
@@ -35,7 +43,7 @@ public class MyLRUCache {
 		this.size = 0;
 		this.capacity = capacity;
 		keyToPrev = new HashMap<>();
-		dummy = new ListNode(0,0);
+		dummy = new ListNode(0, 0);
 		tail = dummy;
 	}
 
@@ -87,7 +95,7 @@ public class MyLRUCache {
 			prev.next.val = value;
 			return;
 		}
-		ListNode cur=new ListNode(key,value);
+		ListNode cur = new ListNode(key, value);
 		if (size < capacity) {
 			tail.next = cur;
 			keyToPrev.put(key, tail);
@@ -108,10 +116,10 @@ public class MyLRUCache {
 	}
 
 
-
 	class ListNode {
 		public int key, val;
 		public ListNode next;
+
 		public ListNode(int key, int val) {
 			this.key = key;
 			this.val = val;

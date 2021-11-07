@@ -20,7 +20,7 @@ public class DFSTest {
     public static void main(String[] args) {
         DFSTest d = new DFSTest();
          //System.out.println(d.combinationSum(new int[]{1, 1, 2}, 4));
-        System.out.println(d.combinationSum(new int[]{2,3,6,7},7));
+        System.out.println(d.combinationSum(new int[]{1,1,1},2));
     }
 
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
@@ -47,13 +47,13 @@ public class DFSTest {
             if (curSum + candidates[i] > target) {
                 break;
             }
-            //******  预防[2,2,3]   结果出现[2,3][2,3]-->跳过相同的数
-            //******    index!=i(也可以index < i) 也特别重要 代表了如果第一遍循环可以无视重复 [2,2,3]求7 这样才会有[2,2,3]作为结果
-            if (i != 0 && candidates[i] == candidates[i - 1]&& index != i) {
+            //******  i != 0 && candidates[i] == candidates[i - 1]  预防给你[1,1,1,3]求3，   结果出现[1,1,1]-->数组不能有重复的数字
+            //******    增加一个 index!=i(也可以index < i) 表示数组可以有重复的数字，但是不能有相同结果集 [1,1,1,3]求5-->[1，1，3]，[1，1，3],[1，1，3]
+            if (i != 0 && candidates[i] == candidates[i - 1] && index != i) {
                 continue;
             }
             result.add(candidates[i]);
-            //********  index预防结果出现[2,2,3],[3,2,2]
+            //********  index 前面遇到过了就跳过
             subHelper(target, results, result, curSum + candidates[i], candidates, i + 1);
             result.remove(result.size() - 1);
         }
@@ -103,7 +103,7 @@ public class DFSTest {
     }
 
     /**
-     * 去重[1,2,2]->[1,2,2]|[2,1,2][2,2,1]
+     * 去重[1,2,2]->结果为[1,2,2]|[2,1,2][2,2,1]
      * 解决办法，只要是同一层相同那么直接跳过
      * 比如第一层 1,2,2
      * 遍历过第一个2之后没必要遍历第二个2

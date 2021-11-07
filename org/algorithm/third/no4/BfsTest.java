@@ -1,6 +1,7 @@
 package org.algorithm.third.no4;
 
 import java.util.*;
+import java.util.LinkedList;
 
 /**
  * @author lhzlhz
