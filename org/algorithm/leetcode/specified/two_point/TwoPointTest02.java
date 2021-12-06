@@ -96,9 +96,12 @@ public class TwoPointTest02 {
                 j--;
             }
         }
+        // 如果取第一个  那么就是satrt(0) +k(1) - 1 = 下标为0
         if (start + k - 1 <= j) {
             return findKthLargest(nums, start, j, k);
         }
+        //去掉了左边  那么就不看了 左边有 left -satr 个数
+        //假设 start = 1  left = 2，就是start -left =1  ，1个不要了
         if (start + k - 1 >= i) {
             return findKthLargest(nums, i, end, k - (i - start));
         }

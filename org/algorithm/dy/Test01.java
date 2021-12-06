@@ -1,8 +1,7 @@
-package org.codetop.douyindianshang;
+package org.algorithm.dy;
 
 import org.algorithm.leetcode.basic.TreeNode;
 
-import java.time.temporal.Temporal;
 import java.util.*;
 
 /**
@@ -11,33 +10,7 @@ import java.util.*;
  */
 public class Test01 {
 
-	public static void main(String[] args) {
-		Test01 t = new Test01();
-		List<List<Integer>> subsets = t.subsets(new int[]{1, 2, 3});
-		System.out.println(subsets);
-		System.out.println(t.permute2(new int[]{1, 1, 3}));
-		int[] arr = {3, 2, 1};
-		t.nextPermutation(arr);
-		System.out.println(Arrays.toString(arr));
-		System.out.println(t.repeatedSubstringPattern("abcabc"));
 
-		t.threeSum(new int[]{-1, 0, 1, 2, -1, -4});
-		//System.out.println(t.findKthLargest(new int[]{1,3,5,7,2,4,6,8},0,7,1));
-		System.out.println(Arrays.toString(t.smallestK(new int[]{1, 3, 5, 7, 2, 4, 6, 8}, 4)
-		));
-		System.out.println(t.removeKdigits("9", 1));
-
-		t.maxSlidingWindow(new int[]{1, 3, 1, 2, 0, 5}, 3);
-
-		System.out.println(t.convert("PAYPALISHIRING", 4));
-
-		System.out.println(t.decodeString("2[abc]3[cd]ef"));
-
-		System.out.println(t.maximalSquare(new char[][]{{'1', '0', '1', '0', '0'},
-				{'1', '0', '1', '1', '1'},
-				{'1', '1', '1', '1', '0'},
-				{'1', '0', '1', '1', '1'},}));
-	}
 
 	public static int solution(int n, int k) {
 		if (n == 0) {
@@ -59,50 +32,9 @@ public class Test01 {
 		return dp[k][0];
 	}
 
-	public List<List<Integer>> subsets(int[] nums) {
-		List<List<Integer>> results = new ArrayList<>();
-		dfs(nums, new ArrayList<>(), results, 0);
-		return results;
-	}
 
-	public void dfs(int[] nums, List<Integer> result, List<List<Integer>> results, int startIndex) {
-		results.add(new ArrayList<>(result));
-		for (int i = startIndex; i < nums.length; i++) {
-			result.add(nums[i]);
-			dfs(nums, result, results, i + 1);
-			result.remove(result.size() - 1);
-		}
-	}
 
-	public List<List<Integer>> permute(int[] nums) {
-		List<List<Integer>> results = new ArrayList<>();
-		boolean[] visited = new boolean[nums.length];
-		dfs2(nums, new ArrayList<>(), results, visited, 0);
-		return results;
-	}
 
-	private void dfs2(int[] nums, List<Integer> result, List<List<Integer>> results, boolean[] visited, int num) {
-		if (num >= nums.length) {
-			results.add(new ArrayList<>(result));
-			return;
-		}
-		for (int i = 0; i < nums.length; i++) {
-			if (visited[i]) {
-				continue;
-			}
-			if (i != 0 && visited[i - 1] && nums[i] == nums[i - 1]) {
-				continue;
-			}
-			result.add(nums[i]);
-			visited[i] = true;
-			dfs2(nums, result, results, visited, ++num);
-			visited[i] = false;
-			num--;
-			result.remove(result.size() - 1);
-
-		}
-
-	}
 
 	public List<List<Integer>> permute2(int[] nums) {
 		List<List<Integer>> results = new ArrayList<>();
@@ -197,14 +129,17 @@ public class Test01 {
 
 	public List<List<Integer>> threeSum(int[] nums) {
 		List<List<Integer>> results = new ArrayList<>();
-		if (nums == null || nums.length < 3) {
+		if(nums == null || nums.length < 3){
 			return results;
 		}
 		Arrays.sort(nums);
-		for (int i = 0; i < nums.length - 2; i++) {
+		for(int i = 0; i < nums.length - 2; i++){
+			if(i != 0 && nums[i] == nums[i-1]){
+				continue;
+			}
 			List<List<Integer>> subResult = twoSum(nums, i + 1, -nums[i]);
-			if (subResult.size() > 0) {
-				for (List<Integer> result : subResult) {
+			if(subResult.size() > 0){
+				for(List<Integer> result: subResult){
 					result.add(nums[i]);
 				}
 				results.addAll(subResult);
@@ -216,22 +151,28 @@ public class Test01 {
 
 	}
 
-	public List<List<Integer>> twoSum(int[] nums, int startIndex, int target) {
+	public List<List<Integer>> twoSum(int[] nums, int startIndex, int target){
 		int start = startIndex;
 		int end = nums.length - 1;
-		List<List<Integer>> results = new ArrayList<>();
-		while (start < end) {
-			if (nums[start] + nums[end] > target) {
+		List<List<Integer>> results =  new ArrayList<>();
+		while(start < end){
+			if(nums[start] + nums[end] > target){
 				end--;
-			} else if (nums[start] + nums[end] < target) {
+			}else if(nums[start] + nums[end] < target){
 				start++;
-			} else {
+			}else{
 				List<Integer> result = new ArrayList<>();
 				result.add(nums[start]);
 				result.add(nums[end]);
 				results.add(result);
 				start++;
 				end--;
+				while(start < end && nums[start]==nums[start - 1]){
+					start++;
+				}
+				while(start < end && nums[end]==nums[end + 1]){
+					end--;
+				}
 			}
 		}
 		return results;
@@ -341,39 +282,7 @@ public class Test01 {
 
 	}
 
-	public String convert(String s, int numRows) {
-		if (numRows <= 1) {
-			return s;
-		}
-		List<StringBuilder> builders = new ArrayList<>();
-		for (int i = 0; i < numRows; i++) {
-			builders.add(new StringBuilder());
-		}
-		int len = s.length();
-		int index = 0;
-		int rowIndex = 0;
-		while (index < len) {
-			while (rowIndex < numRows && index < len) {
-				StringBuilder sb = builders.get(rowIndex);
-				sb.append(s.charAt(index));
-				index++;
-				rowIndex++;
-			}
-			rowIndex -= 2;
-			while (rowIndex >= 0 && index < len) {
-				StringBuilder sb = builders.get(rowIndex);
-				sb.append(s.charAt(index));
-				index++;
-				rowIndex--;
-			}
-			rowIndex += 2;
-		}
-		StringBuilder res = new StringBuilder();
-		for (StringBuilder builder : builders) {
-			res.append(builder);
-		}
-		return res.toString();
-	}
+
 
 	public String decodeString(String s) {
 		Stack<Integer> times = new Stack<>();
@@ -411,71 +320,5 @@ public class Test01 {
 	}
 
 
-	public int maximalSquare(char[][] matrix) {
-		int n = matrix.length;
-		int m = matrix[0].length;
-		int[][] f = new int[n][m];
-		for(int i = 0; i < n; i++){
-			f[i][0] =  matrix[i][0] == '1' ? 1 : 0;
-		}
-		for(int i = 0; i < m; i++){
-			f[0][i] =  matrix[0][i] == '1' ? 1 : 0;
-		}
-		int len = 0;
-		for(int i = 1; i < n; i++){
-			for(int j = 1; j < m; j++){
-				if(matrix[i][j] == '0'){
-					continue;
-				}
-				f[i][j] = Math.min(Math.min(f[i-1][j],f[i][j-1]),f[i-1][j-1]) + 1;
-				len = Math.max(len,f[i][j]);
-			}
-		}
-		return len*len;
-
-	}
-
-
-	static class Node {
-		int x;
-		int y;
-
-		public Node(int x, int y) {
-			this.x = x;
-			this.y = y;
-		}
-
-		@Override
-		public boolean equals(Object o) {
-			if (this == o) return true;
-			if (o == null || getClass() != o.getClass()) return false;
-			Node node = (Node) o;
-			return x == node.x && y == node.y;
-		}
-
-		@Override
-		public int hashCode() {
-			return Objects.hash(x, y);
-		}
-	}
-
-	public int sumNumbers(TreeNode root) {
-		if (root == null) {
-			return 0;
-		}
-		return sum(root,0);
-
-	}
-
-	public int sum(TreeNode root, int sum) {
-		if (root == null) {
-			return 0;
-		}
-		if (root.left == null && root.right == null) {
-			return sum;
-		}
-		return sum(root.left, sum) + sum(root.right, sum);
-
-	}
 
 }

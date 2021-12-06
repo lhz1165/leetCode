@@ -6,36 +6,36 @@ package org.algorithm.leetcode.specified.binary;
  */
 public class BinarySearchTest01 {
 	public static void main(String[] args) {
-		int[] a = {8,9,1,2,3,4,5};
-		System.out.println(findMin(a));
+		int[] a = {3,1,2};
+		System.out.println(peakIndexInMountainArray(a));
 	}
 
 	/**
 	 * 众多峰值 随便找一个
-	 * @param A
+	 * @param nums
 	 * @return
 	 */
-	public int findPeak(int[] A) {
+	public int findPeak(int[] nums) {
 		// write your code here
-		if (A == null || A.length < 3) {
+		if (nums == null || nums.length < 3) {
 			return -1;
 		}
 		int start = 0;
-		int end = A.length - 1;
+		int end = nums.length - 1;
 
 		while (start + 1 < end) {
 			int mid = (start + end) / 2;
 			//上峰
-			if (A[mid] > A[mid + 1] && A[mid] > A[mid - 1]) {
+			if (nums[mid] > nums[mid + 1] && nums[mid] > nums[mid - 1]) {
 				return mid;
 				//谷底
-			} else if ((A[mid] < A[mid + 1] && A[mid] < A[mid - 1])) {
+			} else if ((nums[mid] < nums[mid + 1] && nums[mid] < nums[mid - 1])) {
 				start = mid;
 				//下降
-			}else if ((A[mid] > A[mid + 1] && A[mid] < A[mid - 1])){
+			}else if ((nums[mid] > nums[mid + 1] && nums[mid] < nums[mid - 1])){
 				end = mid;
 				//上升
-			}else if ((A[mid] < A[mid + 1] && A[mid] > A[mid - 1])){
+			}else if ((nums[mid] < nums[mid + 1] && nums[mid] > nums[mid - 1])){
 				start = mid;
 			}
 		}
@@ -44,26 +44,26 @@ public class BinarySearchTest01 {
 
 	/**
 	 * 一个峰值 找出来
-	 * @param A
+	 * @param nums
 	 * @return
 	 */
-	public static int peakIndexInMountainArray(int[] A) {
+	public static int peakIndexInMountainArray(int[] nums) {
 		// Write your code here
 		int start = 0;
-		int end = A.length - 1;
+		int end = nums.length - 1;
 		while (start + 1 < end) {
 			int mid = start + (end - start) / 2;
 			//下坡
-			if (A[mid] > A[mid + 1] && A[mid] < A[mid - 1]) {
+			if (nums[mid] > nums[mid + 1] && nums[mid] < nums[mid - 1]) {
 				end = mid;
 				//上坡
-			}else if (A[mid] < A[mid + 1] && A[mid] > A[mid - 1]){
+			}else if (nums[mid] < nums[mid + 1] && nums[mid] > nums[mid - 1]){
 				start = mid;
-			} else if (A[mid] > A[mid + 1] && A[mid] > A[mid - 1]){
+			} else if (nums[mid] > nums[mid + 1] && nums[mid] > nums[mid - 1]){
 				return   mid;
 			}
 		}
-		return A[start] > A[end] ? start : end;
+		return nums[start] > nums[end] ? start : end;
 
 
 
@@ -115,27 +115,27 @@ public class BinarySearchTest01 {
 	 * mid在右边 --|
 	 *            |-----target在mid右边（缩小左边界）
 	 *
-	 * @param nums
+	 * @param A
 	 * @param target
 	 * @return
 	 */
-	public int search(int[] nums, int target) {
-		if (null == nums || nums.length == 0) {
+	public int search(int[] A, int target) {
+		if (null == A || A.length == 0) {
 			return -1;
 		}
 		int start = 0;
-		int end = nums.length - 1;
+		int end = A.length - 1;
 		while (start + 1 < end) {
 			int mid = start + (end - start) / 2;
-			if (nums[mid] > nums[start]) {
-				if (target <= nums[mid]&&target>=nums[start]) {
+			if (A[mid] > A[start]) {
+				if (target <= A[mid]&&target>=A[start]) {
 					//缩小有边界
 					end = mid;
 				}else {
 					start = mid;
 				}
-			} else if (nums[mid] < nums[end]) {
-				if (target <= nums[end] && target >= nums[mid]) {
+			} else if (A[mid] < A[end]) {
+				if (target <= A[end] && target >= A[mid]) {
 					start = mid;
 				}else {
 					end = mid;
@@ -143,10 +143,10 @@ public class BinarySearchTest01 {
 			}
 
 		}
-		if (nums[start] == target) {
+		if (A[start] == target) {
 			return start;
 		}
-		if (nums[end] == target) {
+		if (A[end] == target) {
 			return end;
 		}
 		return -1;

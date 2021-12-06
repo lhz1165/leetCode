@@ -138,7 +138,7 @@ public class DFSTest {
             // [3(2),3(1),0]ok [3(2),0,3(1)]
             // [3(2),0,3(1)]ok[3(1),0,3(2)]x 不能去2即第二个
             // [0,3,3]
-            if (i != 0 && nums[i - 1] == nums[i] && valid[i-1]) {
+            if (i != 0 && nums[i - 1] == nums[i] && !valid[i-1]) {
                 continue;
             }
             result.add(nums[i]);
