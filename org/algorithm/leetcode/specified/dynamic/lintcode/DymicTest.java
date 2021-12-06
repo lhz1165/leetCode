@@ -37,7 +37,7 @@ public class DymicTest {
             f[i] = Integer.MAX_VALUE;
             //内层比较  min{f(x-2)+1,f(x-5)+1,f(x-7)+1}
             for (int j = 0; j <A.length ; j++) {
-                if (i - A[j] >= 0&&f[i - A[j]]<Integer.MAX_VALUE) {
+                if (i - A[j] >= 0 && f[i - A[j]]<Integer.MAX_VALUE) {
                     f[i] = Math.min(f[i], f[i - A[j]]+1);
                 }
             }
