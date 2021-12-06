@@ -43,6 +43,5 @@ public class BinaryModel {
 			return end;
 		}
 		return -1;
-
 	}
 }
