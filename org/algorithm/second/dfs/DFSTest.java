@@ -20,7 +20,12 @@ public class DFSTest {
     public static void main(String[] args) {
         DFSTest d = new DFSTest();
          //System.out.println(d.combinationSum(new int[]{1, 1, 2}, 4));
-        System.out.println(d.combinationSum(new int[]{1,1,1},2));
+        System.out.println(d.combinationSum(new int[]{1,1,1,2,3},4));
+        System.out.println(d.permute2(new int[]{1,1,2}));
+        System.out.println(d.permute(new int[]{1,1,2}));
+
+
+
     }
 
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
@@ -56,6 +61,7 @@ public class DFSTest {
             //********  index 前面遇到过了就跳过
             subHelper(target, results, result, curSum + candidates[i], candidates, i + 1);
             result.remove(result.size() - 1);
+
         }
     }
 

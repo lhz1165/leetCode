@@ -24,18 +24,20 @@ public class DfsTest01 {
 //
 //
 //        System.out.println(solveNQueens(4));
-        TreeNode root = new TreeNode(5);
-        TreeNode r1 = new TreeNode(1);
-        TreeNode r2 = new TreeNode(2);
-        TreeNode r3 = new TreeNode(3);
-        TreeNode r5 = new TreeNode(6);
-        TreeNode rr = new TreeNode(4);
-        root.right = r5;
-        root.left = r2;
-        r2.left = r1;
-        r2.right = r3;
-        r3.right=rr;
-        d.inorderSuccessor(root,new TreeNode(3));
+//        TreeNode root = new TreeNode(5);
+//        TreeNode r1 = new TreeNode(1);
+//        TreeNode r2 = new TreeNode(2);
+//        TreeNode r3 = new TreeNode(3);
+//        TreeNode r5 = new TreeNode(6);
+//        TreeNode rr = new TreeNode(4);
+//        root.right = r5;
+//        root.left = r2;
+//        r2.left = r1;
+//        r2.right = r3;
+//        r3.right=rr;
+//        d.inorderSuccessor(root,new TreeNode(3));
+
+        permute(new int[]{1, 2, 3});
 
 
 
