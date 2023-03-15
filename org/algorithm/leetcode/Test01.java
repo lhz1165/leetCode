@@ -11,26 +11,73 @@ import java.util.*;
  **/
 public class Test01 {
     public static void main(String[] args)  {
-        new Test01().powIteration(2, 5);
+        int[] ints = {4,1};
+        quickSort(ints, 0, ints.length-1);
+        mergeSort(ints,0,ints.length-1,new int[ints.length]);
+        System.out.println(Arrays.toString(ints));
     }
 
 
-
-
-
-    public double powIteration(double x, int n) {
-        double ans = 1;
-        //遍历每一位
-        while (n > 0) {
-            //最后一位是 1，加到累乘结果里
-            if ((n & 1) == 1) {
-                ans = ans * x;
-            }
-            //更新 x
-            x = x * x;
-            //n 右移一位
-            n = n >> 1;
+    public static void quickSort(int[] array, int start, int end) {
+        if (start >= end) {
+            return;
         }
-        return ans;
+        int left = start;
+        int right = end;
+
+        int pivot = array[(left+right)/2];
+        while (left <= right) {
+            while (pivot > array[left] && left <= right) {
+                left++;
+            }
+            while (pivot < array[right] && left <= right) {
+                right--;
+            }
+            if (left <= right) {
+                int tmp =array[left];
+                array[left]=array[right];
+                array[right]=tmp;
+                left++;
+                right--;
+            }
+
+        }
+        quickSort(array,start,right);
+        quickSort(array, left, end);
     }
+    public static void mergeSort(int[] arr, int start, int end, int[] tmp) {
+        if (start >= end) {
+            return;
+        }
+        int mid = (start + end) / 2;
+        mergeSort(arr, start, mid, tmp);
+        mergeSort(arr, mid + 1, end, tmp);
+        merge(arr, start, end, tmp);
+    }
+
+    private static void merge(int[] arr, int start, int end, int[] tmp) {
+        int i = start;
+        int mid = (start + end) / 2;
+        int j = mid + 1;
+        int index = start;
+        while (j <= end && i <= mid) {
+            if (arr[i] >= arr[j]) {
+                tmp[index++] = arr[j++];
+            } else {
+                tmp[index++] = arr[i++];
+            }
+        }
+        while (i <= mid) {
+            tmp[index++] = arr[i++];
+        }
+        while (j <= end) {
+            tmp[index++] = arr[j++];
+        }
+        for (int i1 = start; i1 <= end; i1++) {
+            arr[i1] = tmp[i1];
+        }
+    }
+
+
+
 }

@@ -8,7 +8,7 @@ import java.util.Arrays;
  **/
 public class SortTest01 {
     public static void main(String[] args) {
-        int[] arr = {2,1};
+        int[] arr = {2,1,3};
         quickSort(arr, 0, arr.length - 1);
 
         SortTest01 s = new SortTest01();
@@ -30,7 +30,7 @@ public class SortTest01 {
      * @param end
      */
     public static void quickSort(int[] arr, int start, int end) {
-        if (start >= end) {
+        if (start > end) {
             return;
         }
         int left = start;
@@ -61,7 +61,7 @@ public class SortTest01 {
     }
 
     public void mergeSort(int[] arr, int start, int end, int[] tmp) {
-        if (start >= end) {
+        if (start > end) {
             return;
         }
         int mid = (start + end) / 2;
