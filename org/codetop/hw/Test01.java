@@ -85,13 +85,10 @@ public class Test01 {
         return ans;
     }
 
-    public static void main(String[] args) {
-        new Test01().longestOnes(new int[]{0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1}, 3);
-    }
 
     public int longestOnes2(int[] nums, int k) {
         //前i个总共几个0
-        int[] P = new int[nums.length+1];
+        int[] P = new int[nums.length + 1];
         for (int i = 1; i <= nums.length; i++) {
             P[i] = P[i - 1];
             if (nums[i - 1] == 0) {
@@ -115,6 +112,91 @@ public class Test01 {
             }
         }
         return ans;
+    }
+
+
+    public int lengthOfLongestSubstring(String s) {
+        if (s.length() == 0) {
+            return 0;
+        }
+        int left = 0;
+        int right = 0;
+        char[] cs = s.toCharArray();
+
+        Map<Character, Integer> c2Index = new HashMap<>();
+        c2Index.put(cs[0], 0);
+        int result = 1;
+        int ans = 1;
+        while (right < cs.length - 1) {
+            right++;
+            if (c2Index.get(cs[right]) != null) {
+                while (c2Index.get(cs[right]) != null) {
+                    c2Index.remove(cs[left]);
+                    ans--;
+                    left++;
+                }
+            }
+            ans++;
+            c2Index.put(cs[right], right);
+            result = Math.max(result, ans);
+        }
+        return result;
+
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new Test01().removeDuplicateLetters("bcabc"));
+    }
+
+
+
+
+    /**
+     * 方法描述
+     * cbacdcbc
+     * @param s
+     * @return java.lang.String
+     * @author laihz
+     * @date 2024/12/27 11:19
+     */
+    public String removeDuplicateLetters(String s) {
+        char[] charArray = s.toCharArray();
+        Stack<Character> from = new Stack<>();
+
+        //用于每个字符计算，后续如果还出现那么pop
+        Map<Character, Integer> charCountMap = new HashMap<>();
+
+        for (char c : charArray) {
+            if (!charCountMap.containsKey(c)) {
+                charCountMap.put(c, 1);
+            } else {
+                charCountMap.put(c, charCountMap.get(c) + 1);
+            }
+
+        }
+
+        Set<Character> set = new HashSet<>();
+
+        //cbacdcbc
+        for (char c : charArray) {
+            charCountMap.put(c,charCountMap.get(c) - 1);
+            if (set.contains(c)) {
+                continue;
+            }
+
+            while (!from.isEmpty() && from.peek() > c && charCountMap.get(from.peek()) > 0){
+                set.remove(from.peek());
+                from.pop();
+            }
+            from.push(c);
+            set.add(c);
+        }
+        StringBuilder sb = new StringBuilder();
+        while (!from.isEmpty()) {
+            sb = new StringBuilder(String.valueOf(from.pop())).append(sb);
+        }
+        return sb.toString();
+
     }
 
 

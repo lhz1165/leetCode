@@ -16,19 +16,53 @@ public class DPTest07 {
      * 多用于文件差异比较
      */
     public int longestCommonSubsequence(String text1, String text2) {
-        // write your code here
-        int n = text1.length();
-        int m = text2.length();
-        int[][] f = new int[n + 1][m + 1];
-        for (int i = 1; i < n + 1; i++) {
-            for (int j = 1; j < m + 1; j++) {
-                if (text1.charAt(i - 1) == text2.charAt(j - 1)) {
-                    f[i][j] = Math.max(f[i][j], f[i - 1][j - 1] + 1);
+        char[] c1 = text1.toCharArray();
+        char[] c2 = text2.toCharArray();
+        int m = c1.length;
+        int n = c2.length;
+        int [][]f = new int[m+1][n+1];
+        int[][] pi = new int[m+1][n+1];
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= n; j++) {
+                if (i ==0 || j== 0){
+                    continue;
                 }
-                f[i][j] = Math.max(f[i][j], Math.max(f[i - 1][j], f[i][j - 1]));
+                f[i][j] = Math.max(f[i][j-1],f[i-1][j]);
+                if (f[i][j] == f[i][j - 1]) {
+                    pi[i][j] = 0;
+                }else{
+                    pi[i][j] = 1;
+                }
+
+                if(c1[i-1] == c2[j-1]){
+                    f[i][j] = Math.max(f[i][j],f[i-1][j-1] + 1);
+                    if (f[i][j] == f[i-1][j-1] + 1){
+                        pi[i][j] = 2;
+                    }
+                }
+
             }
         }
-        return f[n][m];
+        // 回溯得到子序列
+        StringBuilder lcs = new StringBuilder();
+        int i = m;
+        int j = n;
+        while (i > 0 && j > 0) {
+            if (pi[i][j] == 2) {
+                lcs.append(c1[i - 1]);
+                i--;
+                j--;
+            } else if (pi[i][j] == 0) {
+                j--;
+            } else {
+                i--;
+            }
+        }
+
+        // 返回结果
+        System.out.println("Longest Common Subsequence: " + lcs.reverse().toString());
+
+        return f[m][n];
     }
 
     /**
